@@ -46,10 +46,10 @@ from reportlab.pdfgen.canvas import Canvas
 # from common.os_func import check_fold
 pdfmetrics.registerFont(TTFont("SimSun", "G:/trading/SimSun.ttf"))
 
-# auth('18610039264', 'zg19491001')
+auth('18610039264', 'zg19491001')
 style.use('ggplot')
 
-auth('15658001226', 'taiyi123')
+# auth('15658001226', 'taiyi123')
 
 
 # 获取价格
@@ -157,16 +157,6 @@ def KDJ(data, N=9, M1=3, M2=3):
     return k_lst, d_lst, j_lst
 
 
-def get_alert_info(df, txt):
-    if len(df) > 0:
-        info_txt = txt
-        for idx, row in df_day_buy.iterrows():
-            info_txt = info_txt + row.stock_code[:6] + ': k ' + str(np.around(row.k_day, 2)) + ' d ' + \
-                       str(np.around(row.d_day, 2)) + ';'
-        print(info_txt)
-        tkinter.messagebox.showinfo('提示', info_txt)
-
-
 def get_normal_future_index_code():
     temp = get_all_securities(types=['futures'])
     temp['index_code'] = temp.index
@@ -219,58 +209,29 @@ class PDFGenerator:
                                       ('GRID', (0, 0), (-1, -1), 0.5, colors.black),
                                      ])
 
-    def genTaskPDF(self, hold_buy_day, hold_sell_day, hold_buy_week, hold_sell_week, other_buy_week, other_sell_week, method):
+    def genTaskPDF(self, df_hold, df_other):
         styles = getSampleStyleSheet()
         normalStyle = copy.deepcopy(styles['Normal'])
         normalStyle.fontName = 'SimSun'
         story = []
         story.append(
-            Graphs.draw_title('kd_macd_future_%s' % datetime.datetime.now().strftime('%Y%m%d')))
+            Graphs.draw_title('kd_背离_%s' % datetime.datetime.now().strftime('%Y%m%d')))
         story.append(Spacer(0, 0.5 * cm))
 
-        story.append(Paragraph('在持仓日频KD金叉: ', normalStyle))
+        story.append(Paragraph('在持仓KD背离: ', normalStyle))
         story.append(Spacer(0, 0.2 * cm))
-        data = [tuple(hold_buy_day.columns)] + [tuple(x.to_dict().values()) for idx, x in hold_buy_day.iterrows()]
+        data = [tuple(df_hold.columns)] + [tuple(x.to_dict().values()) for idx, x in df_hold.iterrows()]
         story.append(Graphs.draw_table(*data, ALIGN='LEFT', VALIGN='RIGHT',
-                                         col_width=[80] + [70] * (len(hold_buy_day.columns) - 1)))
+                                         col_width=[80] + [70] * (len(df_hold.columns) - 1)))
         story.append(Spacer(0, 0.5 * cm))
 
-        story.append(Paragraph('在持仓日频KD死叉: ', normalStyle))
+        story.append(Paragraph('非在持仓KD背离: ', normalStyle))
         story.append(Spacer(0, 0.2 * cm))
-        data = [tuple(hold_sell_day.columns)] + [tuple(x.to_dict().values()) for idx, x in hold_sell_day.iterrows()]
+        data = [tuple(df_other.columns)] + [tuple(x.to_dict().values()) for idx, x in df_other.iterrows()]
         story.append(Graphs.draw_table(*data, ALIGN='LEFT', VALIGN='RIGHT',
-                                       col_width=[80] + [70] * (len(hold_sell_day.columns) - 1)))
+                                       col_width=[80] + [70] * (len(df_other.columns) - 1)))
         story.append(Spacer(0, 0.5 * cm))
 
-        if method == 1:
-            story.append(Paragraph('在持仓周频KD金叉: ', normalStyle))
-            story.append(Spacer(0, 0.2 * cm))
-            data = [tuple(hold_buy_week.columns)] + [tuple(x.to_dict().values()) for idx, x in hold_buy_week.iterrows()]
-            story.append(Graphs.draw_table(*data, ALIGN='LEFT', VALIGN='RIGHT',
-                                           col_width=[80] + [70] * (len(hold_buy_week.columns) - 1)))
-            story.append(Spacer(0, 0.5 * cm))
-
-            story.append(Paragraph('在持仓周频KD死叉: ', normalStyle))
-            story.append(Spacer(0, 0.2 * cm))
-            data = [tuple(hold_sell_week.columns)] + [tuple(x.to_dict().values()) for idx, x in hold_sell_week.iterrows()]
-            story.append(Graphs.draw_table(*data, ALIGN='LEFT', VALIGN='RIGHT',
-                                           col_width=[80] + [70] * (len(hold_sell_week.columns) - 1)))
-            story.append(Spacer(0, 0.5 * cm))
-
-            story.append(Paragraph('非在持仓周频KD金叉: ', normalStyle))
-            story.append(Spacer(0, 0.2 * cm))
-            data = [tuple(other_buy_week.columns)] + [tuple(x.to_dict().values()) for idx, x in other_buy_week.iterrows()]
-            story.append(Graphs.draw_table(*data, ALIGN='LEFT', VALIGN='RIGHT',
-                                           col_width=[80] + [70] * (len(other_buy_week.columns) - 1)))
-            story.append(Spacer(0, 0.5 * cm))
-
-            story.append(Paragraph('非在持仓周频KD死叉: ', normalStyle))
-            story.append(Spacer(0, 0.2 * cm))
-            data = [tuple(other_sell_week.columns)] + [tuple(x.to_dict().values()) for idx, x in
-                                                      other_sell_week.iterrows()]
-            story.append(Graphs.draw_table(*data, ALIGN='LEFT', VALIGN='RIGHT',
-                                           col_width=[80] + [70] * (len(other_sell_week.columns) - 1)))
-            story.append(Spacer(0, 0.5 * cm))
 
         doc = SimpleDocTemplate(self.file_path + self.filename + ".pdf", pagesize=letter)
         doc.build(story)
@@ -291,8 +252,7 @@ if __name__ == '__main__':
     os.getcwd()
     print(os.path)
     t0 = time.time()
-    fold = 'e:/kdj_macd/'
-    fold_data = 'e:/kdj_macd/data/'
+    fold_data = 'G:/trading/'
     # data = get_all_securities(types=['futures'])
 
     start_day = '2017-01-01'
@@ -311,7 +271,8 @@ if __name__ == '__main__':
     method_lst = [('week', 'week'), ('day', 'day')]
     k1_lst = [(20, 30)]  # kd下限
     k2_lst = [(70, 80)]  # kd上限
-    road_period = 5  # 进N日最高最低价周期
+    road_period = 4  # 进N日最高最低价周期
+    kd_road_period = road_period-1
     if mod == 0:
         k1 = (15, 35)
         k2 = (65, 85)
@@ -326,24 +287,24 @@ if __name__ == '__main__':
         data_daily = stock_price_cgo(symble, start_day, end_day)[
             ['date_time', 'open', 'high', 'low', 'close', 'stock_code', 'volume']]
         data_daily['vol_average'] = data_daily['volume'].shift(1).rolling(window=30).mean()
-        print(data_daily)
         if len(data_daily) < 30:
             continue
+        if index_code == 'P':
+            A = 0
         hq_dict[index_code] = data_daily
         vol_dict[index_code] = [data_daily.vol_average.tolist()[-1]]
     vol_df = pd.DataFrame(vol_dict)
-    print(vol_df)
     vol_df = vol_df.T
     vol_df.columns = ['volume_ave']
-    print(len(vol_df))
     vol_df = vol_df[vol_df['volume_ave'] >= 50000]
-    print(vol_df)
+    # print(vol_df)
     index_code_lst = vol_df.index.values
     index_code_lst = list(index_code_lst)
     index_code_lst.extend(hold_code_lst)
     index_code_lst = set(index_code_lst)
 
     for index_code in index_code_lst:
+        print(index_code)
         data_daily = hq_dict[index_code][
             ['date_time', 'open', 'high', 'low', 'close', 'stock_code']]
         data_daily['time'] = pd.to_datetime(data_daily['date_time'])
@@ -359,88 +320,117 @@ if __name__ == '__main__':
         data_week['k_week'], data_week['d_week'], data_week['j_week'] = KDJ(data_week, 9, 3, 3)
 
         data_daily['k_day'], data_daily['d_day'], data_daily['j_day'] = KDJ(data_daily, 9, 3, 3)
+        data_daily['h_k_day'] = talib.MAX(data_daily['k_day'].shift(1).values, kd_road_period)
+        data_daily['l_k_day'] = talib.MIN(data_daily['k_day'].shift(1).values, kd_road_period)
+        data_daily['h_d_day'] = talib.MAX(data_daily['d_day'].shift(1).values, kd_road_period)
+        data_daily['l_d_day'] = talib.MIN(data_daily['d_day'].shift(1).values, kd_road_period)
         data_daily['h_day'] = talib.MAX(data_daily['high'].values, road_period)
         data_daily['l_day'] = talib.MIN(data_daily['low'].values, road_period)
+        data_week['h_k_week'] = talib.MAX(data_week['k_week'].shift(1).values, kd_road_period)
+        data_week['l_k_week'] = talib.MIN(data_week['k_week'].shift(1).values, kd_road_period)
+        data_week['h_d_week'] = talib.MAX(data_week['d_week'].shift(1).values, kd_road_period)
+        data_week['l_d_week'] = talib.MIN(data_week['d_week'].shift(1).values, kd_road_period)
         data_week['h_week'] = talib.MAX(data_week['high'].values, road_period)
         data_week['l_week'] = talib.MIN(data_week['low'].values, road_period)
 
-        data_daily = data_daily.merge(
-            data_week[['k_week', 'd_week', 'h_week', 'l_week', 'date_time']], on=['date_time'], how='left').sort_values(
-            ['date_time'])
-        data_daily = data_daily.fillna(method='ffill')
         # data_daily.to_csv(fold_data + symble + '_data_daily.csv')
         data_daily['day_kd_b'] = (data_daily['k_day'] > data_daily['d_day']) & (
-                data_daily['k_day'].shift(1) < data_daily['d_day'].shift(1)) & (
-                                         data_daily['k_day'] < k1[1]) & (data_daily['d_day'] > k1[0])
+                data_daily['k_day'].shift(1) < data_daily['d_day'].shift(1))
         data_daily['day_kd_s'] = (data_daily['k_day'] < data_daily['d_day']) & (
-                data_daily['k_day'].shift(1) > data_daily['d_day'].shift(1)) & (
-                                         data_daily['k_day'] > k2[0]) & (data_daily['d_day'] < k2[1])
-        data_daily['week_kd_b'] = (data_daily['k_week'] > data_daily['d_week']) & (
-                data_daily['k_week'].shift(1) < data_daily['d_week'].shift(1)) & (
-                                          data_daily['k_week'] < k1[1]) & (data_daily['d_week'] > k1[0])
-        data_daily['week_kd_s'] = (data_daily['k_week'] < data_daily['d_week']) & (
-                data_daily['k_week'].shift(1) > data_daily['d_week'].shift(1)) & (
-                                          data_daily['k_week'] > k2[0]) & (data_daily['d_week'] < k2[1])
-        data_daily = data_daily.dropna()
+                data_daily['k_day'].shift(1) > data_daily['d_day'].shift(1))
+        data_week['week_kd_b'] = (data_week['k_week'] > data_week['d_week']) & (
+                data_week['k_week'].shift(1) < data_week['d_week'].shift(1))
+        data_week['week_kd_s'] = (data_week['k_week'] < data_week['d_week']) & (
+                data_week['k_week'].shift(1) > data_week['d_week'].shift(1))
+        data_daily = data_daily.dropna().sort_values(by=['date_time'], ascending=False)
+        data_week = data_week.dropna().sort_values(by=['date_time'], ascending=False)
+        day_kd_s_lst = data_daily.day_kd_s.tolist()
+        day_kd_b_lst = data_daily.day_kd_b.tolist()
+        week_kd_s_lst = data_week.week_kd_s.tolist()
+        week_kd_b_lst = data_week.week_kd_b.tolist()
 
-        df_lst.append(data_daily.tail(1))
-    df = pd.concat(df_lst)
+        if day_kd_s_lst[0] == True:
+            kd_max_now = max(data_daily.h_k_day.tolist()[0], data_daily.h_d_day.tolist()[0])
+            price_max_now = data_daily.h_day.tolist()[0]
+            i = 0
+            for idx, _row in data_daily.iterrows():
+                if _row.day_kd_s == True:
+                    i += 1
+                    if i == 2:
+                        kd_max = max(_row.h_k_day, _row.h_d_day)
+                        price_max = _row.h_day
+                        if kd_max_now < kd_max and price_max_now > price_max:
+                            print('%s:日级别顶背离' % index_code)
+                            row = []
+                            row.append(_row.stock_code)
+                            row.append('日级别顶背离')
+                            df_lst.append(row)
+        if day_kd_b_lst[0] == True:
+            kd_min_now = min(data_daily.l_k_day.tolist()[0], data_daily.l_d_day.tolist()[0])
+            price_min_now = data_daily.l_day.tolist()[0]
+            i = 0
+            for idx, _row in data_daily.iterrows():
+                if _row.day_kd_b == True:
+                    i += 1
+                    if i == 2:
+                        kd_min = max(_row.l_k_day, _row.l_d_day)
+                        price_min = _row.l_day
+                        if kd_min_now > kd_min and price_min_now < price_min:
+                            print('%s:日级别底背离' % index_code)
+                            row = []
+                            row.append(_row.stock_code)
+                            row.append('日级别底背离')
+                            df_lst.append(row)
+        if week_kd_s_lst[0] == True:
+            kd_max_now = max(data_week.h_k_week.tolist()[0], data_week.h_d_week.tolist()[0])
+            price_max_now = data_week.h_week.tolist()[0]
+            i = 0
+            for idx, _row in data_week.iterrows():
+                if _row.week_kd_s == True:
+                    i += 1
+                    if i == 2:
+                        kd_max = max(_row.h_k_week, _row.h_d_week)
+                        price_max = _row.h_week
+                        if kd_max_now < kd_max and price_max_now > price_max:
+                            print('%s:周级别顶背离' % index_code)
+                            row = []
+                            row.append(_row.stock_code)
+                            row.append('周级别顶背离')
+                            df_lst.append(row)
+        if week_kd_b_lst[0] == True:
+            kd_min_now = min(data_week.l_k_week.tolist()[0], data_week.l_d_week.tolist()[0])
+            price_min_now = data_week.l_week.tolist()[0]
+            i = 0
+            for idx, _row in data_week.iterrows():
+                if _row.week_kd_b == True:
+                    i += 1
+                    if i == 2:
+                        kd_min = max(_row.l_k_week, _row.l_d_week)
+                        price_min = _row.l_week
+                        if kd_min_now > kd_min and price_min_now < price_min:
+                            print('%s:周级别底背离' % index_code)
+                            row = []
+                            row.append(_row.stock_code)
+                            row.append('周级别底背离')
+                            df_lst.append(row)
+
+    df = pd.DataFrame(df_lst, columns=['代码', '背离'])
 
     name_lst = []
-    for code in df.stock_code.tolist():
+    for code in df['代码'].tolist():
         name_lst.append(get_security_info(code).display_name)
     df['简称'] = name_lst
-    df[['k_day', 'd_day', 'k_week', 'd_week']] = df[
-        ['k_day', 'd_day', 'k_week', 'd_week']].apply(lambda x: np.around(x, 2))
-    df['stock_code'] = df['stock_code'].apply(lambda x: x[:-9])
-    df = df[['date_time', '简称', 'stock_code', 'day_kd_b', 'day_kd_s', 'week_kd_b', 'week_kd_s', 'k_day', 'd_day', 'k_week',
-             'd_week']]
+    df['日期'] = end_day
 
-    df_day_buy = df[df['day_kd_b']==True]
-    df_day_sell = df[df['day_kd_s']==True]
-    df_week_buy = df[df['week_kd_b']==True]
-    df_week_sell = df[df['week_kd_s']==True]
-    # get_alert_info(df_day_buy, '日级别KD金叉:')
-    # get_alert_info(df_week_buy, '周级别KD金叉:')
-    # get_alert_info(df_day_sell, '日级别KD死叉:')
-    # get_alert_info(df_week_sell, '周级别KD死叉:')
-
-
-    df.columns = ['日期', '简称', '代码', '日金叉', '日死叉', '周金叉', '周死叉', '日K', '日D', '周K', '周D']
+    df['代码'] = df['代码'].apply(lambda x: x[:-9])
+    df = df[['日期', '简称', '代码', '背离']]
     df['简称'] = df['简称'].apply(lambda x: x[:-4])
-    print(df[['日金叉', '代码', '日死叉', '周金叉', '周死叉', '日K', '日D', '周K', '周D']])
+    print(df)
 
-    df_day_buy = df[df['日金叉'] == True][['日期', '简称', '代码', '日K', '日D']]
-    df_day_sell = df[df['日死叉'] == True][['日期', '简称', '代码', '日K', '日D']]
-    df_week_buy = df[df['周金叉'] == True][['日期', '简称', '代码', '周K', '周D']]
-    df_week_sell = df[df['周死叉'] == True][['日期', '简称', '代码', '周K', '周D']]
-
-    df_day_buy_hold = df_day_buy[df_day_buy['代码'].isin(hold_code_lst)]
-    df_day_sell_hold = df_day_sell[df_day_sell['代码'].isin(hold_code_lst)]
-
-    df_week_buy_hold = df_week_buy[df_week_buy['代码'].isin(hold_code_lst)]
-    df_week_sell_hold = df_week_sell[df_week_sell['代码'].isin(hold_code_lst)]
-
+    df_hold = df[df['代码'].isin(hold_code_lst)]
     other_code = [i for i in index_code_lst if i not in hold_code_lst]
+    df_other = df[df['代码'].isin(other_code)]
 
-    print('持仓日频KD金叉标的：===========================')
-    print(df_day_buy_hold)
-    print('持仓周频KD金叉标的：===========================')
-    print(df_week_buy_hold)
-    print('持仓日频KD死叉标的：===========================')
-    print(df_day_sell_hold)
-    print('持仓周频KD死叉标的：===========================')
-    print(df_week_sell_hold)
-
-    print('非持仓周频KD金叉标的：===========================')
-    print(df_week_buy[df_week_buy['代码'].isin(other_code)])
-    print('非持仓周频KD死叉标的：===========================')
-    print(df_week_sell[df_week_sell['代码'].isin(other_code)])
-
-
-    df.to_csv(fold_data + 'kdj_future_' + end_day + '1.csv', encoding='gbk')
+    df.to_csv(fold_data + 'kdj_future_' + end_day + '.csv', encoding='gbk')
     print(time.time() - t0)
-    PDFGenerator('kdj_macd_future_signal_' + end_day).genTaskPDF(
-        df_day_buy_hold, df_day_sell_hold, df_week_buy_hold, df_week_sell_hold,
-        df_week_buy[df_week_buy['代码'].isin(other_code)], df_week_sell[df_week_sell['代码'].isin(other_code)],
-               method)
+    PDFGenerator('kd_beili_' + end_day).genTaskPDF(df_hold, df_other)
