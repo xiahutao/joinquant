@@ -4,9 +4,15 @@ Created on 9.30, 2018
 适用于btc/usdt，btc计价并结算
 @author: fang.zhang
 '''
+
 from __future__ import division
 # from backtest_func import *
 import os
+import sys
+print(sys.path)
+sys.path.append('../')
+sys.path.append('C:\\Users\\51951\\PycharmProjects\\resRepo')  # 新加入的
+
 import time
 import matplotlib.pyplot as plt
 from matplotlib import style
@@ -29,7 +35,7 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import Table, SimpleDocTemplate, Paragraph,NextPageTemplate,PageBreak,PageBegin
 from reportlab.lib.pagesizes import letter
-from data_engine.instrument.future import Future
+# from data_engine.instrument.future import Future
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import Paragraph,Spacer,Image,Table
 from reportlab.lib.units import cm
@@ -37,15 +43,13 @@ import datetime
 from reportlab.pdfgen import canvas
 from reportlab.pdfgen.canvas import Canvas
 
-from common.os_func import check_fold
+# from common.os_func import check_fold
 pdfmetrics.registerFont(TTFont("SimSun", "G:/trading/SimSun.ttf"))
 
 # auth('18610039264', 'zg19491001')
 style.use('ggplot')
 
 auth('15658001226', 'taiyi123')
-myclient = pymongo.MongoClient('mongodb://juzheng:jz2018*@192.168.2.201:27017/')
-jzmongo = Arctic(myclient)
 
 
 # 获取价格
@@ -62,13 +66,6 @@ def stock_price(sec, sday, eday):
         .rename(columns={'day': 'trade_date', 'code': 'stock_cpde'})
     temp = temp[(temp['trade_date'] >= sday) & (temp['trade_date'] <= eday)].sort_values(['trade_date'])
     return temp
-
-
-def get_stock_code_list():
-    db_index = jzmongo['stock_raw.stock_index']
-    stock_df = db_index.read('all')
-    code_list = list(stock_df.iloc[-1].dropna().index)
-    return code_list
 
 
 def stock_price_cgo(sec, sday, eday):
@@ -120,26 +117,6 @@ def trans_heng_float(x):
     if x == '--':
         x = None
     return x
-
-
-def stock_price_jz(sec, sday, eday):
-    """
-    输入 股票代码，开始日期，截至日期
-    输出 个股的后复权的开高低收价格
-    """
-    temp = jzmongo['stock_raw.stock_1d_jq_post'].read(sec)
-    temp = temp[temp['volume'] > 0]
-    temp['date_time'] = temp.index
-    temp = temp.assign(date_time=lambda df: df.date_time.apply(lambda x: str(x)[:10]))
-
-    temp = temp.assign(high=lambda df: df.high.apply(lambda x: trans_heng_float(x))) \
-        .assign(open=lambda df: df.open.apply(lambda x: trans_heng_float(x))) \
-        .assign(low=lambda df: df.high.apply(lambda x: trans_heng_float(x)))[
-        ['high', 'open', 'low', 'close', 'date_time']].dropna()
-    temp = temp[(temp['date_time'] >= sday) & (temp['date_time'] <= eday)].sort_values(['date_time'])
-
-    temp[['high', 'open', 'low', 'close']] = temp[['high', 'open', 'low', 'close']].astype(float)
-    return temp
 
 
 def KDJ(data, N=9, M1=3, M2=3):
