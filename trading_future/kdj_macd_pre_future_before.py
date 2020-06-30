@@ -5,7 +5,8 @@ Created on 9.30, 2018
 @author: fang.zhang
 '''
 from __future__ import division
-# from backtest_func import *
+import sys
+sys.path.append('C:\\Users\\Administrator\\PycharmProjects\\joinquant')  # 新加入的
 import os
 import time
 import matplotlib.pyplot as plt

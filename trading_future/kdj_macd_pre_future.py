@@ -39,7 +39,8 @@ from reportlab.pdfgen.canvas import Canvas
 
 from common.os_func import check_fold
 pdfmetrics.registerFont(TTFont("SimSun", "G:/trading/SimSun.ttf"))
-
+import sys
+sys.path.append('C:\\Users\\Administrator\\PycharmProjects\\joinquant')  # 新加入的
 # auth('18610039264', 'zg19491001')
 style.use('ggplot')
 

@@ -9,6 +9,7 @@ from __future__ import division
 import os
 import sys
 print(sys.path)
+sys.path.append('C:\\Users\\Administrator\\PycharmProjects\\joinquant')  # 新加入的
 # sys.path.append('../')
 # sys.path.append('C:\\Users\\51951\\PycharmProjects\\resRepo')  # 新加入的
 from configDB import *
@@ -262,7 +263,7 @@ if __name__ == '__main__':
         end_day = calen[-2].strftime('%Y-%m-%d')
     # end_day = '2020-04-20'
     mod = 0
-    hold_code_lst = ['RU', 'P', 'AU', 'C', 'CU', 'SC', 'Y', 'CF', 'I', 'M', 'OI']
+    hold_code_lst = ['RU', 'P', 'AU', 'C', 'CU', 'SC', 'Y', 'CF', 'I', 'M', 'OI', 'ZN', 'AG',]
     normalize_code_future, index_code_lst = get_normal_future_index_code()
     method = 1
     n = 1  # 回测周期
