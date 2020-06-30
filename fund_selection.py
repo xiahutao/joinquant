@@ -19,16 +19,6 @@ from arctic import Arctic, TICK_STORE, CHUNK_STORE
 style.use('ggplot')
 
 
-def stock_price_jz(sec, sday, eday):
-    """
-    输入 股票代码，开始日期，截至日期
-    输出 个股的后复权的开高低收价格
-    """
-    temp = jzmongo['wind_index'].read(sec)
-    temp = temp[(temp['date'] >= sday) & (temp['date'] <= eday)]
-    return temp
-
-
 def yearsharpRatio(netlist, n):
     '''
     :param netlist:

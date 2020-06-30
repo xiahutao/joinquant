@@ -11,6 +11,7 @@ import sys
 print(sys.path)
 # sys.path.append('../')
 # sys.path.append('C:\\Users\\51951\\PycharmProjects\\resRepo')  # 新加入的
+from configDB import *
 
 import time
 import matplotlib.pyplot as plt
@@ -45,10 +46,9 @@ from reportlab.pdfgen.canvas import Canvas
 # from common.os_func import check_fold
 pdfmetrics.registerFont(TTFont("SimSun", "G:/trading/SimSun.ttf"))
 
-auth('18610039264', 'zg19491001')
+# auth('18610039264', 'zg19491001')
 style.use('ggplot')
-
-# auth('15658001226', 'taiyi123')
+auth(JOINQUANT_USER, JOINQUANT_PW)
 
 
 # 获取价格

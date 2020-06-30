@@ -14,7 +14,9 @@ import numpy as np
 import json
 import seaborn as sns
 
-auth('18610039264', 'zg19491001')
+# auth('18610039264', 'zg19491001')
+from configDB import *
+auth(JOINQUANT_USER, JOINQUANT_PW)
 style.use('ggplot')
 
 def stock_price_jz(sec, sday, eday):

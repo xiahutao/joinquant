@@ -11,7 +11,8 @@ from trading_future.future_singleton import Future
 from trading_simulate.trading_fuction import Trading
 
 # auth('18610039264', 'zg19491001')
-auth('15658001226', 'taiyi123')
+from configDB import *
+auth(JOINQUANT_USER, JOINQUANT_PW)
 
 
 if __name__ == '__main__':

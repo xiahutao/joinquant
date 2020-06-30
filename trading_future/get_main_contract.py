@@ -4,7 +4,8 @@ import pandas as pd
 import datetime
 from trading_future.future_singleton import Future
 from jqdatasdk import *
-auth('15658001226', 'taiyi123')
+from configDB import *
+auth(JOINQUANT_USER, JOINQUANT_PW)
 
 
 def get_date(calen, today):
@@ -21,12 +22,14 @@ if __name__ == '__main__':
     symbol_lst = ['C', 'CS', 'A', 'B', 'M', 'RM', 'Y', 'P', 'OI', 'L', 'V', 'PP', 'TA', 'RU', 'BU', 'MA', 'SC', 'FU',
                    'AL', 'ZN', 'CU', 'PB', 'NI', 'SN', 'J', 'JM', 'I', 'RB', 'HC', 'ZC', 'SF', 'SM', 'FG', 'IF',
                    'IH', 'IC', 'T', 'TF', 'AG', 'AU', 'JD', 'AP', 'CJ', 'CF', 'SR']
-    symbol_lst = ['RU', 'C', 'P', 'AU', 'CU', 'ZN', 'SC', 'Y', 'CF', 'I', 'AG', 'M', 'OI']
+    symbol_lst = ['NI', 'SF', 'RU', 'C', 'P', 'AU', 'CU', 'ZN', 'SC', 'Y', 'CF', 'I', 'AG', 'M', 'OI']
     date = datetime.date.today()
+    # date = pd.to_datetime('2020-06-29')
 
     bars = 5
-    calen = get_trade_days(count=bars)
+    calen = get_trade_days(end_date=date, count=bars)
     calen = list(calen)
+    print(calen)
     calen, next_tradeday, EndDate, StartDate, hq_last_date = get_date(calen, date)
     porfolio = Future()
     print(EndDate)

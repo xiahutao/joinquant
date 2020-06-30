@@ -18,7 +18,8 @@ import pymongo
 from arctic import Arctic, TICK_STORE, CHUNK_STORE
 import talib as tb
 
-auth('15658001226', 'taiyi123')
+from configDB import *
+auth(JOINQUANT_USER, JOINQUANT_PW)
 
 
 # 获取价格

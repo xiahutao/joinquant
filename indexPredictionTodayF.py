@@ -20,8 +20,9 @@ from email.mime.image import MIMEImage
 from email.header import Header
 from smtplib import SMTP_SSL
 
-auth('18610039264', 'zg19491001')
-
+# auth('18610039264', 'zg19491001')
+from configDB import *
+auth(JOINQUANT_USER, JOINQUANT_PW)
 
 # from mssqlDBConnectorPeng import *
 

@@ -43,7 +43,8 @@ pdfmetrics.registerFont(TTFont("SimSun", "G:/trading/SimSun.ttf"))
 # auth('18610039264', 'zg19491001')
 style.use('ggplot')
 
-auth('15658001226', 'taiyi123')
+from configDB import *
+auth(JOINQUANT_USER, JOINQUANT_PW)
 myclient = pymongo.MongoClient('mongodb://juzheng:jz2018*@192.168.2.201:27017/')
 jzmongo = Arctic(myclient)
 

@@ -20,7 +20,9 @@ import matplotlib.pyplot as plt
 import math
 from jqdatasdk import *
 
-auth('18610039264', 'zg19491001')
+# auth('18610039264', 'zg19491001')
+from configDB import *
+auth(JOINQUANT_USER, JOINQUANT_PW)
 
 import smtplib
 from email.mime.multipart import MIMEMultipart

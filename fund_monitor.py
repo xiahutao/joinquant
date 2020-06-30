@@ -21,8 +21,9 @@ import datetime
 # import statsmodels.api as sm
 from jqdatasdk import *
 
-auth('18610039264', 'zg19491001')
-
+# auth('18610039264', 'zg19491001')
+from configDB import *
+auth(JOINQUANT_USER, JOINQUANT_PW)
 
 # 提取基金净值数据
 def fund_value(start_day, code):

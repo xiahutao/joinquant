@@ -23,7 +23,8 @@ from dateutil.relativedelta import relativedelta
 from jqdatasdk import *
 
 # auth('18610039264', 'zg19491001')
-auth('15658001226', 'taiyi123')
+from configDB import *
+auth(JOINQUANT_USER, JOINQUANT_PW)
 
 
 # count_=get_query_count()

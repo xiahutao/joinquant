@@ -14,7 +14,9 @@ from jqdatasdk import *
 from cgo_ymjh_email_index_prediction import index_stocks
 
 import copy
-auth('18610039264', 'zg19491001')
+# auth('18610039264', 'zg19491001')
+from configDB import *
+auth(JOINQUANT_USER, JOINQUANT_PW)
 import datetime
 import talib as tb
 import pymongo

@@ -16,8 +16,9 @@ from jqdatasdk import *
 import copy
 import pymongo
 from arctic import Arctic, TICK_STORE, CHUNK_STORE
-auth('18610039264', 'zg19491001')
-
+# auth('18610039264', 'zg19491001')
+from configDB import *
+auth(JOINQUANT_USER, JOINQUANT_PW)
 
 # 获取价格
 def stock_price(sec, period, sday, eday):

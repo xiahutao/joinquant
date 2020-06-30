@@ -18,8 +18,9 @@ from dateutil.relativedelta import relativedelta
 # import statsmodels.api as sm
 from jqdatasdk import *
 
-auth('18610039264', 'zg19491001')
-
+# auth('18610039264', 'zg19491001')
+from configDB import *
+auth(JOINQUANT_USER, JOINQUANT_PW)
 
 # count_=get_query_count()
 # print(count_)

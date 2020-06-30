@@ -10,7 +10,9 @@ import numpy as np
 from jqdatasdk import *
 import copy
 
-auth('18610039264', 'zg19491001')
+# auth('18610039264', 'zg19491001')
+from configDB import *
+auth(JOINQUANT_USER, JOINQUANT_PW)
 import datetime
 import talib as tb
 import pymongo

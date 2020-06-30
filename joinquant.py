@@ -8,8 +8,9 @@ Created on Thu Aug 09 16:00:44 2018
 from jqdatasdk import *
 import datetime
 
-auth('18610039264', 'zg19491001')
-
+# auth('18610039264', 'zg19491001')
+from configDB import *
+auth(JOINQUANT_USER, JOINQUANT_PW)
 """
 1、以下函数中 股票代码的格式为 '000001.XSHE','603980.XSHG'，日期格式为 '2018-01-01'
 2、开通权限后，您可以在本地Python环境下安装和使用JQData，具体操作方法如下。如使用中遇到问题，可以添加JQData管理员微信，管理员微信号：jqdata01，添加时请留言"JQData"。

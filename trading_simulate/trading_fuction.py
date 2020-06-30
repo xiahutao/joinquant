@@ -6,7 +6,8 @@ import pandas as pd
 import time
 from jqdatasdk import *
 import datetime
-auth('15658001226', 'taiyi123')
+from configDB import *
+auth(JOINQUANT_USER, JOINQUANT_PW)
 
 
 class Trading:

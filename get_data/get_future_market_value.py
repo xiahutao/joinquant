@@ -5,7 +5,8 @@ import datetime
 from trading_future.future_singleton import Future
 from jqdatasdk import *
 from tqsdk import TqApi, TqAccount
-auth('15658001226', 'taiyi123')
+from configDB import *
+auth(JOINQUANT_USER, JOINQUANT_PW)
 
 
 def get_date(calen, today):

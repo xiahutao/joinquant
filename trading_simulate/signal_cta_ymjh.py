@@ -19,7 +19,8 @@ import copy
 from email_fuction import send_email
 from trading_future.future_singleton import Future
 # auth('18610039264', 'zg19491001')
-auth('15658001226', 'taiyi123')
+from configDB import *
+auth(JOINQUANT_USER, JOINQUANT_PW)
 import datetime
 import talib as tb
 import pymongo
