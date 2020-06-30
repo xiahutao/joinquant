@@ -172,6 +172,7 @@ def get_signal(signal, aum, balance, EndDate, close_dict):
     porfolio = Future()
     main_contract_dict = porfolio.get_main_symbol(product=symbol_lst, date=EndDate)
     main_contract = pd.DataFrame(main_contract_dict).T[['main_contract']]
+    print(main_contract)
     contract_lst = main_contract.main_contract.tolist()
     ExchangeID_dict = porfolio.get_ExchangeID(contract_lst=contract_lst)
     ExchangeInstID_dict = porfolio.get_ExchangeInstID(contract_lst=contract_lst)

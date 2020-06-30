@@ -53,17 +53,18 @@ if __name__ == '__main__':
     symbol_lst = ['C', 'CS', 'A', 'B', 'M', 'RM', 'Y', 'P', 'OI', 'L', 'V', 'PP', 'TA', 'RU', 'BU', 'MA', 'SC', 'FU',
                    'AL', 'ZN', 'CU', 'PB', 'NI', 'SN', 'J', 'JM', 'I', 'RB', 'HC', 'ZC', 'SF', 'SM', 'FG', 'IF',
                    'IH', 'IC', 'T', 'TF', 'AG', 'AU', 'JD', 'AP', 'CJ', 'CF', 'SR']
-    # symbol_lst = ['RU', 'C', 'P', 'AU', 'CU', 'ZN', 'SC', 'Y', 'CF']
+    symbol_lst = ['AL', 'JM', 'V']
     date = datetime.date.today()
 
     sday = '2010-01-01'
-    eday = '2020-06-04'
+    eday = '2020-06-24'
     for symbol in symbol_lst:
         code = code_dic[symbol]
         for fred in ['1m']:
             temp = stock_price(code, sday, eday, fred)
             print(temp)
-            temp.to_csv('f:/data/future_index/' + code + '_' + fred + '.txt')
+            temp.to_csv('e:/data/future_index/' + code + '_' + fred + '.txt')
+            # temp.to_csv('e:/data/future_index/' + symbol + '_' + fred + '_index.csv')
 
 
 
