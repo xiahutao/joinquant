@@ -499,7 +499,7 @@ if __name__ == '__main__':
     annror_36_402003 = 0  # 债券型基金近3年年化收益阈值
     annror_36 = 0.0  # 股票型和混合型基金近3年年化收益阈值
     maxretrace_60 = 1  # 近5年最大回撤阈值
-    max_period = 48  # 最大评级指标周期
+    max_period = 36  # 最大评级指标周期
 
     today = datetime.datetime.today()
     today = str(today)[:10]
@@ -742,4 +742,4 @@ if __name__ == '__main__':
     # 输出结果 
     fund_rank_r = pd.concat(ret)
     fund_rank_r = pd.merge(fund_name, fund_rank_r, on='code', how='inner')
-    fund_rank_r.to_csv('G:/lfp/result/fund_rank_by_topsis_48.csv', encoding='gbk')
+    fund_rank_r.to_csv('G:/lfp/result/fund_rank_by_topsis_36' + today + '.csv', encoding='gbk')
