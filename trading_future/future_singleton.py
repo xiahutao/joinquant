@@ -30,7 +30,10 @@ class Future:
         dict_all = dict()
         contract_lst = [i.upper() for i in contract_lst]
         for contract in contract_lst:
-            dict_all[contract] = {i: self.products_base_msg[contract[0:-4]][i] for i in info_lst}
+            contract_temp = contract
+            if len(contract) > 3:
+                contract_temp = contract[:-4]
+            dict_all[contract] = {i: self.products_base_msg[contract_temp][i] for i in info_lst}
         return dict_all
 
     def get_ExchangeID(self, contract_lst=None):

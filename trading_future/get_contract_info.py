@@ -12,6 +12,7 @@ if __name__ == '__main__':
                    'IH', 'IC', 'T', 'TF', 'AG', 'AU', 'JD', 'AP', 'CJ', 'CF', 'SR']
     info_lst = ['ExchangeID', 'VolumeMultiple', 'MaxMarketOrderVolume', 'MaxLimitOrderVolume']  # 'VolumeMultiple',
     contract_lst = ['RU2009', 'FG2009', 'AU2012', 'SR2009', 'P2009', 'C2009', 'ZN2008', 'CU2008', 'M2009', 'SC2012', 'Y2009', 'OI2009', 'AG2012', 'SC2008']
+    # contract_lst = ['RU']
     date = datetime.date.today()
     porfolio = Future()
     df = porfolio.get_contract_info(contract_lst=contract_lst, info_lst=info_lst)
@@ -24,3 +25,7 @@ if __name__ == '__main__':
     limit_position_ret['limit_position'] = limit_position
     limit_position = pd.DataFrame(limit_position_ret)
     print(limit_position)
+    contract_lst = ['RU']
+    df = porfolio.get_VolumeMultiple(contract_lst)
+    print(df)
+    # get_VolumeMultiple
