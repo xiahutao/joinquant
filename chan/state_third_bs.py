@@ -13,9 +13,10 @@ def PowerSetsRecursive(items):
 
 
 if __name__ == "__main__":
-    fold_path = 'e://Strategy//MT4//'
-    df = pd.read_excel(fold_path + '蓝线三类买卖点0630.xlsx').dropna()
+    fold_path = 'e://Strategy//MT4//state_third_bs//'
+    df = pd.read_excel(fold_path + '蓝线三类买卖点0701.xlsx').dropna()
     print(df)
+    df['盈利次数'] = df['trading_times'] * df['胜率']
 
     method_name = ['开仓中枢过滤', '开仓确认', '平仓有无背离', 'symbol']  # ['模型', '开仓中枢过滤', '开仓确认', '平仓有无背离']
     method_name_all = PowerSetsRecursive(method_name)
@@ -28,7 +29,7 @@ if __name__ == "__main__":
 
             rw = []
             rw.append(method)
-            rw.append(group['胜率'].mean())
+            rw.append(group['盈利次数'].sum() / group['trading_times'].sum())
             rw.append(group['盈亏比'].mean())
             rw.append(group['trading_times'].mean())
             rw.append(len(group[group['盈亏平衡'] > 0])/len(group))
@@ -36,7 +37,9 @@ if __name__ == "__main__":
 
             lst.append(rw)
     ret = pd.DataFrame(lst, columns=['模型', '平均胜率', '平均盈亏比', '平均交易次数', '盈利品种占比', '平均盈亏'])
+    print(ret)
     ret['盈亏平衡'] = ret['平均胜率'] * ret['平均盈亏比'] - (1 - ret['平均胜率'])
+    print(ret)
     ret.to_excel(fold_path + 'state_third_bs_' + '_'.join(method_name) + '.xlsx')
 
     symbol_max = df.groupby(['symbol'])['盈亏平衡'].max()
@@ -46,5 +49,5 @@ if __name__ == "__main__":
         symbol_max.append(group[group['盈亏平衡'] == group['盈亏平衡'].max()])
     symbol_max = pd.concat(symbol_max)
     print(symbol_max)
-    symbol_max.to_excel(fold_path + 'symbol_max' + '.xlsx')
+    # symbol_max.to_excel(fold_path + 'symbol_max' + '.xlsx')
 
