@@ -17,18 +17,19 @@ def PowerSetsRecursive(items):
 
 
 if __name__ == "__main__":
-    level = 5
+    level = 1
     s_date = '2015-01-01'
-    mode = '蓝线笔_蓝线反转确认_蓝线反转平仓_200627_15分钟_new'
-    fee = 0.0004
-    fold_path = 'e://Strategy//MT4//' + mode + '//'
+    mode = '蓝线笔_蓝线反转确认_蓝线反转平仓_200627_15分钟'
+    fee = 0.00015
+    fold_path = 'G://缠论//回测报告//' + mode + '//'
+    # fold_path = 'e://Strategy//MT4//' + mode + '//'
     code_lst = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
                 'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有品种32个
-    code_lst = ['ap', 'ag', 'al', 'cu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'v', 'zc', 'zn', 'c',
-                'if', 'sf', 'p', 'hc', 'au', 'sm', 'ru', 'bu', 'sr', 'ta', 'ma']   # sharp>0的品种17个
-    code_lst = ['ma', 'ta', 'c', 'bu', 'sf', 'v', 'sm', 'hc', 'rb', 'pp', 'p', 'zc', 'ag', 'al', 'i',
-                'pb', 'ap', 'zn']  # 保证金<10000的品种18个
-    code_lst = ['ma', 'ta', 'c', 'bu', 'sf', 'v', 'sm', 'hc', 'rb', 'pp', 'p']  # 保证金<5000的品种11个
+    # code_lst = ['ap', 'ag', 'al', 'cu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'v', 'zc', 'zn', 'c',
+    #             'if', 'sf', 'p', 'hc', 'au', 'sm', 'ru', 'bu', 'sr', 'ta', 'ma']   # sharp>0的品种17个
+    # code_lst = ['ma', 'ta', 'c', 'bu', 'sf', 'v', 'sm', 'hc', 'rb', 'pp', 'p', 'zc', 'ag', 'al', 'i',
+    #             'pb', 'ap', 'zn']  # 保证金<10000的品种18个
+    # code_lst = ['ma', 'ta', 'c', 'bu', 'sf', 'v', 'sm', 'hc', 'rb', 'pp', 'p']  # 保证金<5000的品种11个
     porfolio = Future()
     ret = {}
     ret['symbol'] = []
@@ -54,9 +55,12 @@ if __name__ == "__main__":
         print(state)
         html = pd.read_html(fold_path + code + '.htm', encoding='gbk', header=0, index_col=0)
         trade = html[1]
-        profit_df = trade[['时间', '获利']].rename(columns={'时间': 'date_time', '获利': 'profit'})
-        profit_df['date_time'] = profit_df['date_time'].apply(lambda x: x[:4] + '-' + x[5:7] + '-' + x[8:10])
-        profit_df = profit_df.groupby(['date_time']).sum()
+        profit_df_all = trade[['时间', '获利']].rename(columns={'时间': 'date_time', '获利': 'profit'}).fillna(value=0)
+        profit_df_all['date_time'] = profit_df_all['date_time'].apply(lambda x: x[:4] + '-' + x[5:7] + '-' + x[8:10])
+        profit_df_all = profit_df_all.groupby(['date_time'])
+        profit_df = profit_df_all.sum()
+        profit_df['count'] = profit_df_all.count()
+        # trade_times_everyday = count_df.profit.mean()
         profit_df['date_time'] = profit_df.index
         profit_df = profit_df.assign(date_time=lambda df: df.date_time.apply(lambda x: str(x)[:10]))
         profit_df = profit_df.reset_index(drop=True)
@@ -70,7 +74,7 @@ if __name__ == "__main__":
         aum_ini = hq.close.tolist()[0] * VolumeMultiple * 2 * level
         profit_df = hq.merge(profit_df, on=['date_time'], how='left').sort_values(['date_time'])
         # profit_df = profit_df.fillna(0)
-        profit_df['chg'] = (profit_df['profit'] - profit_df['close'].shift(1) * 2 * VolumeMultiple * fee) * level / profit_df['close'].shift(1) / (VolumeMultiple * 2)
+        profit_df['chg'] = (profit_df['profit'] - profit_df['close'].shift(1) * profit_df['count'] * VolumeMultiple * fee) * level / profit_df['close'].shift(1) / (VolumeMultiple * 2)
         profit_df = profit_df.fillna(0)
 
         profit_df['net'] = (1 + profit_df['chg']).cumprod()

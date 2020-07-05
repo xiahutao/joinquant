@@ -1,5 +1,5 @@
 # coding=utf-8
-from trading_future.config import *
+from trading_future.config_self import *
 import pandas as pd
 import numpy as np
 import re
@@ -34,6 +34,21 @@ class Future:
             if len(contract) > 3:
                 contract_temp = contract[:-4]
             dict_all[contract] = {i: self.products_base_msg[contract_temp][i] for i in info_lst}
+        return dict_all
+
+    def get_PriceTick(self, contract_lst=None):
+        """
+        获取交易所名称
+        """
+        info_lst = ['PriceTick']
+        dict_all = dict()
+        contract_lst = [i.upper() for i in contract_lst]
+        for contract in contract_lst:
+            contract_temp = contract
+            if len(contract) > 3:
+                contract_temp = contract[:-4]
+            dict_all[contract] = {i: self.products_base_msg[contract_temp][i] for i in info_lst}
+
         return dict_all
 
     def get_ExchangeID(self, contract_lst=None):
@@ -95,6 +110,8 @@ class Future:
             dict_all[contract] = {i: self.products_symbol_msg[''.join(re.split(r'[^A-Za-z]', contract))][contract][i]
                                   for i in info_lst}
         return dict_all
+
+
 
     def get_MaxLimitOrderVolume(self, contract_lst=None):
         """

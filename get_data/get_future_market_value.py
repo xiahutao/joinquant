@@ -59,6 +59,8 @@ if __name__ == '__main__':
     symbol_lst = ['C', 'CS', 'A', 'B', 'M', 'RM', 'Y', 'P', 'OI', 'L', 'V', 'PP', 'TA', 'RU', 'BU', 'MA', 'SC', 'FU',
                    'AL', 'ZN', 'CU', 'PB', 'NI', 'SN', 'J', 'JM', 'I', 'RB', 'HC', 'ZC', 'SF', 'SM', 'FG', 'IF',
                    'IH', 'IC', 'T', 'TF', 'AG', 'AU', 'JD', 'AP', 'CJ', 'CF', 'SR']
+    # symbol_lst = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
+    #             'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有品种32个
     # symbol_lst = ['RU', 'C', 'P', 'AU', 'CU', 'ZN', 'SC', 'Y', 'CF']
     calen, next_tradeday, EndDate, StartDate, hq_last_date = get_date(calen, today)
     # close_dict = {}
@@ -72,6 +74,7 @@ if __name__ == '__main__':
     main_contract_dict = porfolio.get_main_symbol(product=symbol_lst, date=EndDate)
     main_contract = pd.DataFrame(main_contract_dict).T[['main_contract']]
     print(main_contract)
+    PriceTick_dict = porfolio.get_PriceTick(symbol_lst)
     contract_lst = main_contract.main_contract.tolist()
     ExchangeID_dict = porfolio.get_ExchangeID(contract_lst=contract_lst)
     ExchangeInstID_dict = porfolio.get_ExchangeInstID(contract_lst=contract_lst)
@@ -82,10 +85,11 @@ if __name__ == '__main__':
     signal_dict = {}
     for symbol in symbol_lst:
         main_contract = main_contract_dict[symbol]['main_contract']
+        price_tick = PriceTick_dict[symbol]['PriceTick']
         trading_code = ExchangeID_dict[main_contract]['ExchangeID'] + '.' + ExchangeInstID_dict[main_contract][
             'ExchangeInstID']
         signal_dict[symbol] = {
-            'symbol': symbol, 'trading_code': trading_code,
+            'symbol': symbol, 'trading_code': trading_code, 'price_tick': price_tick,
             'last_price': api.get_quote(trading_code).pre_close,
             'VolumeMultiple': VolumeMultiple_dict[main_contract]['VolumeMultiple']
         }
