@@ -52,6 +52,8 @@ def stock_price(sec, sday, eday, fred):
 
 if __name__ == '__main__':
     api = TqApi(TqAccount("simnow", "163919", "yo193846"), web_gui=False)
+    init_aum = 4000000
+    level = 5
     calen = get_trade_days(count=5)
     today = datetime.date.today()
     calen = list(calen)
@@ -59,9 +61,9 @@ if __name__ == '__main__':
     symbol_lst = ['C', 'CS', 'A', 'B', 'M', 'RM', 'Y', 'P', 'OI', 'L', 'V', 'PP', 'TA', 'RU', 'BU', 'MA', 'SC', 'FU',
                    'AL', 'ZN', 'CU', 'PB', 'NI', 'SN', 'J', 'JM', 'I', 'RB', 'HC', 'ZC', 'SF', 'SM', 'FG', 'IF',
                    'IH', 'IC', 'T', 'TF', 'AG', 'AU', 'JD', 'AP', 'CJ', 'CF', 'SR']
-    # symbol_lst = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
-    #             'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有品种32个
-    # symbol_lst = ['RU', 'C', 'P', 'AU', 'CU', 'ZN', 'SC', 'Y', 'CF']
+    symbol_lst = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
+                'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有品种32个
+    symbol_lst = [i.upper() for i in symbol_lst]
     calen, next_tradeday, EndDate, StartDate, hq_last_date = get_date(calen, today)
     # close_dict = {}
     # for index_code in symbol_lst:
@@ -95,7 +97,8 @@ if __name__ == '__main__':
         }
     trading_info = pd.DataFrame(signal_dict).T
     trading_info['market_value'] = trading_info['VolumeMultiple'] * trading_info['last_price']
-    trading_info.to_csv('F:/data/future/' + 'future_market_value_' + hq_last_date + '.csv')
+    trading_info['lots'] = init_aum / trading_info['market_value'] / len(symbol_lst) * level / 2
+    trading_info.to_csv('F:/data/future/' + 'future_market_value_' + hq_last_date + '1.csv')
 
     print(trading_info)
 

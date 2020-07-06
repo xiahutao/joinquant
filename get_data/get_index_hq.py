@@ -33,6 +33,21 @@ def get_normal_future_index_code():
     return code_dic
 
 
+def get_normal_future_maincontact_code():
+    temp = get_all_securities(types=['futures'])
+    temp['index_code'] = temp.index
+    temp['idx'] = temp['index_code'].apply(lambda x: x[-9:-5])
+    temp = temp[temp['idx'] == '9999']
+    temp['symbol'] = temp['index_code'].apply(lambda x: x[:-9])
+    # code_lst = temp.symbol.tolist()
+    temp = temp[['index_code', 'symbol']].set_index(['symbol'])
+    code_dic = {}
+    for idx, _row in temp.iterrows():
+        code_dic[idx] = _row.index_code
+
+    return code_dic
+
+
 def stock_price(sec, sday, eday, fred):
     """
     输入 股票代码，开始日期，截至日期
@@ -50,17 +65,21 @@ def stock_price(sec, sday, eday, fred):
 
 
 if __name__ == '__main__':
-    code_dic = get_normal_future_index_code()
+    # code_dic = get_normal_future_index_code()  # 获取指数代码
+    code_dic = get_normal_future_maincontact_code()  # 获取主力合约代码
     symbol_lst = ['C', 'CS', 'A', 'B', 'M', 'RM', 'Y', 'P', 'OI', 'L', 'V', 'PP', 'TA', 'RU', 'BU', 'MA', 'SC', 'FU',
                    'AL', 'ZN', 'CU', 'PB', 'NI', 'SN', 'J', 'JM', 'I', 'RB', 'HC', 'ZC', 'SF', 'SM', 'FG', 'IF',
                    'IH', 'IC', 'T', 'TF', 'AG', 'AU', 'JD', 'AP', 'CJ', 'CF', 'SR']
-    symbol_lst = ['AL', 'JM', 'V']
+
+    # symbol_lst = ['SM', 'TF', 'T', 'IF', 'FU', 'IH', 'PB', 'ZC', 'SF', 'BU']
+    # symbol_lst = ['000300.XSHG', '000016.XSHG', '000905.XSHG', '399006.XSHE']
     date = datetime.date.today()
 
     sday = '2010-01-01'
-    eday = '2020-06-24'
+    eday = '2020-06-29'
     for symbol in symbol_lst:
         code = code_dic[symbol]
+        # code = symbol
         for fred in ['1m']:
             temp = stock_price(code, sday, eday, fred)
             print(temp)
