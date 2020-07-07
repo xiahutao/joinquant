@@ -289,6 +289,15 @@ def annROR(netlist, n):
     return math.pow(netlist[-1] / netlist[0], 252 * n / len(netlist)) - 1
 
 
+def annROR_signal(netlist, n):
+    '''
+    :param netlist:净值曲线
+    :param n:每交易日对应周期数
+    :return: 年化收益
+    '''
+    return (netlist[-1] / netlist[0] - 1) / n / (len(netlist) / 252)
+
+
 def daysharpRatio(netlist):
     row = []
     for i in range(1, len(netlist)):

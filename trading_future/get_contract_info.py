@@ -11,7 +11,8 @@ if __name__ == '__main__':
                    'AL', 'ZN', 'CU', 'PB', 'NI', 'SN', 'J', 'JM', 'I', 'RB', 'HC', 'ZC', 'SF', 'SM', 'FG', 'IF',
                    'IH', 'IC', 'T', 'TF', 'AG', 'AU', 'JD', 'AP', 'CJ', 'CF', 'SR']
     info_lst = ['ExchangeID', 'VolumeMultiple', 'MaxMarketOrderVolume', 'MaxLimitOrderVolume']  # 'VolumeMultiple',
-    contract_lst = ['RU2009', 'FG2009', 'AU2012', 'SR2009', 'P2009', 'C2009', 'ZN2008', 'CU2008', 'M2009', 'SC2012', 'Y2009', 'OI2009', 'AG2012', 'SC2008', 'AP2009']
+    contract_lst = ['RU2009', 'FG2009', 'AU2012', 'SR2009', 'P2009', 'C2009', 'ZN2008', 'CU2008', 'M2009', 'SC2012', 'Y2009', 'OI2009', 'AG2012', 'SC2008', 'JD2009', 'AP2010',
+                    'IF2007', 'IH2007', 'IC2007']
     # contract_lst = ['RU']
     date = datetime.date.today()
     porfolio = Future()
@@ -28,4 +29,3 @@ if __name__ == '__main__':
     contract_lst = ['RU']
     df = porfolio.get_VolumeMultiple(contract_lst)
     print(df)
-    # get_VolumeMultiple

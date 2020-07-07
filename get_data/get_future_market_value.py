@@ -98,7 +98,7 @@ if __name__ == '__main__':
     trading_info = pd.DataFrame(signal_dict).T
     trading_info['market_value'] = trading_info['VolumeMultiple'] * trading_info['last_price']
     trading_info['lots'] = init_aum / trading_info['market_value'] / len(symbol_lst) * level / 2
-    trading_info.to_csv('F:/data/future/' + 'future_market_value_' + hq_last_date + '1.csv')
+    trading_info.to_csv('F:/data/future/' + 'future_market_value_' + hq_last_date + '.csv')
 
     print(trading_info)
 

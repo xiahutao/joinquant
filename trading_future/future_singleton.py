@@ -389,7 +389,7 @@ class Future:
                         'CJ': 6
                     }
                 data_dict[symbol] = limit_dict[product]
-            elif product in ['A', 'V', 'PP', 'C', 'B', 'L', 'P', 'J', 'JM', 'I', 'FB', 'BB', 'CS', 'Y', 'M', 'EG', 'JD']:
+            elif product in ['A', 'V', 'PP', 'C', 'B', 'L', 'P', 'J', 'JM', 'I', 'FB', 'BB', 'CS', 'Y', 'M', 'EG']:
                 expireDate = pd.to_datetime(expireDate)
                 lst_lst_month_last_day = (expireDate.replace(day=1) - datetime.timedelta(days=1)
                                           ).replace(day=1) - datetime.timedelta(days=1)
@@ -439,7 +439,7 @@ class Future:
                 change_day = expireDate.replace(day=1).strftime('%Y-%m-%d')
                 if today < lst_lst_change_day:
                     limit_dict = {
-                        'JD': 600
+                        'JD': 1200
                     }
 
                 elif last_change_day > today >= lst_lst_change_day:
