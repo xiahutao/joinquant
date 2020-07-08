@@ -4,7 +4,7 @@
 import pandas as pd
 import html5lib
 from trading_future.future_singleton import Future
-from backtest_func import yearsharpRatio, maxRetrace, annROR
+from backtest_func import yearsharpRatio, maxRetrace, annROR, annROR_signal
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -26,7 +26,7 @@ if __name__ == "__main__":
     # fold_ini_path = 'G://缠论//回测报告//'
     porfolio = Future()
     period_ini_lst = [15, 30, 60, 240, 1440]
-    period_ini_lst = [15, 30, 60, 240, 1440]
+    period_ini_lst = [5, 15, 30, 60, 240, 1440]
     period_lst_all = PowerSetsRecursive(period_ini_lst)
     period_lst_all = [i for i in period_lst_all if len(i)>0]
 
@@ -104,7 +104,7 @@ if __name__ == "__main__":
             except:
                 sharpe_ratio = -1
             try:
-                ann_return = annROR(net_lst, 1)
+                ann_return = annROR_signal(net_lst, 1)
             except:
                 ann_return = -1
             try:
@@ -157,8 +157,9 @@ if __name__ == "__main__":
         porfolio_lst.append(porfolio_row)
 
         chg_df.ix[:, ['net']].plot()
-        title_str = '品种%s个 周期%sm sharp %.2f annRet %.2f maxRetrace %.2f' % (str(len(code_lst)), str(period),
-            sharpe_ratio, 100 * ann_return, 100 * max_drawdown)
+        title_str = '品种%s个 周期%sm sharp %.2f annRet %.2f maxRetrace %.2f' % (
+            str(len(code_lst)),  '_'.join([str(i) for i in period_lst]), sharpe_ratio, 100 * ann_return,
+            100 * max_drawdown)
         plt.rcParams['font.sans-serif'] = ['SimHei']
         plt.title(title_str)
         plt.savefig(fold_ini_path + 'fig/' + str(len(code_lst)) + '_' + str(period) + 'm' + '_fee_' +
@@ -167,12 +168,12 @@ if __name__ == "__main__":
 
     porfolio_state = pd.DataFrame(porfolio_lst, columns=['品种数', 'period', 'fee', 'sharpe_ratio', 'ann_return',
                                                          'max_drawdown', 's_date', 'e_date'])
-    porfolio_state.to_excel(fold_ini_path + 'state_blue_line//state_porfolio_all_period_' + str(int(np.around(100000 * fee, 0))) + '.xlsx', encoding='gbk')
+    porfolio_state.to_excel(fold_ini_path + 'state_blue_line//state_porfolio_all_period' + '.xlsx', encoding='gbk')
 
     signal_state = pd.DataFrame(signal_lst, columns=['品种', 'period', 'fee', 'sharpe_ratio', 'ann_return',
                                                          'max_drawdown', 's_date', 'e_date'])
     signal_state.to_excel(
-        fold_ini_path + 'state_blue_line//state_all_period_' + str(int(np.around(100000 * fee, 0))) + '.xlsx',
+        fold_ini_path + 'state_blue_line//state_signal_all_period_' + '.xlsx',
         encoding='gbk')
 
 

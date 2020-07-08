@@ -263,7 +263,7 @@ if __name__ == '__main__':
         end_day = calen[-2].strftime('%Y-%m-%d')
     # end_day = '2020-04-20'
     mod = 0
-    hold_code_lst = ['RU', 'P', 'AU', 'C', 'CU', 'SC', 'Y', 'CF', 'I', 'M', 'OI', 'ZN', 'AG', 'IC', 'IH', 'IF', 'JD']
+    hold_code_lst = ['RU', 'P', 'AU', 'C', 'CU', 'SC', 'Y', 'CF', 'I', 'M', 'OI', 'ZN', 'AG', 'IC', 'IH', 'IF', 'JD', 'SA']
     normalize_code_future, index_code_lst = get_normal_future_index_code()
     method = 1
     n = 1  # 回测周期

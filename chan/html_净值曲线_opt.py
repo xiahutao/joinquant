@@ -19,18 +19,35 @@ def PowerSetsRecursive(items):
 
 if __name__ == "__main__":
     level_lst = [i for i in range(1, 6)]
-    level_lst = [1]
+    level_lst = [5]
     date_lst = [('2015-01-01', '2020-01-01'), ('2015-01-01', '2020-07-01')]
     # date_lst = [('2015-01-01', '2020-01-01')]
     method = 'sum'  # 单利：sum；复利：muti
+
     fee = np.float(0.00015)
     fold_ini_path = 'e://Strategy//MT4//'
     # fold_ini_path = 'G://缠论//回测报告//'
     porfolio = Future()
     mode = '蓝线笔_蓝线反转确认_蓝线反转平仓_200627'
-    code_lst = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
-                'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有品种32个
 
+    code_lst_5 = ['ap', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'v', 'zn', 'if', 'sm']  # 所有5分钟夏普>0
+    code_lst_15 = ['ap', 'ag', 'al', 'sm', 'v', 'i', 'j', 'sf', 'pp', 'pb', 'zc', 'hc', 'rb', 'c', 'cu', 'fu', 'ni', 'sc', 'zn',
+                  'if', 'sr']  # 所有品种32个
+    code_lst_30 = ['ap', 'al', 'fu', 'i', 'j', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn',
+                  'if', 'sf', 'p', 'hc', 'sm', 'ru', 'oi', 'sr', 'ta']  # 所有品种32个
+    code_lst_60 = ['ap', 'al', 'fu', 'i', 'j', 'ni', 'rb', 'sc', 'tf', 'v', 'zc', 'zn',
+                  'sf', 'hc', 'sm', 'bu', 'ta', 'm', 'ma']   # 所有60分钟夏普>0
+    code_lst_240 = ['al', 'cu', 'fu', 'i', 'j', 'pb', 'pp', 'rb', 'v', 'zc', 'zn',
+                  'c', 'if', 'p', 'hc', 'jm', 'sm', 'ru', 'bu', 'ta', 'm', 'ma']   # 所有4小时夏普>0
+    code_lst_1440 = ['ag', 'cf', 'cu', 'fu', 'j', 'pp', 'tf', 'v', 'zn', 'sm', 'c', 'if', 'sf', 'hc', 'au', 'jm', 'bu',
+                     'oi', 'sr', 'ta', 'ma']   # 所有日级别夏普>0
+    code_dict = {}
+    code_dict['5'] = code_lst_5
+    code_dict['15'] = code_lst_15
+    code_dict['30'] = code_lst_30
+    code_dict['60'] = code_lst_60
+    code_dict['240'] = code_lst_240
+    code_dict['1440'] = code_lst_1440
     # code_lst = ['ma', 'ta', 'c', 'bu', 'sf', 'v', 'sm', 'hc', 'rb', 'pp', 'p', 'zc', 'ag', 'al', 'i',
     #             'pb', 'ap', 'zn']  # 保证金<10000的品种18个
     # code_lst = ['ma', 'ta', 'c', 'bu', 'sf', 'v', 'sm', 'hc', 'rb', 'pp', 'p']  # 保证金<5000的品种11个
@@ -58,6 +75,7 @@ if __name__ == "__main__":
                 mode_period = mode + '_' + str(period) + '分钟'
                 fold_path = fold_ini_path + mode_period + '//'
                 chg_df_all = pd.DataFrame(columns=['date_time'])
+                code_lst = code_dict[str(period)]
                 for code in code_lst:
                     print(code)
                     html = pd.read_html(fold_path + code + '.htm', encoding='gbk')
@@ -80,43 +98,19 @@ if __name__ == "__main__":
                     hq = hq[(hq['date_time'] > s_date) & (hq['date_time'] < e_date)]
                     contract_lst = [code.upper()]
                     VolumeMultiple = porfolio.get_VolumeMultiple(contract_lst)[code.upper()]['VolumeMultiple']
+                    print(VolumeMultiple)
                     aum_ini = hq.close.tolist()[0] * VolumeMultiple * 2 * level
                     profit_df = hq.merge(profit_df, on=['date_time'], how='left').sort_values(['date_time'])
                     # profit_df = profit_df.fillna(0)
                     profit_df['chg'] = (profit_df['profit'] - profit_df['close'].shift(1) * profit_df['count'] * VolumeMultiple * fee) * level / profit_df['close'].shift(1) / (VolumeMultiple * 2)
                     profit_df = profit_df.fillna(0)
                     if method == 'sum':
+
                         profit_df['net'] = 1 + profit_df['chg'].cumsum()
                     else:
                         profit_df['net'] = (1 + profit_df['chg']).cumprod()
                     print(profit_df)
-
                     net_lst = profit_df.net.tolist()
-                    if level == 1:
-                        sharpe_ratio = yearsharpRatio(net_lst, 1)
-                        if method == 'sum':
-                            ann_return = annROR_signal(net_lst, 1)
-                        else:
-                            ann_return = annROR(net_lst, 1)
-                        max_drawdown = maxRetrace(net_lst, 1)
-
-                        ret['symbol'].append(state.iloc[0, 2].split('.')[0])
-                        ret['tm'].append(state.iloc[1, 2].split()[0] + state.iloc[1, 2].split()[1])
-                        ret['start_time'].append(s_date)
-                        ret['end_time'].append(e_date)
-                        ret['复盘模型'].append(state.iloc[2, 2])
-                        ret['K线数量'].append(state.iloc[5, 1])
-                        ret['盈利比'].append(state.iloc[10, 1])
-                        ret['trading_times'].append(int(state.iloc[13, 1]))
-                        ret['盈利次数'].append(int(state.iloc[14, 3].split()[0]))
-                        ret['平均盈利'].append(float(state.iloc[16, 3]))
-                        ret['平均亏损'].append(float(state.iloc[16, 5]))
-                        ret['点差'].append(state.iloc[8, 5])
-                        ret['sharp'].append(sharpe_ratio)
-                        ret['ann_return'].append(ann_return)
-                        ret['max_drawdown'].append(max_drawdown)
-                        ret['level'].append(level)
-
                     chg_df_ = profit_df.reset_index(drop=False)[['date_time', 'chg']].rename(columns={'chg': 'chg_' + code})
                     chg_df_all = chg_df_all.merge(chg_df_, on=['date_time'], how='outer')
                 chg_df_all = chg_df_all.fillna(value=0)
@@ -157,20 +151,9 @@ if __name__ == "__main__":
                 plt.savefig(fold_ini_path + 'fig/' + str(len(code_lst)) + '_' + str(period) + 'm' + '_fee_' +
                             str(int(np.around(fee*100000, 0))) + '.png')
                 plt.show()
-        if level == 1:
-            state_df = pd.DataFrame(ret)
-            print(state_df)
-            state_df['胜率'] = state_df['盈利次数'] / state_df['trading_times']
-            state_df['盈亏比'] = -state_df['平均盈利'] / state_df['平均亏损']
-            state_df['开仓中枢过滤'] = '无中枢过滤'
-            state_df['开仓确认'] = '蓝线反转'
-            state_df['平仓有无背离'] = '无背离'
-            state_df['模型'] = mode
-            state_df.to_excel(fold_ini_path + 'state_blue_line//state_singal_symbol_' + method + '_' + str(level) + '.xlsx',
-                              encoding='gbk')
     porfolio_state = pd.DataFrame(porfolio_lst, columns=['杠杆率', '品种数', 'period', 'fee', 'sharpe_ratio', 'ann_return',
                                                          'max_drawdown', 's_date', 'e_date'])
-    porfolio_state.to_excel(fold_ini_path + 'state_blue_line//state_porfolio_signal_period_' + method + '.xlsx',
+    porfolio_state.to_excel(fold_ini_path + 'state_blue_line//state_porfolio_signal_period_' + method + '_opt.xlsx',
                       encoding='gbk')
 
 

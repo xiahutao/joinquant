@@ -315,7 +315,10 @@ def yearsharpRatio(netlist, n):
     new_lst = copy.deepcopy(netlist)
     new_lst = [new_lst[i] for i in range(0, len(new_lst), n)]
     for i in range(1, len(new_lst)):
-        row.append(math.log(new_lst[i] / new_lst[i - 1]))
+        try:
+            row.append(math.log(new_lst[i] / new_lst[i - 1]))
+        except:
+            row.append(0)
     return np.mean(row) / np.std(row) * math.pow(252, 0.5)
 
 

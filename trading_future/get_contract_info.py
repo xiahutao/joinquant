@@ -12,7 +12,7 @@ if __name__ == '__main__':
                    'IH', 'IC', 'T', 'TF', 'AG', 'AU', 'JD', 'AP', 'CJ', 'CF', 'SR']
     info_lst = ['ExchangeID', 'VolumeMultiple', 'MaxMarketOrderVolume', 'MaxLimitOrderVolume']  # 'VolumeMultiple',
     contract_lst = ['RU2009', 'FG2009', 'AU2012', 'SR2009', 'P2009', 'C2009', 'ZN2008', 'CU2008', 'M2009', 'SC2012', 'Y2009', 'OI2009', 'AG2012', 'SC2008', 'JD2009', 'AP2010',
-                    'IF2007', 'IH2007', 'IC2007']
+                    'IF2007', 'IH2007', 'IC2007', 'SA2009']
     # contract_lst = ['RU']
     date = datetime.date.today()
     porfolio = Future()

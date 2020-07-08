@@ -327,7 +327,7 @@ class Future:
             today = datetime.date.today().strftime('%Y-%m-%d')
             if pd.to_datetime(today).strftime('%Y%m%d') >= expireDate:
                 data_dict[symbol] = 'expired'
-            elif product in ['CF', 'SR', 'TA', 'OI', 'MA', 'FG', 'RM', 'ZC', 'PM', 'WH', 'RS', 'RI', 'JR', 'LR', 'SF',
+            elif product in ['SA', 'CF', 'SR', 'TA', 'OI', 'MA', 'FG', 'RM', 'ZC', 'PM', 'WH', 'RS', 'RI', 'JR', 'LR', 'SF',
                              'SM', 'CY', 'AP']:
                 expireDate = pd.to_datetime(expireDate)
                 lst_lst_month_last_day = (expireDate.replace(day=1) - datetime.timedelta(days=1)
@@ -338,6 +338,7 @@ class Future:
                     product = product + '7'
                 if today <= last_change_day:
                     limit_dict = {
+                        'SA': '单边持仓量<20万:20000手, 单边持仓量≥20万:单边持仓量×10%',
                         'CF': '单边持仓量<15万:15000手，单边持仓量≥15万:单边持仓量×10%',
                         'SR': '单边持仓量<25万:25000手，单边持仓量≥25万:单边持仓量×10%',
                         'TA': '单边持仓量<25万:25000手，单边持仓量≥25万:单边持仓量×10%',
@@ -351,14 +352,14 @@ class Future:
                     }
 
                 elif change_day > today > last_change_day:
-                    limit_dict = {
-                        'CF': 3000, 'SR': 5000, 'TA': 10000, 'OI': 3000, 'MA': 2000, 'FG': 5000,
+                    limit_dict = {'SA': 4000,
+                        'CF': 4000, 'SR': 5000, 'TA': 10000, 'OI': 3000, 'MA': 2000, 'FG': 5000,
                         'RM': 2000, 'ZC': 20000, 'PM': 600, 'WH': 1000, 'RS': 1000, 'RI': 2000, 'JR': 3000,
                         'LR': 3000, 'SF': 2000, 'SM': 10000, 'CY': 500, 'AP': 100, 'AP7': 20
                     }
                 else:
-                    limit_dict = {
-                        'CF': 400, 'SR': 1000, 'TA': 5000, 'OI': 1000, 'MA': 1000, 'FG': 1000,
+                    limit_dict = {'SA': 800,
+                        'CF': 800, 'SR': 1000, 'TA': 5000, 'OI': 1000, 'MA': 1000, 'FG': 1000,
                         'RM': 1000, 'ZC': 4000, 'PM': 200, 'WH': 300, 'RS': 500, 'RI': 400, 'JR': 500,
                         'LR': 500, 'SF': 500, 'SM': 2000, 'CY': 100, 'AP': 10, 'AP7': 6
                     }
