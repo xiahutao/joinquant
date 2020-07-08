@@ -52,7 +52,7 @@ def stock_price(sec, sday, eday, fred):
 
 if __name__ == '__main__':
     api = TqApi(TqAccount("simnow", "163919", "yo193846"), web_gui=False)
-    init_aum = 4000000
+
     level = 5
     calen = get_trade_days(count=5)
     today = datetime.date.today()
@@ -63,8 +63,9 @@ if __name__ == '__main__':
                    'IH', 'IC', 'T', 'TF', 'AG', 'AU', 'JD', 'AP', 'CJ', 'CF', 'SR']
     symbol_lst = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
                 'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有品种32个
-    symbol_lst = ['ap', 'ag', 'al', 'sm', 'v', 'i', 'j', 'sf', 'pp', 'cu', 'fu', 'ni', 'pb', 'rb', 'sc', 'zc', 'zn',
-                  'c', 'if', 'hc', 'sr']
+    # symbol_lst = ['ap', 'ag', 'al', 'sm', 'v', 'i', 'j', 'sf', 'pp', 'pb', 'zc', 'hc', 'rb', 'c', 'cu', 'fu', 'ni', 'sc', 'zn',
+    #               'if', 'sr']
+    init_aum = 100000 * len(symbol_lst)
     symbol_lst = [i.upper() for i in symbol_lst]
     calen, next_tradeday, EndDate, StartDate, hq_last_date = get_date(calen, today)
     # close_dict = {}
