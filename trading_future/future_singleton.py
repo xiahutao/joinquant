@@ -1,5 +1,5 @@
 # coding=utf-8
-from trading_future.config import *
+from trading_future.config_self import *
 import pandas as pd
 import numpy as np
 import re

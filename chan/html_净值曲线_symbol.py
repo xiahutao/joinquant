@@ -18,17 +18,20 @@ def PowerSetsRecursive(items):
 
 
 if __name__ == "__main__":
-    level = 5
-    s_date = '2015-01-01'
-    e_date = '2020-07-01'
+    level = 1
+    s_date = '2017-01-01'
+    e_date = '2020-01-01'
     fee = np.float(0.00015)
-    fold_ini_path = 'e://Strategy//MT4//'
-    # fold_ini_path = 'G://缠论//回测报告//'
+    # fold_ini_path = 'e://Strategy//MT4//'
+    fold_ini_path = 'G://缠论//回测报告//'
+    print(fold_ini_path)
     porfolio = Future()
     period_ini_lst = [15, 30, 60, 240, 1440]
     period_ini_lst = [5, 15, 30, 60, 240, 1440]
     period_lst_all = PowerSetsRecursive(period_ini_lst)
-    period_lst_all = [i for i in period_lst_all if len(i) == 6]
+    period_lst_all = [i for i in period_lst_all if len(i) > 0]
+    # period_lst_all = [[240], [15], [5], [15], [30], [60], [5, 15, 30, 60, 240, 1440], [15, 30, 60, 240, 1440], [15, 30, 60, 240]]
+    print(period_lst_all)
 
     code_lst = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
                 'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有品种32个
@@ -39,9 +42,10 @@ if __name__ == "__main__":
     code_lst_60 = ['ap', 'hc', 'j', 'rb', 'sc', 'al', 'ni', 'sf', 'fu', 'ta', 'zc', 'v',
                    'bu', 'i', 'sm', 'ma', 'tf', 'zn']  # 所有60分钟夏普>0
     code_lst_240 = ['al', 'cu', 'v', 'i', 'ma', 'j', 'zn', 'jm', 'fu', 'bu', 'rb',
-                    'sm', 'ta', 'p', 'zc', 'hc', 'c', 'pp', 'if', 'ru', 'pb']  # 所有4小时夏普>0
+                    'sm', 'ta', 'p', 'zc', 'hc', 'c', 'pp', 'if', 'ru', 'pb', 'm', 'oi']  # 所有4小时夏普>0
     code_lst_1440 = ['v', 'ma', 'fu', 'cu', 'j', 'au', 'cf', 'c', 'ta', 'pp', 'sf', 'ag', 'jm', 'sr', 'tf', 'if',
                      'hc', 'bu', 'zn', 'sm']  # 所有日级别夏普>0
+
     code_dict = {}
     code_dict['5'] = code_lst_5
     code_dict['15'] = code_lst_15
@@ -49,28 +53,13 @@ if __name__ == "__main__":
     code_dict['60'] = code_lst_60
     code_dict['240'] = code_lst_240
     code_dict['1440'] = code_lst_1440
-    ret = {}
-    ret['symbol'] = []
-    ret['tm'] = []
-    ret['start_time'] = []
-    ret['end_time'] = []
-    ret['复盘模型'] = []
-    ret['K线数量'] = []
-    ret['盈利比'] = []
-    ret['trading_times'] = []
-    ret['盈利次数'] = []
-    ret['平均盈利'] = []
-    ret['平均亏损'] = []
-    ret['点差'] = []
-    ret['sharp'] = []
-    ret['ann_return'] = []
-    ret['max_drawdown'] = []
-    ret['level'] = []
+
     porfolio_lst = []
     signal_lst = []
     for period_lst in period_lst_all:
         print(period_lst)
         chg_df_all = pd.DataFrame(columns=['date_time'])
+        chg_name = []
         for code in code_lst:
             print(code)
             profit_lst = []
@@ -130,6 +119,7 @@ if __name__ == "__main__":
             signal_row = []
             signal_row.append(code)
             signal_row.append('_'.join([str(i) for i in period_name]))
+            signal_row.append(len(period_name))
             signal_row.append(fee)
             signal_row.append(sharpe_ratio)
             signal_row.append(ann_return)
@@ -147,10 +137,11 @@ if __name__ == "__main__":
 
             chg_df_ = profit_df.reset_index(drop=False)[['date_time', 'chg']]
             chg_df_ = chg_df_.rename(columns={'chg': 'chg_' + code})
+            chg_name.append('chg_' + code)
             chg_df_all = chg_df_all.merge(chg_df_, on=['date_time'], how='outer')
         chg_df_all = chg_df_all.fillna(value=0)
         chg_df = chg_df_all.sort_values(['date_time']).set_index(['date_time'])
-        chg_name = ['chg_' + code for code in code_lst]
+        # chg_name = ['chg_' + code for code in code_lst]
         chg_df['chg'] = chg_df[chg_name].sum(axis=1) / len(code_lst)
         chg_df['net'] = 1 + chg_df['chg'].cumsum()
         chg_df = chg_df.reset_index(drop=False)
@@ -161,7 +152,7 @@ if __name__ == "__main__":
         max_drawdown = maxRetrace(chg_df['net'].tolist(), 1)
         porfolio_row = []
         porfolio_row.append(len(code_lst))
-        porfolio_row.append('_'.join([str(i) for i in period_name]))
+        porfolio_row.append('_'.join([str(i) for i in period_lst]))
         porfolio_row.append(fee)
         porfolio_row.append(sharpe_ratio)
         porfolio_row.append(ann_return)
@@ -172,22 +163,21 @@ if __name__ == "__main__":
 
         chg_df.ix[:, ['net']].plot()
         title_str = '品种%s个 周期%sm sharp %.2f annRet %.2f maxRetrace %.2f' % (
-            str(len(code_lst)),  '_'.join([str(i) for i in period_name]), sharpe_ratio, 100 * ann_return,
+            str(len(code_lst)),  '_'.join([str(i) for i in period_lst]), sharpe_ratio, 100 * ann_return,
             100 * max_drawdown)
         plt.rcParams['font.sans-serif'] = ['SimHei']
         plt.title(title_str)
-        plt.savefig(fold_ini_path + 'fig/' + str(len(code_lst)) + '_' + str(period) + 'm' + '_fee_' +
-                    str(int(np.around(fee*100000, 0))) + '.png')
+        plt.savefig(fold_ini_path + 'fig/' + str(len(code_lst)) + '_' + '_'.join([str(i) for i in period_lst]) + 'm' + '.png')
         plt.show()
 
     porfolio_state = pd.DataFrame(porfolio_lst, columns=['品种数', 'period', 'fee', 'sharpe_ratio', 'ann_return',
                                                          'max_drawdown', 's_date', 'e_date'])
-    # porfolio_state.to_excel(fold_ini_path + 'state_blue_line//state_porfolio_all_period_' + e_date + '.xlsx', encoding='gbk')
+    porfolio_state.to_excel(fold_ini_path + 'state_blue_line//state_porfolio_all_period_' + s_date + '_' + e_date + '.xlsx', encoding='gbk')
 
-    signal_state = pd.DataFrame(signal_lst, columns=['品种', 'period', 'fee', 'sharpe_ratio', 'ann_return',
+    signal_state = pd.DataFrame(signal_lst, columns=['品种', 'period', 'period_num', 'fee', 'sharpe_ratio', 'ann_return',
                                                          'max_drawdown', 's_date', 'e_date'])
     signal_state.to_excel(
-        fold_ini_path + 'state_blue_line//state_signal_all_period' + '.xlsx',
+        fold_ini_path + 'state_blue_line//state_signal_all_period' + s_date + '_' + e_date + '.xlsx',
         encoding='gbk')
 
 

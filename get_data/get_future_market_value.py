@@ -51,7 +51,10 @@ def stock_price(sec, sday, eday, fred):
 
 
 if __name__ == '__main__':
-    api = TqApi(TqAccount("simnow", "163919", "yo193846"), web_gui=False)
+    api = TqApi()
+    # api = TqApi(TqAccount("G国泰君安", "85030120", "jz04282020"), web_gui=False)
+    # fold_ini_path = 'e://Strategy//MT4//'
+    fold_ini_path = 'G://缠论//回测报告//'
 
     level = 5
     calen = get_trade_days(count=5)
@@ -65,6 +68,24 @@ if __name__ == '__main__':
                 'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有品种32个
     # symbol_lst = ['ap', 'ag', 'al', 'sm', 'v', 'i', 'j', 'sf', 'pp', 'pb', 'zc', 'hc', 'rb', 'c', 'cu', 'fu', 'ni', 'sc', 'zn',
     #               'if', 'sr']
+    code_lst_5 = ['ap', 'j', 'rb', 'i', 'fu', 'sm', 'if', 'v', 'zn', 'pp', 'ni', 'pb']  # 所有5分钟夏普>0
+    code_lst_15 = ['v', 'sm', 'sf', 'ap', 'ni', 'j', 'i', 'if', 'hc', 'cu', 'al', 'pp', 'zc', 'rb', 'c', 'zn',
+                   'ag', 'pb', 'sc', 'sr', 'fu']  # 所有15分钟夏普>0
+    code_lst_30 = ['zc', 'v', 'ap', 'sm', 'if', 'al', 'rb', 'j', 'sc', 'fu', 'i', 'ta', 'sf', 'hc', 'pp']  # 所有30分钟夏普>0
+    code_lst_60 = ['ap', 'hc', 'j', 'rb', 'sc', 'al', 'ni', 'sf', 'fu', 'ta', 'zc', 'v',
+                   'bu', 'i', 'sm', 'ma', 'tf', 'zn']  # 所有60分钟夏普>0
+    code_lst_240 = ['al', 'cu', 'v', 'i', 'ma', 'j', 'zn', 'jm', 'fu', 'bu', 'rb',
+                    'sm', 'ta', 'p', 'zc', 'hc', 'c', 'pp', 'if', 'ru', 'pb', 'm', 'oi']  # 所有4小时夏普>0
+    code_lst_1440 = ['v', 'ma', 'fu', 'cu', 'j', 'au', 'cf', 'c', 'ta', 'pp', 'sf', 'ag', 'jm', 'sr', 'tf', 'if',
+                     'hc', 'bu', 'zn', 'sm']  # 所有日级别夏普>0
+    code_lst_5.extend(code_lst_15)
+    code_lst_5.extend(code_lst_30)
+    code_lst_5.extend(code_lst_60)
+    code_lst_5.extend(code_lst_240)
+    code_lst_5.extend(code_lst_1440)
+    period_dict = {}
+    for symbol in symbol_lst:
+        period_dict[symbol.upper()] = len([i for i in code_lst_5 if i == symbol])
     init_aum = 100000 * len(symbol_lst)
     symbol_lst = [i.upper() for i in symbol_lst]
     calen, next_tradeday, EndDate, StartDate, hq_last_date = get_date(calen, today)
@@ -99,13 +120,29 @@ if __name__ == '__main__':
             'symbol': symbol, 'trading_code': trading_code, 'price_tick': price_tick,
             'last_price': api.get_quote(trading_code).pre_close,
             'VolumeMultiple': VolumeMultiple_dict[main_contract]['VolumeMultiple'],
-            'LongMarginRatio': LongMarginRatio_dict[main_contract]['LongMarginRatio'],
-            'ShortMarginRatio': ShortMarginRatio_dict[main_contract]['ShortMarginRatio']
+            'LongMarginRatio': LongMarginRatio_dict[main_contract]['LongMarginRatio'] + 0.01,
+            'ShortMarginRatio': ShortMarginRatio_dict[main_contract]['ShortMarginRatio'] + 0.01,
+            'period_num_all': period_dict[symbol]
         }
     trading_info = pd.DataFrame(signal_dict).T
     trading_info['market_value'] = trading_info['VolumeMultiple'] * trading_info['last_price']
+    trading_info['market_margin'] = trading_info['market_value'] * trading_info['LongMarginRatio']
     trading_info['lots'] = init_aum / trading_info['market_value'] / len(symbol_lst) * level / 2
-    trading_info.to_csv('F:/data/future/' + 'future_market_value_' + hq_last_date + '.csv')
+    # trading_info.to_csv('F:/data/future/' + 'future_market_value_' + hq_last_date + '.csv')
+
+    singal = pd.read_excel(fold_ini_path + 'state_blue_line//state_signal_all_period实盘1' + '.xlsx', encoding='gbk',
+                                 index_col=0)
+    print(singal)
+
+    singal['symbol'] = singal['品种']
+    trading_info['symbol'] = trading_info['symbol'].apply(lambda x: x.lower())
+    singal['period_num'] = singal['period_num'].apply(lambda x: int(x))
+    singal = singal.merge(trading_info, on=['symbol'])
+    print(singal)
+    print(singal.columns)
+    singal['cost'] = 2 * singal['market_margin'] * singal['period_num']
+    cost_df = singal[['trd_num', 'cost']].groupby(['trd_num']).sum()
+    cost_df.to_csv('F:/data/future/' + 'cost_df_' + hq_last_date + '实盘.csv')
 
     print(trading_info)
 

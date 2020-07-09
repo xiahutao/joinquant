@@ -18,35 +18,53 @@ def PowerSetsRecursive(items):
 
 
 if __name__ == "__main__":
-    level = 5
+    level = 1
     s_date = '2015-01-01'
-    e_date = '2020-01-01'
-    trd_num = 14
+    e_date = '2020-07-01'
+    trd_num = 15
     fee = np.float(0.00015)
-    fold_ini_path = 'e://Strategy//MT4//'
-    # fold_ini_path = 'G://缠论//回测报告//'
+    # fold_ini_path = 'e://Strategy//MT4//'
+    fold_ini_path = 'G://缠论//回测报告//'
     porfolio = Future()
     period_ini_lst = [5, 15, 30, 60, 240, 1440]
     period_lst_all = PowerSetsRecursive(period_ini_lst)
-    period_lst_all = [i for i in period_lst_all if len(i) == 6]
-    code_trade_all = ['v', 'fu', 'sm', 'zc', 'rb', 'ma', 'pp', 'bu', 'ta', 'hc', 'sf', 'p', 'c']
+    period_lst_all = [i for i in period_lst_all if len(i) == 5 and 5 not in i]
+    period_lst_all = [[15, 30, 60, 240]]
+    code_trade_all = ['sm', 'v', 'ta', 'zc', 'sf', 'hc', 'bu', 'ma', 'fu', 'rb', 'p', 'c', 'pp', 'ap']
 
 
     code_lst = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
                 'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有品种32个
-    code_lst_5 = ['ap', 'j', 'rb', 'i', 'fu', 'sm', 'if', 'v', 'zn', 'pp', 'ni', 'pb']  # 所有5分钟夏普>0
-    code_lst_15 = ['v', 'sm', 'sf', 'ap', 'ni', 'j', 'i', 'if', 'hc', 'cu', 'al', 'pp', 'zc', 'rb', 'c', 'zn',
-                   'ag', 'pb', 'sc', 'sr', 'fu']  # 所有15分钟夏普>0
-    code_lst_30 = ['zc', 'v', 'ap', 'sm', 'if', 'al', 'rb', 'j', 'sc', 'fu', 'i', 'ta', 'sf', 'hc', 'pp']  # 所有30分钟夏普>0
-    code_lst_60 = ['ap', 'hc', 'j', 'rb', 'sc', 'al', 'ni', 'sf', 'fu', 'ta', 'zc', 'v',
-                   'bu', 'i', 'sm', 'ma', 'tf', 'zn']  # 所有60分钟夏普>0
-    code_lst_240 = ['al', 'cu', 'v', 'i', 'ma', 'j', 'zn', 'jm', 'fu', 'bu', 'rb',
-                    'sm', 'ta', 'p', 'zc', 'hc', 'c', 'pp', 'if', 'ru', 'pb']  # 所有4小时夏普>0
-    code_lst_1440 = ['v', 'ma', 'fu', 'cu', 'j', 'au', 'cf', 'c', 'ta', 'pp', 'sf', 'ag', 'jm', 'sr', 'tf', 'if',
-                     'hc', 'bu', 'zn', 'sm']  # 所有日级别夏普>0
+    # code_lst_5 = ['ap', 'j', 'rb', 'i', 'fu', 'sm', 'if', 'v', 'zn', 'pp', 'ni', 'pb']  # 所有5分钟夏普>0
+    # code_lst_15 = ['v', 'sm', 'sf', 'ap', 'ni', 'j', 'i', 'if', 'hc', 'cu', 'al', 'pp', 'zc', 'rb', 'c', 'zn',
+    #                'ag', 'pb', 'sc', 'sr', 'fu']  # 所有15分钟夏普>0
+    # code_lst_30 = ['zc', 'v', 'ap', 'sm', 'if', 'al', 'rb', 'j', 'sc', 'fu', 'i', 'ta', 'sf', 'hc', 'pp']  # 所有30分钟夏普>0
+    # code_lst_60 = ['ap', 'hc', 'j', 'rb', 'sc', 'al', 'ni', 'sf', 'fu', 'ta', 'zc', 'v',
+    #                'bu', 'i', 'sm', 'ma', 'tf', 'zn']  # 所有60分钟夏普>0
+    # code_lst_240 = ['al', 'cu', 'v', 'i', 'ma', 'j', 'zn', 'jm', 'fu', 'bu', 'rb',
+    #                 'sm', 'ta', 'p', 'zc', 'hc', 'c', 'pp', 'if', 'ru', 'pb']  # 所有4小时夏普>0
+    # code_lst_1440 = ['v', 'ma', 'fu', 'cu', 'j', 'au', 'cf', 'c', 'ta', 'pp', 'sf', 'ag', 'jm', 'sr', 'tf', 'if',
+    #                  'hc', 'bu', 'zn', 'sm']  # 所有日级别夏普>0
+    code_lst_5 = []  # 所有5分钟夏普>0
+    # code_lst_15 = ['v', 'sm', 'sf', 'ni', 'j', 'i', 'if', 'hc', 'cu', 'al', 'pp', 'c', 'zn',
+    #                'ag', 'pb', 'sc', 'sr']  # 所有15分钟夏普>0
+    # code_lst_30 = ['zc', 'v', 'ap', 'sm', 'if', 'al', 'j', 'sc', 'i', 'pp']  # 所有30分钟夏普>0
+    # code_lst_60 = ['ap', 'hc', 'j', 'rb', 'sc', 'al', 'ni', 'sf', 'fu', 'ta', 'zc',
+    #                'i', 'ma', 'tf', 'zn']  # 所有60分钟夏普>0
+    # code_lst_240 = ['al', 'cu', 'i', 'ma', 'j', 'zn', 'jm', 'fu', 'bu', 'rb',
+    #                 'ta', 'p', 'if', 'ru', 'pb']  # 所有4小时夏普>0
+    code_lst_1440 = []  # 所有日级别夏普>0
+
+    code_lst_15 = ['sm', 'sf', 'ni', 'j', 'i', 'if', 'cu', 'al', 'pp', 'c', 'zn',
+                   'ag', 'pb', 'sc', 'sr']  # 所有15分钟夏普>0
+    code_lst_30 = ['v', 'zc', 'ap', 'if', 'al', 'j', 'sc', 'i', 'rb']  # 所有30分钟夏普>0
+    code_lst_60 = ['ta', 'ap', 'hc', 'sm', 'j', 'rb', 'sc', 'al', 'ni', 'sf',
+                   'i', 'tf', 'zn', 'bu', 'fu', 'ma']  # 所有60分钟夏普>0
+    code_lst_240 = ['v', 'al', 'cu', 'i', 'ma', 'j', 'zn', 'jm', 'fu', 'bu',
+                    'ta', 'p', 'if', 'ru', 'pb', 'zc']  # 所有4小时夏普>0
     porfolio_lst = []
     signal_lst = []
-    for trd_num in range(1, len(code_trade_all)):
+    for trd_num in range(1, len(code_trade_all) + 1):
         code_trade_lst = code_trade_all[:trd_num]
 
         code_dict = {}
@@ -130,11 +148,11 @@ if __name__ == "__main__":
                 signal_lst.append(signal_row)
                 title_str = '%s 周期%sm sharp %.2f annRet %.2f maxRetrace %.2f' % (
                     code, '_'.join([str(i) for i in period_name]), sharpe_ratio, 100 * ann_return, 100 * max_drawdown)
-                profit_df.set_index(['date_time']).ix[:, ['net']].plot()
-                plt.rcParams['font.sans-serif'] = ['SimHei']
-                plt.title(title_str)
-                plt.savefig(fold_ini_path + 'fig/' + code + '_' + '_'.join([str(i) for i in period_name]) + '.png')
-                plt.show()
+                # profit_df.set_index(['date_time']).ix[:, ['net']].plot()
+                # plt.rcParams['font.sans-serif'] = ['SimHei']
+                # plt.title(title_str)
+                # plt.savefig(fold_ini_path + 'fig/' + code + '_' + '_'.join([str(i) for i in period_name]) + '.png')
+                # plt.show()
 
 
                 chg_df_ = profit_df.reset_index(drop=False)[['date_time', 'chg']]
@@ -179,12 +197,12 @@ if __name__ == "__main__":
 
     porfolio_state = pd.DataFrame(porfolio_lst, columns=['品种数', 'period', 'fee', 'sharpe_ratio', 'ann_return',
                                                          'max_drawdown', 's_date', 'e_date'])
-    porfolio_state.to_excel(fold_ini_path + 'state_blue_line//state_porfolio_all_period_' + e_date + '.xlsx', encoding='gbk')
+    porfolio_state.to_excel(fold_ini_path + 'state_blue_line//state_porfolio_all_period_' + e_date + '实盘1.xlsx', encoding='gbk')
 
     signal_state = pd.DataFrame(signal_lst, columns=['品种', 'period_num', 'trd_num', 'period', 'fee', 'sharpe_ratio', 'ann_return',
                                                          'max_drawdown', 's_date', 'e_date'])
     signal_state.to_excel(
-        fold_ini_path + 'state_blue_line//state_signal_all_period1' + '.xlsx',
+        fold_ini_path + 'state_blue_line//state_signal_all_period实盘1' + '.xlsx',
         encoding='gbk')
 
 
