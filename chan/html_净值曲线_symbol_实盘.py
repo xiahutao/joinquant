@@ -21,7 +21,7 @@ if __name__ == "__main__":
     level = 5
     s_date = '2015-01-01'
     e_date = '2020-01-01'
-    trd_num = 13
+    trd_num = 14
     fee = np.float(0.00015)
     fold_ini_path = 'e://Strategy//MT4//'
     # fold_ini_path = 'G://缠论//回测报告//'
