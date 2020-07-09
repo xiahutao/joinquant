@@ -18,9 +18,9 @@ def PowerSetsRecursive(items):
 
 
 if __name__ == "__main__":
-    level = 1
+    level = 5
     s_date = '2015-01-01'
-    e_date = '2020-01-01'
+    e_date = '2020-07-01'
     fee = np.float(0.00015)
     fold_ini_path = 'e://Strategy//MT4//'
     # fold_ini_path = 'G://缠论//回测报告//'
@@ -28,15 +28,27 @@ if __name__ == "__main__":
     period_ini_lst = [15, 30, 60, 240, 1440]
     period_ini_lst = [5, 15, 30, 60, 240, 1440]
     period_lst_all = PowerSetsRecursive(period_ini_lst)
-    period_lst_all = [i for i in period_lst_all if len(i)>0]
+    period_lst_all = [i for i in period_lst_all if len(i) == 6]
 
     code_lst = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
                 'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有品种32个
-    # code_lst = ['ap', 'ag', 'al', 'cu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'v', 'zc', 'zn', 'c',
-    #             'if', 'sf', 'p', 'hc', 'au', 'sm', 'ru', 'bu', 'sr', 'ta', 'ma']   # sharp>0的品种17个
-    # code_lst = ['ma', 'ta', 'c', 'bu', 'sf', 'v', 'sm', 'hc', 'rb', 'pp', 'p', 'zc', 'ag', 'al', 'i',
-    #             'pb', 'ap', 'zn']  # 保证金<10000的品种18个
-    # code_lst = ['ma', 'ta', 'c', 'bu', 'sf', 'v', 'sm', 'hc', 'rb', 'pp', 'p']  # 保证金<5000的品种11个
+    code_lst_5 = ['ap', 'j', 'rb', 'i', 'fu', 'sm', 'if', 'v', 'zn', 'pp', 'ni', 'pb']  # 所有5分钟夏普>0
+    code_lst_15 = ['v', 'sm', 'sf', 'ap', 'ni', 'j', 'i', 'if', 'hc', 'cu', 'al', 'pp', 'zc', 'rb', 'c', 'zn',
+                   'ag', 'pb', 'sc', 'sr', 'fu']  # 所有15分钟夏普>0
+    code_lst_30 = ['zc', 'v', 'ap', 'sm', 'if', 'al', 'rb', 'j', 'sc', 'fu', 'i', 'ta', 'sf', 'hc', 'pp']  # 所有30分钟夏普>0
+    code_lst_60 = ['ap', 'hc', 'j', 'rb', 'sc', 'al', 'ni', 'sf', 'fu', 'ta', 'zc', 'v',
+                   'bu', 'i', 'sm', 'ma', 'tf', 'zn']  # 所有60分钟夏普>0
+    code_lst_240 = ['al', 'cu', 'v', 'i', 'ma', 'j', 'zn', 'jm', 'fu', 'bu', 'rb',
+                    'sm', 'ta', 'p', 'zc', 'hc', 'c', 'pp', 'if', 'ru', 'pb']  # 所有4小时夏普>0
+    code_lst_1440 = ['v', 'ma', 'fu', 'cu', 'j', 'au', 'cf', 'c', 'ta', 'pp', 'sf', 'ag', 'jm', 'sr', 'tf', 'if',
+                     'hc', 'bu', 'zn', 'sm']  # 所有日级别夏普>0
+    code_dict = {}
+    code_dict['5'] = code_lst_5
+    code_dict['15'] = code_lst_15
+    code_dict['30'] = code_lst_30
+    code_dict['60'] = code_lst_60
+    code_dict['240'] = code_lst_240
+    code_dict['1440'] = code_lst_1440
     ret = {}
     ret['symbol'] = []
     ret['tm'] = []
@@ -55,17 +67,18 @@ if __name__ == "__main__":
     ret['max_drawdown'] = []
     ret['level'] = []
     porfolio_lst = []
-
     signal_lst = []
-
     for period_lst in period_lst_all:
         print(period_lst)
         chg_df_all = pd.DataFrame(columns=['date_time'])
         for code in code_lst:
             print(code)
             profit_lst = []
+            period_name = []
             for period in period_lst:
-
+                if code not in code_dict[str(period)]:
+                    continue
+                period_name.append(period)
                 mode = '蓝线笔_蓝线反转确认_蓝线反转平仓_200627_' + str(period) + '分钟'
                 fold_path = fold_ini_path + mode + '//'
                 html = pd.read_html(fold_path + code + '.htm', encoding='gbk')
@@ -73,6 +86,8 @@ if __name__ == "__main__":
                 html = pd.read_html(fold_path + code + '.htm', encoding='gbk', header=0, index_col=0)
                 trade = html[1]
                 profit_lst.append(trade[['时间', '获利']])
+            if len(period_name) == 0:
+                continue
             profit_df_all = pd.concat(profit_lst).rename(columns={'时间': 'date_time', '获利': 'profit'}).fillna(value=0)
             profit_df_all['date_time'] = profit_df_all['date_time'].apply(lambda x: x[:4] + '-' + x[5:7] + '-' + x[8:10])
             profit_df_all = profit_df_all.groupby(['date_time'])
@@ -104,7 +119,7 @@ if __name__ == "__main__":
             except:
                 sharpe_ratio = -1
             try:
-                ann_return = annROR_signal(net_lst, 1)
+                ann_return = annROR(net_lst, 1)
             except:
                 ann_return = -1
             try:
@@ -114,7 +129,7 @@ if __name__ == "__main__":
 
             signal_row = []
             signal_row.append(code)
-            signal_row.append('_'.join([str(i) for i in period_lst]))
+            signal_row.append('_'.join([str(i) for i in period_name]))
             signal_row.append(fee)
             signal_row.append(sharpe_ratio)
             signal_row.append(ann_return)
@@ -123,12 +138,11 @@ if __name__ == "__main__":
             signal_row.append(e_date)
             signal_lst.append(signal_row)
             title_str = '%s 周期%sm sharp %.2f annRet %.2f maxRetrace %.2f' % (
-                code, '_'.join([str(i) for i in period_lst]), sharpe_ratio, 100 * ann_return, 100 * max_drawdown)
+                code, '_'.join([str(i) for i in period_name]), sharpe_ratio, 100 * ann_return, 100 * max_drawdown)
             profit_df.set_index(['date_time']).ix[:, ['net']].plot()
             plt.rcParams['font.sans-serif'] = ['SimHei']
             plt.title(title_str)
-            plt.savefig(fold_ini_path + 'fig/' + code + '_' + '_'.join([str(i) for i in period_lst]) + '_fee_' +
-                        str(int(np.around(fee * 100000, 0))) + '.png')
+            plt.savefig(fold_ini_path + 'fig/' + code + '_' + '_'.join([str(i) for i in period_name]) + '.png')
             plt.show()
 
             chg_df_ = profit_df.reset_index(drop=False)[['date_time', 'chg']]
@@ -147,7 +161,7 @@ if __name__ == "__main__":
         max_drawdown = maxRetrace(chg_df['net'].tolist(), 1)
         porfolio_row = []
         porfolio_row.append(len(code_lst))
-        porfolio_row.append('_'.join([str(i) for i in period_lst]))
+        porfolio_row.append('_'.join([str(i) for i in period_name]))
         porfolio_row.append(fee)
         porfolio_row.append(sharpe_ratio)
         porfolio_row.append(ann_return)
@@ -158,7 +172,7 @@ if __name__ == "__main__":
 
         chg_df.ix[:, ['net']].plot()
         title_str = '品种%s个 周期%sm sharp %.2f annRet %.2f maxRetrace %.2f' % (
-            str(len(code_lst)),  '_'.join([str(i) for i in period_lst]), sharpe_ratio, 100 * ann_return,
+            str(len(code_lst)),  '_'.join([str(i) for i in period_name]), sharpe_ratio, 100 * ann_return,
             100 * max_drawdown)
         plt.rcParams['font.sans-serif'] = ['SimHei']
         plt.title(title_str)
@@ -168,12 +182,12 @@ if __name__ == "__main__":
 
     porfolio_state = pd.DataFrame(porfolio_lst, columns=['品种数', 'period', 'fee', 'sharpe_ratio', 'ann_return',
                                                          'max_drawdown', 's_date', 'e_date'])
-    porfolio_state.to_excel(fold_ini_path + 'state_blue_line//state_porfolio_all_period' + '.xlsx', encoding='gbk')
+    # porfolio_state.to_excel(fold_ini_path + 'state_blue_line//state_porfolio_all_period_' + e_date + '.xlsx', encoding='gbk')
 
     signal_state = pd.DataFrame(signal_lst, columns=['品种', 'period', 'fee', 'sharpe_ratio', 'ann_return',
                                                          'max_drawdown', 's_date', 'e_date'])
     signal_state.to_excel(
-        fold_ini_path + 'state_blue_line//state_signal_all_period_' + '.xlsx',
+        fold_ini_path + 'state_blue_line//state_signal_all_period' + '.xlsx',
         encoding='gbk')
 
 

@@ -30,17 +30,16 @@ if __name__ == "__main__":
     porfolio = Future()
     mode = '蓝线笔_蓝线反转确认_蓝线反转平仓_200627'
 
-    code_lst_5 = ['ap', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'v', 'zn', 'if', 'sm']  # 所有5分钟夏普>0
-    code_lst_15 = ['ap', 'ag', 'al', 'sm', 'v', 'i', 'j', 'sf', 'pp', 'pb', 'zc', 'hc', 'rb', 'c', 'cu', 'fu', 'ni', 'sc', 'zn',
-                  'if', 'sr']  # 所有品种32个
-    code_lst_30 = ['ap', 'al', 'fu', 'i', 'j', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn',
-                  'if', 'sf', 'p', 'hc', 'sm', 'ru', 'oi', 'sr', 'ta']  # 所有品种32个
-    code_lst_60 = ['ap', 'al', 'fu', 'i', 'j', 'ni', 'rb', 'sc', 'tf', 'v', 'zc', 'zn',
-                  'sf', 'hc', 'sm', 'bu', 'ta', 'm', 'ma']   # 所有60分钟夏普>0
-    code_lst_240 = ['al', 'cu', 'fu', 'i', 'j', 'pb', 'pp', 'rb', 'v', 'zc', 'zn',
-                  'c', 'if', 'p', 'hc', 'jm', 'sm', 'ru', 'bu', 'ta', 'm', 'ma']   # 所有4小时夏普>0
-    code_lst_1440 = ['ag', 'cf', 'cu', 'fu', 'j', 'pp', 'tf', 'v', 'zn', 'sm', 'c', 'if', 'sf', 'hc', 'au', 'jm', 'bu',
-                     'oi', 'sr', 'ta', 'ma']   # 所有日级别夏普>0
+    code_lst_5 = ['ap', 'j', 'rb', 'i', 'fu', 'sm', 'if', 'v', 'zn', 'pp', 'ni', 'pb']  # 所有5分钟夏普>0
+    code_lst_15 = ['v', 'sm', 'sf', 'ap', 'ni', 'j', 'i', 'if', 'hc', 'cu', 'al', 'pp', 'zc', 'rb', 'c', 'zn',
+                   'ag', 'pb', 'sc', 'sr', 'fu']  #  所有15分钟夏普>0
+    code_lst_30 = ['zc', 'v', 'ap', 'sm', 'if', 'al', 'rb', 'j', 'sc', 'fu', 'i', 'ta', 'sf', 'hc', 'pp']  # 所有30分钟夏普>0
+    code_lst_60 = ['ap', 'hc', 'j', 'rb', 'sc', 'al', 'ni', 'sf', 'fu', 'ta', 'zc', 'v',
+                  'bu', 'i', 'sm', 'm', 'ma', 'tf', 'zn']   # 所有60分钟夏普>0
+    code_lst_240 = ['al', 'cu', 'v', 'i', 'ma', 'j', 'zn', 'jm', 'fu', 'bu', 'rb',
+                  'sm', 'ta', 'p', 'zc', 'hc', 'c', 'pp', 'if', 'ru', 'm', 'pb']   # 所有4小时夏普>0
+    code_lst_1440 = ['v', 'ma', 'fu', 'cu', 'j', 'au', 'cf', 'c', 'ta', 'pp', 'sf', 'ag', 'jm', 'sr', 'oi', 'tf', 'if', 'hc',
+                     'bu', 'zn', 'sm']   # 所有日级别夏普>0
     code_dict = {}
     code_dict['5'] = code_lst_5
     code_dict['15'] = code_lst_15
@@ -148,8 +147,7 @@ if __name__ == "__main__":
                     sharpe_ratio, 100 * ann_return, 100 * max_drawdown, int(level))
                 plt.rcParams['font.sans-serif'] = ['SimHei']
                 plt.title(title_str)
-                plt.savefig(fold_ini_path + 'fig/' + str(len(code_lst)) + '_' + str(period) + 'm' + '_fee_' +
-                            str(int(np.around(fee*100000, 0))) + '.png')
+                plt.savefig(fold_ini_path + 'fig/' + str(len(code_lst)) + '_' + str(period) + 'm' + '_fee_opt' + '.png')
                 plt.show()
     porfolio_state = pd.DataFrame(porfolio_lst, columns=['杠杆率', '品种数', 'period', 'fee', 'sharpe_ratio', 'ann_return',
                                                          'max_drawdown', 's_date', 'e_date'])

@@ -196,8 +196,8 @@ class Trading:
 
 
 if __name__ == '__main__':
-    trd_stime = '2020-07-08 21:00:30'
-    trd_etime = '2020-07-09 02:30:00'
+    trd_stime = '2020-07-09 09:00:30'
+    trd_etime = '2020-07-10 02:30:00'
     api = TqApi(TqAccount("G国泰君安", "85030120", "jz04282020"), web_gui=True)
     Trd = Trading(api)
     # order = Trd.insert_order_sk_limit('INE.sc2012', 1)
@@ -234,20 +234,19 @@ if __name__ == '__main__':
         print(datetime.datetime.now())
         print(df)
 
-        if (diff < 33) and times1 < 9 and trad == True and \
+        if (diff < 33) and times1 < 3 and trad == True and \
                 datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') > trd_stime:
-            try:
-                send_email(df, '完成1次', receiver)
-                # times1 += 1
-                # logger_async.log(__name__, logger_async.critical, '完成第一次交易')
-            except Exception as e:
-                print(str(e))
             # try:
-            #     order1 = Trd.insert_order_bp_limit('INE.sc2012', 1)
-            #     order2 = Trd.insert_order_sp_limit('INE.sc2008', 1)
-            #     times1 += 1
+            #     send_email(df, '完成1次', receiver)
+            #     # times1 += 1
+            #     # logger_async.log(__name__, logger_async.critical, '完成第一次交易')
             # except Exception as e:
             #     print(str(e))
+            try:
+                order1 = Trd.insert_order_bp_limit('INE.sc2012', 1)
+                order2 = Trd.insert_order_sp_limit('INE.sc2008', 1)
+                times1 += 1
+            except Exception as e:
+                print(str(e))
             # get_alert_info('价差小于33')
-
         time.sleep(5)

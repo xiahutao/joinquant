@@ -19,13 +19,13 @@ def PowerSetsRecursive(items):
 
 if __name__ == "__main__":
     level_lst = [i for i in range(1, 6)]
-    level_lst = [1]
+    level_lst = [5]
     date_lst = [('2015-01-01', '2020-01-01'), ('2015-01-01', '2020-07-01')]
     # date_lst = [('2015-01-01', '2020-01-01')]
     method = 'sum'  # 单利：sum；复利：muti
     fee = np.float(0.00015)
-    # fold_ini_path = 'e://Strategy//MT4//'
-    fold_ini_path = 'G://缠论//回测报告//'
+    fold_ini_path = 'e://Strategy//MT4//'
+    # fold_ini_path = 'G://缠论//回测报告//'
     porfolio = Future()
     mode = '蓝线笔_蓝线反转确认_蓝线反转平仓_200627'
     code_lst = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',

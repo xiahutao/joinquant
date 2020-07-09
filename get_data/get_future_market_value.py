@@ -84,6 +84,8 @@ if __name__ == '__main__':
     ExchangeID_dict = porfolio.get_ExchangeID(contract_lst=contract_lst)
     ExchangeInstID_dict = porfolio.get_ExchangeInstID(contract_lst=contract_lst)
     VolumeMultiple_dict = porfolio.get_VolumeMultiple(contract_lst)
+    LongMarginRatio_dict = porfolio.get_LongMarginRatio(contract_lst)
+    ShortMarginRatio_dict = porfolio.get_ShortMarginRatio(contract_lst)
 
     main_contract['symbol'] = main_contract.index
     print(main_contract)
@@ -96,7 +98,9 @@ if __name__ == '__main__':
         signal_dict[symbol] = {
             'symbol': symbol, 'trading_code': trading_code, 'price_tick': price_tick,
             'last_price': api.get_quote(trading_code).pre_close,
-            'VolumeMultiple': VolumeMultiple_dict[main_contract]['VolumeMultiple']
+            'VolumeMultiple': VolumeMultiple_dict[main_contract]['VolumeMultiple'],
+            'LongMarginRatio': LongMarginRatio_dict[main_contract]['LongMarginRatio'],
+            'ShortMarginRatio': ShortMarginRatio_dict[main_contract]['ShortMarginRatio']
         }
     trading_info = pd.DataFrame(signal_dict).T
     trading_info['market_value'] = trading_info['VolumeMultiple'] * trading_info['last_price']
