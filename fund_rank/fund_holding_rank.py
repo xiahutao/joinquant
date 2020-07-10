@@ -10,10 +10,10 @@ if __name__ == '__main__':
     today = str(today)[:10]
     fund_holding = pd.read_csv('g://lfp//result//fund_holding.csv')\
         .assign(code=lambda df: df.code.apply(lambda x: int(x)))
-    rank = pd.read_csv('g://lfp//result//fund_rank_position_chg_zf2020-07-01.csv', encoding='gbk')[['code', 'topsis', 'stars']]\
+    rank = pd.read_csv('g://lfp//result//fund_rank_position_chg_zf2020-07-10.csv', encoding='gbk')[['code', 'topsis', 'stars']]\
         .assign(code=lambda df: df.code.apply(lambda x: int(x)))
     print(rank)
-    rank_48 = pd.read_csv('g://lfp//result//fund_rank_position_chg_482020-07-01.csv', encoding='gbk')[['code', 'name', 'topsis', 'stars']]\
+    rank_48 = pd.read_csv('g://lfp//result//fund_rank_position_chg_482020-07-10.csv', encoding='gbk')[['code', 'name', 'topsis', 'stars']]\
         .assign(code=lambda df: df.code.apply(lambda x: int(x)))
     print(rank_48)
     df_rank_60 = fund_holding.merge(rank, on='code', how='left').rename(columns={'topsis': 'topsis5', 'stars': 'stars5'})

@@ -53,8 +53,8 @@ def stock_price(sec, sday, eday, fred):
 if __name__ == '__main__':
     api = TqApi()
     # api = TqApi(TqAccount("G国泰君安", "85030120", "jz04282020"), web_gui=False)
-    # fold_ini_path = 'e://Strategy//MT4//'
-    fold_ini_path = 'G://缠论//回测报告//'
+    fold_ini_path = 'e://Strategy//MT4//'
+    # fold_ini_path = 'G://缠论//回测报告//'
 
     level = 5
     calen = get_trade_days(count=5)

@@ -196,8 +196,8 @@ class Trading:
 
 
 if __name__ == '__main__':
-    trd_stime = '2020-07-09 09:00:30'
-    trd_etime = '2020-07-10 02:30:00'
+    trd_stime = '2020-07-10 09:00:30'
+    trd_etime = '2020-07-11 02:30:00'
     api = TqApi(TqAccount("G国泰君安", "85030120", "jz04282020"), web_gui=True)
     Trd = Trading(api)
     # order = Trd.insert_order_sk_limit('INE.sc2012', 1)
@@ -206,8 +206,6 @@ if __name__ == '__main__':
     start_day = datetime.date.today().strftime('%Y-%m-%d')
     end_day = datetime.date.today().strftime('%Y-%m-%d')
     receiver = ['xiahutao@163.com', '3467518502@qq.com', '897174480@qq.com']
-    quote = api.get_quote("INE.sc2007")
-    print(quote.last_price)
     long_code_lst = ['sc2008']
     short_code_lst = ['sc2012']
     # long_cost_lst = [311.16]
