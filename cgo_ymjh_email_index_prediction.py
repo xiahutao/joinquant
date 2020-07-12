@@ -237,16 +237,6 @@ def get_html_msg(data):
     return html_msg
 
 
-def stock_code_lst(sec):
-    """
-    输入 股票代码，开始日期，截至日期
-    输出 个股的后复权的开高低收价格
-    """
-    temp = jzmongo['wind_index'].read(sec + '_component')
-    temp = temp[temp['date'] == temp['date'].max()]
-    return temp.code.tolist()
-
-
 def get_date(calen, today):
     next_tradeday = get_trade_days(start_date=today + datetime.timedelta(days=1), end_date='2030-01-01')[0]
     if datetime.datetime.now().hour > 18:
@@ -442,8 +432,8 @@ def stock_price(sec, period, sday, eday):
 
 
 if __name__ == '__main__':
-    myclient = pymongo.MongoClient('mongodb://juzheng:jz2018*@192.168.2.201:27017/')
-    jzmongo = Arctic(myclient)
+    # myclient = pymongo.MongoClient('mongodb://juzheng:jz2018*@192.168.2.201:27017/')
+    # jzmongo = Arctic(myclient)
     # 下面的发件人，收件人是用于邮件传输的。
     smtpserver = 'smtp.163.com'
     username = 'xiahutao@163.com'
@@ -454,6 +444,7 @@ if __name__ == '__main__':
     # receiver = ['zxdokok@sina.com','43521385@qq.com','542362275@qq.com', '3467518502@qq.com', 'xiahutao@163.com']
     # receiver = ['xiahutao@163.com', '3467518502@qq.com', '542362275@qq.com']
     receiver = ['xiahutao@163.com']
+
     today = datetime.date.today()
     fold = 'E:/fof/cgo/'
     index_code_lst = ['399006.XSHE', '000300.XSHG', '000905.XSHG', '000016.XSHG']

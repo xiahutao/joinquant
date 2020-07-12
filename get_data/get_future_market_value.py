@@ -53,8 +53,8 @@ def stock_price(sec, sday, eday, fred):
 if __name__ == '__main__':
     api = TqApi()
     # api = TqApi(TqAccount("G国泰君安", "85030120", "jz04282020"), web_gui=False)
-    fold_ini_path = 'e://Strategy//MT4//'
-    # fold_ini_path = 'G://缠论//回测报告//'
+    # fold_ini_path = 'e://Strategy//MT4//'
+    fold_ini_path = 'G://缠论//回测报告//'
 
     level = 5
     calen = get_trade_days(count=5)
@@ -140,9 +140,9 @@ if __name__ == '__main__':
     singal = singal.merge(trading_info, on=['symbol'])
     print(singal)
     print(singal.columns)
-    singal['cost'] = 2 * singal['market_margin'] * singal['period_num']
+    singal['cost'] = 2 * singal['market_margin'] * singal['period_num'] / 0.8
     cost_df = singal[['trd_num', 'cost']].groupby(['trd_num']).sum()
-    cost_df.to_csv('F:/data/future/' + 'cost_df_' + hq_last_date + '实盘.csv')
+    cost_df.to_csv('F:/data/future/' + 'cost_df_' + hq_last_date + '实盘1.csv')
 
     print(trading_info)
 

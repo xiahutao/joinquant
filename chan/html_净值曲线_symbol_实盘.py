@@ -21,16 +21,17 @@ if __name__ == "__main__":
     level = 5
     s_date = '2015-01-01'
     e_date = '2020-07-01'
-    trd_num = 15
+    trd_num = 24
     fee = np.float(0.00015)
-    fold_ini_path = 'e://Strategy//MT4//'
-    # fold_ini_path = 'G://缠论//回测报告//'
+    # fold_ini_path = 'e://Strategy//MT4//'
+    fold_ini_path = 'G://缠论//回测报告//'
     porfolio = Future()
     period_ini_lst = [5, 15, 30, 60, 240, 1440]
     period_lst_all = PowerSetsRecursive(period_ini_lst)
     period_lst_all = [i for i in period_lst_all if len(i) == 5 and 5 not in i]
     period_lst_all = [[15, 30, 60, 240]]
-    code_trade_all = ['v', 'sm', 'zc', 'sf', 'hc', 'bu', 'fu', 'ma', 'p', 'ta', 'rb', 'c', 'pp', 'ap']
+    code_trade_all = ['v', 'ap', 'sm', 'rb', 'hc', 'ma', 'i', 'fu', 'j', 'al', 'cu', 'ni', 'zn', 'jm', 'zc', 'bu', 'p',
+                      'pp', 'ta', 'c', 'ag', 'pb', 'sf']
 
     code_lst = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
                 'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有品种32个
@@ -54,13 +55,10 @@ if __name__ == "__main__":
     #                 'ta', 'p', 'if', 'ru', 'pb']  # 所有4小时夏普>0
     code_lst_1440 = []  # 所有日级别夏普>0
 
-    code_lst_15 = ['ap', 'sm', 'sf', 'ni', 'j', 'i', 'if', 'cu', 'al', 'zn',
-                   'ag', 'pb', 'sc', 'sr', 'rb']  # 所有15分钟夏普>0
-    code_lst_30 = ['pp', 'ta', 'sm', 'v', 'zc', 'ap', 'if', 'al', 'j', 'sc', 'i', 'rb']  # 所有30分钟夏普>0
-    code_lst_60 = ['ap', 'hc', 'j', 'rb', 'sc', 'al', 'ni', 'sf',
-                   'i', 'tf', 'zn', 'fu', 'ma', 'rb']  # 所有60分钟夏普>0
-    code_lst_240 = ['c', 'v', 'al', 'cu', 'i', 'ma', 'j', 'zn', 'jm', 'fu', 'bu',
-                    'ta', 'p', 'if', 'ru', 'pb', 'zc', 'rb']  # 所有4小时夏普>0
+    code_lst_15 = ['ag', 'j', 'fu', 'zc', 'c', 'pb']  # 所有15分钟夏普>0
+    code_lst_30 = ['v', 'sm', 'rb']  # 所有30分钟夏普>0
+    code_lst_60 = ['al', 'ap', 'j', 'rb', 'hc', 'ni', 'fu', 'bu', 'ta']  # 所有60分钟夏普>0
+    code_lst_240 = ['v', 'sm', 'cu', 'i', 'ma', 'zn', 'jm', 'zc', 'bu', 'p', 'pp', 'c', 'sf']  # 所有4小时夏普>0
     porfolio_lst = []
     signal_lst = []
     for trd_num in range(1, len(code_trade_all) + 1):
@@ -93,7 +91,7 @@ if __name__ == "__main__":
                     if code not in code_dict[str(period)]:
                         continue
                     period_name.append(period)
-                    mode = '蓝线笔_蓝线反转确认_蓝线反转平仓_200627_' + str(period) + '分钟'
+                    mode = '蓝线笔_蓝线反转确认_蓝线反转平仓_200627_' + str(period) + '分钟_12tick_0710笔'
                     fold_path = fold_ini_path + mode + '//'
                     html = pd.read_html(fold_path + code + '.htm', encoding='gbk')
                     state = html[0]
