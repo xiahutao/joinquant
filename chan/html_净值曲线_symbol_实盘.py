@@ -23,8 +23,8 @@ if __name__ == "__main__":
     e_date = '2020-07-01'
     trd_num = 24
     fee = np.float(0.00015)
-    # fold_ini_path = 'e://Strategy//MT4//'
-    fold_ini_path = 'G://缠论//回测报告//'
+    fold_ini_path = 'e://Strategy//MT4//'
+    # fold_ini_path = 'G://缠论//回测报告//'
     porfolio = Future()
     period_ini_lst = [5, 15, 30, 60, 240, 1440]
     period_lst_all = PowerSetsRecursive(period_ini_lst)

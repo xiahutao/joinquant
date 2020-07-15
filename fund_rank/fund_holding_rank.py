@@ -10,7 +10,7 @@ if __name__ == '__main__':
     today = str(today)[:10]
     fund_holding = pd.read_csv('g://lfp//result//fund_holding.csv')\
         .assign(code=lambda df: df.code.apply(lambda x: int(x)))
-    rank = pd.read_csv('g://lfp//result//fund_rank_position_chg_zf2020-07-10.csv', encoding='gbk')[['code', 'topsis', 'stars']]\
+    rank = pd.read_excel('g://lfp//result//fund_rank_by_topsis_v5_2020-07-13.xlsx', encoding='gbk')[['code', 'topsis', 'stars']]\
         .assign(code=lambda df: df.code.apply(lambda x: int(x)))
     print(rank)
     rank_48 = pd.read_csv('g://lfp//result//fund_rank_position_chg_482020-07-10.csv', encoding='gbk')[['code', 'name', 'topsis', 'stars']]\

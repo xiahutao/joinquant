@@ -66,12 +66,12 @@ def stock_price(sec, sday, eday, fred):
 
 if __name__ == '__main__':
     # code_dic = get_normal_future_index_code()  # 获取指数代码
-    code_dic = get_normal_future_maincontact_code()  # 获取主力合约代码
+    code_dic = get_normal_future_index_code()  # 获取主力合约代码
     symbol_lst = ['C', 'CS', 'A', 'B', 'M', 'RM', 'Y', 'P', 'OI', 'L', 'V', 'PP', 'TA', 'RU', 'BU', 'MA', 'SC', 'FU',
                    'AL', 'ZN', 'CU', 'PB', 'NI', 'SN', 'J', 'JM', 'I', 'RB', 'HC', 'ZC', 'SF', 'SM', 'FG', 'IF',
                    'IH', 'IC', 'T', 'TF', 'AG', 'AU', 'JD', 'AP', 'CJ', 'CF', 'SR']
 
-    symbol_lst = ['FU']
+    # symbol_lst = ['FU']
     # symbol_lst = ['000300.XSHG', '000016.XSHG', '000905.XSHG', '399006.XSHE']
     date = datetime.date.today()
 

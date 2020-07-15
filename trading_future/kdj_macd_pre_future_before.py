@@ -334,8 +334,8 @@ if __name__ == '__main__':
     n = 1  # 回测周期
     period = '1d'
     method_lst = [('week', 'week'), ('day', 'day')]
-    k1_lst = [(20, 30)]  # kd下限
-    k2_lst = [(70, 80)]  # kd上限
+    k1_lst = [(15, 50)]  # kd下限
+    k2_lst = [(50, 85)]  # kd上限
     if mod == 0:
         k1 = (15, 35)
         k2 = (65, 85)

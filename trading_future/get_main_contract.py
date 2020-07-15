@@ -22,7 +22,8 @@ if __name__ == '__main__':
     symbol_lst = ['C', 'CS', 'A', 'B', 'M', 'RM', 'Y', 'P', 'OI', 'L', 'V', 'PP', 'TA', 'RU', 'BU', 'MA', 'SC', 'FU',
                    'AL', 'ZN', 'CU', 'PB', 'NI', 'SN', 'J', 'JM', 'I', 'RB', 'HC', 'ZC', 'SF', 'SM', 'FG', 'IF',
                    'IH', 'IC', 'T', 'TF', 'AG', 'AU', 'JD', 'AP', 'CJ', 'CF', 'SR']
-    symbol_lst = ['NI', 'SF', 'RU', 'C', 'P', 'AU', 'CU', 'ZN', 'SC', 'Y', 'CF', 'I', 'AG', 'M', 'OI', 'RB', 'IH', 'IC', 'JD', 'IF', 'SA']
+    symbol_lst = ['SF', 'RU', 'C', 'P', 'AU', 'CU', 'ZN', 'SC', 'Y', 'CF', 'I', 'AG', 'M', 'OI', 'RB', 'IH', 'IC', 'JD', 'IF', 'SA']
+    # symbol_lst = ['V', 'AP', 'SM', 'RB', 'HC', 'MA']
     date = datetime.date.today()
     # date = pd.to_datetime('2020-06-29')
 

@@ -9,8 +9,8 @@ import pandas as pd
 import numpy as np
 import time
 # from jqdatasdk import *
-# import tkinter
-# import tkinter.messagebox
+import tkinter
+import tkinter.messagebox
 from tqsdk import TqApi, TqSim, TqAccount
 # from configDB import *
 # JOINQUANT_USER = '15168322665'
@@ -191,13 +191,13 @@ class Trading:
         return order
 
 
-# def get_alert_info(info_txt):
-#     tkinter.messagebox.showinfo('提示', info_txt)
+def get_alert_info(info_txt):
+    tkinter.messagebox.showinfo('提示', info_txt)
 
 
 if __name__ == '__main__':
-    trd_stime = '2020-07-10 09:00:30'
-    trd_etime = '2020-07-11 02:30:00'
+    trd_stime = '2020-07-14 09:00:30'
+    trd_etime = '2020-07-15 02:30:00'
     api = TqApi(TqAccount("G国泰君安", "85030120", "jz04282020"), web_gui=True)
     Trd = Trading(api)
     # order = Trd.insert_order_sk_limit('INE.sc2012', 1)
@@ -224,6 +224,7 @@ if __name__ == '__main__':
         short_value_now = 0
         quote_08 = api.get_quote("INE.sc2008")
         quote_12 = api.get_quote("INE.sc2012")
+        # print(quote_08)
         price_08 = quote_08.last_price
         price_12 = quote_12.last_price
         diff = price_12 - price_08
@@ -234,17 +235,17 @@ if __name__ == '__main__':
 
         if (diff < 33) and times1 < 3 and trad == True and \
                 datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S') > trd_stime:
-            # try:
-            #     send_email(df, '完成1次', receiver)
-            #     # times1 += 1
-            #     # logger_async.log(__name__, logger_async.critical, '完成第一次交易')
-            # except Exception as e:
-            #     print(str(e))
             try:
-                order1 = Trd.insert_order_bp_limit('INE.sc2012', 1)
-                order2 = Trd.insert_order_sp_limit('INE.sc2008', 1)
-                times1 += 1
+                send_email(df, '完成1次', receiver)
+                # times1 += 1
+                # logger_async.log(__name__, logger_async.critical, '完成第一次交易')
             except Exception as e:
                 print(str(e))
-            # get_alert_info('价差小于33')
-        time.sleep(5)
+            # try:
+            #     order1 = Trd.insert_order_bp_limit('INE.sc2012', 1)
+            #     order2 = Trd.insert_order_sp_limit('INE.sc2008', 1)
+            #     times1 += 1
+            # except Exception as e:
+            #     print(str(e))
+            get_alert_info('价差小于33')
+        # time.sleep(5)
