@@ -1,0 +1,17 @@
+# 浙商期货
+md_addr1=tcp://122.224.243.56:41313
+md_addr2=tcp://221.12.4.112:41313
+md_addr3=tcp://180.169.75.194:41313
+md_addr4=tcp://140.206.112.130:41313
+
+td_addr1=tcp://122.224.170.2:41305
+td_addr2=tcp://180.166.1.17:41305
+td_addr3=tcp://124.160.36.203:41305
+td_addr4=tcp://140.206.112.142:41305
+
+Username=21900576
+Password=390014
+
+BrokerId=6010
+AppID=client_juzheng_1.0
+AuthCode=O5YTVMLN8D28VYQF
