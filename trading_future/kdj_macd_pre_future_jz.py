@@ -49,7 +49,6 @@ myclient = pymongo.MongoClient('mongodb://juzheng:jz2018*@192.168.2.201:27017/')
 jzmongo = Arctic(myclient)
 
 
-
 # 获取价格
 def stock_price(sec, sday, eday):
     """

@@ -20,21 +20,22 @@ def PowerSetsRecursive(items):
 if __name__ == "__main__":
     fold_ini_path = 'e://Strategy//MT4//'
     # fold_ini_path = 'G://缠论//回测报告//'
-    level = 5
-    date_lst = [('2015-01-01', '2020-07-01'), ('2015-01-01', '2017-01-01'), ('2017-01-01', '2020-01-01'), ('2020-01-01', '2020-07-01')]
+    level = 1
+    date_lst = [('2020-01-01', '2020-07-01'), ('2015-01-01', '2017-01-01'), ('2017-01-01', '2020-01-01')]
+    # date_lst = [('2015-01-01', '2020-07-01')]
 
     fee = np.float(0.00015)
     porfolio = Future()
     period_ini_lst = [15, 30, 60, 240, 1440]
-    period_ini_lst = [15, 30, 60, 240, 1440]
+    period_ini_lst = [5, 15, 30, 60, 240, 1440]
     period_lst_all = PowerSetsRecursive(period_ini_lst)
-    period_lst_all = [i for i in period_lst_all if len(i) > 0]
+    period_lst_all = [i for i in period_lst_all if len(i) >= 1]
     # period_lst_all = [[240], [15], [5], [15], [30], [60], [5, 15, 30, 60, 240, 1440], [15, 30, 60, 240, 1440], [15, 30, 60, 240]]
     print(period_lst_all)
 
     code_lst = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
                 'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有品种32个
-    code_lst_5 = ['ap', 'j', 'rb', 'i', 'fu', 'sm', 'if', 'v', 'zn', 'pp', 'ni', 'pb']  # 所有5分钟夏普>0
+    code_lst_5 = ['ap', 'j', 'rb', 'i', 'sf', 'pp', 'sm', 'fu', 'if', 'zn', 'sc', 'ag', 'p', 'pb']  # 所有5分钟夏普>0
     code_lst_15 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'sc', 'v', 'zc', 'zn', 'c',
                 'if', 'sf', 'hc', 'au', 'sm', 'sr', 'ta']  # 所有15分钟夏普>0
     code_lst_30 = ['ap', 'al', 'fu', 'i', 'j', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn',
@@ -46,7 +47,8 @@ if __name__ == "__main__":
     code_lst_1440 = ['ag', 'cu', 'j', 'pp', 'tf', 'v', 'zn', 'c',
                   'au', 'jm', 'sm', 'bu', 'ta', 'ma']  # 所有日级别夏普>0
 
-    # code_lst_5 = []  # 所有5分钟夏普>0
+    # code_lst_5 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
+    #             'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有5分钟夏普>0
     # code_lst_15 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
     #             'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有15分钟夏普>0
     # code_lst_30 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
@@ -171,7 +173,7 @@ if __name__ == "__main__":
             ann_return = annROR(chg_df['net'].tolist(), 1)
             max_drawdown = maxRetrace(chg_df['net'].tolist(), 1)
             porfolio_row = []
-            porfolio_row.append(len(code_lst))
+            porfolio_row.append(len(code_dict[str(period)]))
             porfolio_row.append('_'.join([str(i) for i in period_lst]))
             porfolio_row.append(fee)
             porfolio_row.append(sharpe_ratio)
@@ -192,12 +194,12 @@ if __name__ == "__main__":
 
     porfolio_state = pd.DataFrame(porfolio_lst, columns=['品种数', 'period', 'fee', 'sharpe_ratio', 'ann_return',
                                                          'max_drawdown', 's_date', 'e_date'])
-    porfolio_state.to_excel(fold_ini_path + 'state_blue_line//state_porfolio_all_period' + '0714_opt.xlsx', encoding='gbk')
+    porfolio_state.to_excel(fold_ini_path + 'state_blue_line//state_porfolio_all_period' + '0717opt.xlsx', encoding='gbk')
 
     signal_state = pd.DataFrame(signal_lst, columns=['品种', 'period', 'period_num', 'fee', 'sharpe_ratio', 'ann_return',
                                                          'max_drawdown', 's_date', 'e_date'])
     signal_state.to_excel(
-        fold_ini_path + 'state_blue_line//state_signal_all_period' + '0714_opt.xlsx',
+        fold_ini_path + 'state_blue_line//state_signal_all_period' + '0717opt.xlsx',
         encoding='gbk')
 
 

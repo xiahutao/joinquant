@@ -203,7 +203,6 @@ def get_normal_future_index_code():
     code_dic = {}
     for idx, _row in temp.iterrows():
         code_dic[idx] = _row.index_code
-
     return code_dic, code_lst
 
 
@@ -472,7 +471,7 @@ if __name__ == '__main__':
     print(df_week_sell[df_week_sell['代码'].isin(other_code)])
 
 
-    df.to_csv(fold_data + 'kdj_future_' + end_day + '1.csv', encoding='gbk')
+    df.to_csv(fold_data + 'kdj_future_' + end_day + '.csv', encoding='gbk')
     print(time.time() - t0)
     PDFGenerator('kdj_macd_future_signal_' + end_day).genTaskPDF(
         df_day_buy_hold, df_day_sell_hold, df_week_buy_hold, df_week_sell_hold,

@@ -10,8 +10,17 @@ if __name__ == "__main__":
     ### 查询
     fund_df = api.req_fund()
     print(fund_df)
+    fund_df = fund_df[['T静态权益', '平仓盈亏', '持仓盈亏', '投资者账号']]
+    fund_df['动态权益'] = fund_df['T静态权益'] + fund_df['平仓盈亏'] + fund_df['持仓盈亏']
+    fund_net = fund_df['动态权益'].tolist()[0]
+
 
     hold_df = api.req_hold()
+    hold_df = hold_df[['合约', '方向', '总仓', '持仓均价', '保证金', '持仓盈亏']]
+    hold_df['资金占比'] = hold_df['保证金'] / fund_net
+    hold_pos = hold_df['资金占比'].sum()
+
+    fund_df['资金占比'] = hold_pos
 
     trades_df = api.req_trades()
 

@@ -30,8 +30,8 @@ if __name__ == "__main__":
     period_lst_all = PowerSetsRecursive(period_ini_lst)
     period_lst_all = [i for i in period_lst_all if len(i) == 5 and 5 not in i]
     period_lst_all = [[15, 30, 60, 240]]
-    code_trade_all = ['v', 'ap', 'sm', 'rb', 'hc', 'ma', 'i', 'fu', 'j', 'al', 'cu', 'ni', 'zn', 'jm', 'zc', 'bu', 'p',
-                      'pp', 'ta', 'c', 'ag', 'pb', 'sf']
+    code_trade_all = ['v', 'ap', 'sm', 'fu', 'zc',  'ma', 'rb', 'hc', 'i', 'j', 'al', 'cu', 'ni', 'zn', 'jm', 'bu', 'p',
+                      'pp', 'c', 'ag', 'pb', 'sf', 'ta']
 
     code_lst = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
                 'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有品种32个
@@ -55,10 +55,10 @@ if __name__ == "__main__":
     #                 'ta', 'p', 'if', 'ru', 'pb']  # 所有4小时夏普>0
     code_lst_1440 = []  # 所有日级别夏普>0
 
-    code_lst_15 = ['ag', 'j', 'fu', 'zc', 'c', 'pb']  # 所有15分钟夏普>0
+    code_lst_15 = ['ag', 'j', 'fu', 'zc', 'c', 'pb', 'ta']  # 所有15分钟夏普>0
     code_lst_30 = ['v', 'sm', 'rb']  # 所有30分钟夏普>0
-    code_lst_60 = ['al', 'ap', 'j', 'rb', 'hc', 'ni', 'fu', 'bu', 'ta']  # 所有60分钟夏普>0
-    code_lst_240 = ['v', 'sm', 'cu', 'i', 'ma', 'zn', 'jm', 'zc', 'bu', 'p', 'pp', 'c', 'sf']  # 所有4小时夏普>0
+    code_lst_60 = ['al', 'ap', 'j', 'hc', 'ni', 'fu', 'bu', 'zc']  # 所有60分钟夏普>0
+    code_lst_240 = ['v', 'sm', 'cu', 'i', 'ma', 'zn', 'jm', 'bu', 'p', 'pp', 'c', 'sf', 'ta']  # 所有4小时夏普>0
     porfolio_lst = []
     signal_lst = []
     for trd_num in range(1, len(code_trade_all) + 1):
