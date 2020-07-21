@@ -23,15 +23,15 @@ if __name__ == "__main__":
     e_date = '2020-07-01'
     trd_num = 24
     fee = np.float(0.00015)
-    fold_ini_path = 'e://Strategy//MT4//'
-    # fold_ini_path = 'G://缠论//回测报告//'
+    # fold_ini_path = 'e://Strategy//MT4//'
+    fold_ini_path = 'G://缠论//回测报告//'
     porfolio = Future()
     period_ini_lst = [5, 15, 30, 60, 240, 1440]
     period_lst_all = PowerSetsRecursive(period_ini_lst)
     period_lst_all = [i for i in period_lst_all if len(i) == 5 and 5 not in i]
     period_lst_all = [[15, 30, 60, 240]]
-    code_trade_all = ['v', 'ap', 'sm', 'fu', 'zc',  'ma', 'rb', 'hc', 'i', 'j', 'al', 'cu', 'ni', 'zn', 'jm', 'bu', 'p',
-                      'pp', 'c', 'ag', 'pb', 'sf', 'ta']
+    code_trade_all = ['v', 'ap', 'sm', 'fu', 'zc', 'ma', 'rb', 'ta', 'hc', 'i', 'j', 'al', 'cu', 'ni', 'zn', 'jm','bu', 'p',
+                      'pp', 'c', 'ag', 'pb', 'sf']
 
     code_lst = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
                 'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有品种32个

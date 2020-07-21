@@ -53,8 +53,8 @@ def stock_price(sec, sday, eday, fred):
 if __name__ == '__main__':
     api = TqApi()
     # api = TqApi(TqAccount("G国泰君安", "85030120", "jz04282020"), web_gui=False)
-    fold_ini_path = 'e://Strategy//MT4//'
-    # fold_ini_path = 'G://缠论//回测报告//'
+    # fold_ini_path = 'e://Strategy//MT4//'
+    fold_ini_path = 'G://缠论//回测报告//'
 
     level = 5
     calen = get_trade_days(count=5)
@@ -89,6 +89,7 @@ if __name__ == '__main__':
     init_aum = 100000 * len(symbol_lst)
     symbol_lst = [i.upper() for i in symbol_lst]
     calen, next_tradeday, EndDate, StartDate, hq_last_date = get_date(calen, today)
+    print(today)
     # close_dict = {}
     # for index_code in symbol_lst:
     #     code = code_dic[index_code]
@@ -97,7 +98,7 @@ if __name__ == '__main__':
     # print(close_dict)
 
     porfolio = Future()
-    main_contract_dict = porfolio.get_main_symbol(product=symbol_lst, date=EndDate)
+    main_contract_dict = porfolio.get_main_symbol(product=symbol_lst, date=hq_last_date)
     main_contract = pd.DataFrame(main_contract_dict).T[['main_contract']]
     print(main_contract)
     PriceTick_dict = porfolio.get_PriceTick(symbol_lst)

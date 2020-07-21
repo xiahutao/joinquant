@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>居正量化监控</title>
+  <script src="js/jquery.js"></script>
+  <script src="js/zedWS.js"></script>
+  <!-- 库 -->
+  <script src="js/bootstrap.js"></script>
+
+  <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+
+<body>
+  <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">居正量化监控</a>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row" id = "fund_row">
+      <div class="col">
+        <div class="h2 pt-3 pb-2 mb-3 "><p>资金账户</p></div>
+        <table class="table table-bordered table-hover" id="fund_table"></table>
+        <div class="h2 pt-3 pb-2 mb-3 "><p>持仓信息</p></div>
+        <table class="table table-bordered table-hover" id="hold_table"></table>
+        <div class="h2 pt-3 pb-2 mb-3 "><p>成交信息</p></div>
+        <table class="table table-bordered table-hover" id="trades_table"></table>
+        <div class="h2 pt-3 pb-2 mb-3 "><p>挂单信息</p></div>
+        <table class="table table-bordered table-hover" id="orders_table"></table>
+      </div>
+    </div>
+    <div class="row" style="height:200px;">
+      <div class="col">
+        <div class="row">
+          <div class="h2">
+            <P>Logs:</p>
+          </div>
+          <div class="logs" id="output">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+[2020-07-16 09:40:33][daily_logger][error][thread 16784] 收到json请求，json={"cmd":"req_fund"}
+
+[2020-07-16 09:40:34][daily_logger][error][thread 16784] 收到json请求，json={"cmd":"req_hold"}
+
+[2020-07-16 09:40:34][daily_logger][error][thread 16784] 收到json请求，json={"cmd":"req_trades"}
+
+[2020-07-16 09:40:35][daily_logger][error][thread 16784] 收到json请求，json={"cmd":"req_orders"}
+
+[2020-07-16 14:07:53][daily_logger][error][thread 3076] 收到json请求，json={"cmd":"req_fund"}
+
+[2020-07-16 14:07:53][daily_logger][error][thread 3076] 收到json请求，json={"cmd":"req_hold"}
+
+[2020-07-16 14:07:54][daily_logger][error][thread 3076] 收到json请求，json={"cmd":"req_trades"}
+
+[2020-07-16 14:07:54][daily_logger][error][thread 3076] 收到json请求，json={"cmd":"req_orders"}
+
+[2020-07-16 14:29:13][daily_logger][error][thread 3076] 收到json请求，json={"cmd":"req_fund"}
+
+[2020-07-16 14:29:13][daily_logger][error][thread 3076] 收到json请求，json={"cmd":"req_hold"}
+
+[2020-07-16 14:29:14][daily_logger][error][thread 3076] 收到json请求，json={"cmd":"req_trades"}
+
+[2020-07-16 14:29:14][daily_logger][error][thread 3076] 收到json请求，json={"cmd":"req_orders"}
+
+[2020-07-16 14:32:40][daily_logger][error][thread 12316] 收到json请求，json={"cmd":"req_fund"}
+
+[2020-07-16 14:32:41][daily_logger][error][thread 12316] 收到json请求，json={"cmd":"req_hold"}
+
+[2020-07-16 14:32:41][daily_logger][error][thread 12316] 收到json请求，json={"cmd":"req_trades"}
+
+[2020-07-16 14:32:42][daily_logger][error][thread 12316] 收到json请求，json={"cmd":"req_orders"}
+
+[2020-07-16 14:34:28][daily_logger][error][thread 948] 收到json请求，json={"cmd":"req_fund"}
+
+[2020-07-16 14:34:29][daily_logger][error][thread 948] 收到json请求，json={"cmd":"req_hold"}
+
+[2020-07-16 14:34:29][daily_logger][error][thread 948] 收到json请求，json={"cmd":"req_trades"}
+
+[2020-07-16 14:34:30][daily_logger][error][thread 948] 收到json请求，json={"cmd":"req_orders"}
+
+[2020-07-16 14:34:31][daily_logger][error][thread 948] 收到json请求，json={"cmd":"req_fund"}
+
+[2020-07-16 14:34:31][daily_logger][error][thread 948] 收到json请求，json={"cmd":"req_hold"}
+
+[2020-07-16 14:34:32][daily_logger][error][thread 948] 收到json请求，json={"cmd":"req_trades"}
+
+[2020-07-16 14:34:32][daily_logger][error][thread 948] 收到json请求，json={"cmd":"req_orders"}
+
+[2020-07-16 14:42:37][daily_logger][error][thread 17776] 收到json请求，json={"cmd":"req_fund"}
+
+[2020-07-16 14:42:37][daily_logger][error][thread 17776] 收到json请求，json={"cmd":"req_hold"}
+
+[2020-07-16 14:42:38][daily_logger][error][thread 17776] 收到json请求，json={"cmd":"req_trades"}
+
+[2020-07-16 14:42:38][daily_logger][error][thread 17776] 收到json请求，json={"cmd":"req_orders"}
+
+[2020-07-16 14:42:40][daily_logger][error][thread 17776] 收到json请求，json={"cmd":"req_fund"}
+
+[2020-07-16 14:42:41][daily_logger][error][thread 17776] 收到json请求，json={"cmd":"req_hold"}
+
+[2020-07-16 14:42:41][daily_logger][error][thread 17776] 收到json请求，json={"cmd":"req_trades"}
+
+[2020-07-16 14:42:42][daily_logger][error][thread 17776] 收到json请求，json={"cmd":"req_orders"}
+

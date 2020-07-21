@@ -1,0 +1,54 @@
+[2020-07-13 22:44:05][daily_logger][error][thread 10756] 收到json请求，json={"cmd": "req_hold"}
+
+[2020-07-13 22:44:27][daily_logger][error][thread 10756] 收到json请求，json={"cmd":"req_fund"}
+
+[2020-07-13 22:44:27][daily_logger][error][thread 10756] 收到json请求，json={"cmd":"req_hold"}
+
+[2020-07-13 22:44:28][daily_logger][error][thread 10756] 收到json请求，json={"cmd":"req_trades"}
+
+[2020-07-13 22:44:28][daily_logger][error][thread 10756] 收到json请求，json={"cmd":"req_orders"}
+
+[2020-07-13 23:01:49][daily_logger][error][thread 10756] 收到json请求，json={"cmd": "req_fund"}
+
+[2020-07-13 23:01:50][daily_logger][error][thread 10756] 收到json请求，json={"cmd": "req_hold"}
+
+[2020-07-13 23:01:50][daily_logger][error][thread 10756] 收到json请求，json={"cmd": "req_trades"}
+
+[2020-07-13 23:02:27][daily_logger][error][thread 3912] 收到json请求，json={"cmd": "req_fund"}
+
+[2020-07-13 23:02:27][daily_logger][error][thread 3912] 收到json请求，json={"cmd": "req_hold"}
+
+[2020-07-13 23:02:28][daily_logger][error][thread 3912] 收到json请求，json={"cmd": "req_trades"}
+
+[2020-07-13 23:04:18][daily_logger][error][thread 3912] 收到json请求，json={"cmd": "req_fund"}
+
+[2020-07-13 23:04:18][daily_logger][error][thread 3912] 收到json请求，json={"cmd": "req_hold"}
+
+[2020-07-13 23:04:21][daily_logger][error][thread 3912] 收到json请求，json={"cmd": "req_trades"}
+
+[2020-07-13 23:04:35][daily_logger][error][thread 3912] 收到json请求，json={"cmd": "req_orders"}
+
+[2020-07-13 23:04:49][daily_logger][error][thread 3912] 收到json请求，json={"cmd": "req_fund"}
+
+[2020-07-13 23:04:49][daily_logger][error][thread 3912] 收到json请求，json={"cmd": "req_hold"}
+
+[2020-07-13 23:04:49][daily_logger][error][thread 3912] 收到json请求，json={"cmd": "req_trades"}
+
+[2020-07-13 23:05:13][daily_logger][error][thread 3912] 收到json请求，json={"cmd": "req_fund"}
+
+[2020-07-13 23:05:14][daily_logger][error][thread 3912] 收到json请求，json={"cmd": "req_hold"}
+
+[2020-07-13 23:05:16][daily_logger][error][thread 3912] 收到json请求，json={"cmd": "req_orders"}
+
+[2020-07-13 23:05:20][daily_logger][error][thread 3912] 收到json请求，json={"cmd": "req_trades"}
+
+[2020-07-13 23:05:25][daily_logger][error][thread 3912] 收到json请求，json={"cmd": "req_orders"}
+
+[2020-07-13 23:05:29][daily_logger][error][thread 3912] 收到json请求，json={"cmd": "req_trades"}
+
+[2020-07-13 23:05:30][daily_logger][error][thread 3912] 收到json请求，json={"cmd": "req_trades"}
+
+[2020-07-13 23:05:30][daily_logger][error][thread 3912] 收到json请求，json={"cmd": "req_trades"}
+
+[2020-07-13 23:05:30][daily_logger][error][thread 3912] 收到json请求，json={"cmd": "req_trades"}
+
