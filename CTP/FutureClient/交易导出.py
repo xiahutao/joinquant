@@ -8,6 +8,7 @@ import datetime
 from configDB import *
 import pandas as pd
 import matplotlib.pyplot as plt
+import time
 auth(JOINQUANT_USER, JOINQUANT_PW)
 
 
@@ -62,7 +63,7 @@ if __name__ == "__main__":
     plt.title(title_str)
     plt.savefig(path + 'fig/' + account + '_net_' + today + '.png')
     # plt.show()
-
+    time.sleep(1)
     hold_df = api.req_hold()
     hold_pos = hold_df.loc[:, ['交易所', '交易日', '合约', '方向', '总仓', '上次结算价', '本次结算价', '保证金', '平仓盈亏', '持仓盈亏', '开仓成本', '持仓成本', '帐号']]
     hold_pos['symbol'] = hold_df['合约'].apply(lambda x: ''.join(filter(str.isalpha, x)))
@@ -79,7 +80,7 @@ if __name__ == "__main__":
 
     hold_pos['资金占比'] = hold_pos['保证金'] / fund_net
     hold_pos.to_excel(path + 'hold_' + account + '_' + today + '.xlsx')
-
+    time.sleep(1)
     trades_df = api.req_trades()
     trades_df = trades_df.sort_values(['成交时间'])
     print(trades_df)

@@ -747,7 +747,7 @@ if __name__ == '__main__':
     api = TqApi(TqAccount("G国泰君安", "85030120", "jz04282020"), web_gui=True)
     Trd = Trading(api)
     for i in range(1):
-        order = Trd.insert_order_bp_limit('INE.sc2012', 1)
-        order = Trd.insert_order_sp_limit('INE.sc2008', 1)
+        order = Trd.insert_order_bp_limit('SHFE.cu2008', 1)
+        order = Trd.insert_order_sp_limit('SHFE.cu2009', 1)
         time.sleep(5)
 
