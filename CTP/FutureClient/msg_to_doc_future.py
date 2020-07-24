@@ -75,6 +75,9 @@ def save_df_to_doc(document, test_df, word=None):
     # add_paragraph表示添加一个段落
     if word:
         document.add_paragraph(u'\n%s' % (word))
+    if len(test_df.columns) == 0:
+        # document.add_paragraph(u'\n%s' % ('无'))
+        return
 
     # 添加一个表格--行数和列数，行数多加一行，需要将列名同时保存
     t = document.add_table(test_df.shape[0] + 1, test_df.shape[1], style="Table Grid")
@@ -116,7 +119,6 @@ if __name__ == '__main__':
     path = 'G:/trading/trading_report/'
     account1 = '21900576'
     account2 = '85030120'
-    host_name = 'account_0710113519'
     bars = 5
     today = datetime.date.today()
     calen = get_trade_days(count=bars)
@@ -126,6 +128,8 @@ if __name__ == '__main__':
     hq_last_date = hq_last_date[:4] + hq_last_date[5:7] + hq_last_date[8:]
     today = datetime.date.strftime(today, '%Y%m%d')
     document = Document()
+    document.add_heading(f'交易报告{today}', level=0)
+    document.add_heading(f'账户汇总')
     # document.add_picture(f'{path}/account_{date}.png', width=Inches(6.0))
     # document.add_picture(f'{path}/JZ_ZG_{date}.png', width=Inches(6.0))
     # document.add_picture(f'{path}/JZ_ROE_{date}.png', width=Inches(6.0))
@@ -139,6 +143,7 @@ if __name__ == '__main__':
     fund_today1 = fund_df1[fund_df1['交易日'] == today].loc[:, ['交易日', '动态权益', '保证金']]\
         .assign(账户='浙商期货')\
         .assign(初始资产=4000000)\
+        .assign(动态权益=lambda df: df['动态权益'] - 1)\
         .rename(columns={'动态权益': '总资产'})
 
     fund_today2 = fund_df2[fund_df2['交易日'] == today].loc[:, ['交易日', '动态权益', '保证金']] \
@@ -157,7 +162,8 @@ if __name__ == '__main__':
     fund_total['保证金'] = fund_total['保证金'].apply(lambda x: '%.0f' % x)
     fund_total['资金使用率'] = fund_total['资金使用率'].apply(lambda x: '%.2f%%' % (x * 100))
     fund_total['收益率'] = fund_total['收益率'].apply(lambda x: '%.2f%%' % (x * 100))
-    fund_total = fund_total.loc[:, ['初始资产', '总资产', '保证金', '收益率', '资金使用率']]
+    fund_total = fund_total.loc[:, ['初始资产', '总资产', '保证金', '收益率', '资金使用率']].reset_index(drop=False)
+    fund_total = fund_total.loc[:, ['账户', '初始资产', '总资产', '保证金', '收益率', '资金使用率']]
 
     save_df_to_doc(document, fund_total, '账户总览')
 
@@ -167,6 +173,25 @@ if __name__ == '__main__':
     hold_df2 = pd.read_excel(path + 'hold_' + account2 + '_' + today + '.xlsx') \
         .assign(交易日=lambda df: df['交易日'].apply(lambda x: str(int(x + 0.1))))
     hold_df2 = hold_df2[hold_df2['总仓'] != 0]
+    hold1 = hold_df1.loc[:, ['合约', '方向', '总仓', '保证金', '开仓均价', '本次结算价', '资金占比', '帐号']]
+    hold1['trend'] = hold1['方向'].apply(lambda x: 1 if x == '多' else -1)
+    hold1['盈利价差'] = (hold1['本次结算价'] - hold1['开仓均价']) * hold1['trend']
+    hold1 = hold1.loc[:, ['合约', '方向', '总仓', '保证金', '开仓均价', '盈利价差', '资金占比', '帐号']]
+
+    hold2 = hold_df2.loc[:, ['合约', '方向', '总仓', '保证金', '开仓均价', '本次结算价', '资金占比', '帐号']]
+    hold2['trend'] = hold2['方向'].apply(lambda x: 1 if x == '多' else -1)
+    hold2['盈利价差'] = (hold2['本次结算价'] - hold2['开仓均价']) * hold2['trend']
+    hold2 = hold2.loc[:, ['合约', '方向', '总仓', '保证金', '开仓均价', '盈利价差', '资金占比', '帐号']]
+
+    hold1['盈利价差'] = hold1['盈利价差'].apply(lambda x: '%.0f' % x)
+    hold1['开仓均价'] = hold1['开仓均价'].apply(lambda x: '%.0f' % x)
+    hold1['保证金'] = hold1['保证金'].apply(lambda x: '%.0f' % x)
+    hold1['资金占比'] = hold1['资金占比'].apply(lambda x: '%.2f%%' % (x * 100))
+
+    hold2['盈利价差'] = hold2['盈利价差'].apply(lambda x: '%.0f' % x)
+    hold2['开仓均价'] = hold2['开仓均价'].apply(lambda x: '%.0f' % x)
+    hold2['保证金'] = hold2['保证金'].apply(lambda x: '%.0f' % x)
+    hold2['资金占比'] = hold2['资金占比'].apply(lambda x: '%.2f%%' % (x * 100))
 
     temp = pd.DataFrame()
     for stock_name in hold_df2['合约']:
@@ -229,11 +254,41 @@ if __name__ == '__main__':
     print(fund_total['总资产'].iloc[-1])
     temp['仓位占比'] = temp['保证金'] / int(fund_total['总资产'].iloc[-1])
 
-    save_df_to_doc(document, temp, '账户总持仓')
+    temp['保证金'] = temp['保证金'].apply(lambda x: '%.0f' % x)
+    temp['开仓均价'] = temp['开仓均价'].apply(lambda x: '%.0f' % x)
+    temp['盈利价差'] = temp['盈利价差'].apply(lambda x: '%.0f' % x)
+    temp['仓位占比'] = temp['仓位占比'].apply(lambda x: '%.2f%%' % (x * 100))
+    temp['总仓'] = temp['总仓'].apply(lambda x: '%.0f' % x)
+    temp = temp.loc[:, ['合约', '方向', '总仓', '开仓均价', '盈利价差', '保证金', '仓位占比']]
+
+    trad_df1 = pd.read_excel(path + 'trade_' + account1 + '_' + today + '.xlsx')\
+                   .loc[:, ['合约', '开平', '方向', '成交价', '成交手数', '成交时间', '成交编号']]
+    # trad_df1['交易原因'] = ''
+    trad_df2 = pd.read_excel(path + 'trade_' + account2 + '_' + today + '.xlsx')\
+                   .loc[:, ['合约', '开平', '方向', '成交价', '成交手数', '成交时间', '成交编号']]
+    # trad_df2['交易原因'] = ''
+
+
+    save_df_to_doc(document, temp, '总持仓汇总')
+    # save_df_to_doc(document, pd.DataFrame(), '持仓品种重大事项提醒')
+    # save_df_to_doc(document, pd.DataFrame(), '交易计划')
+    document.add_heading(f'浙商期货账户')
+    # save_df_to_doc(document, pd.DataFrame(), '浙商期货')
+    save_df_to_doc(document, pd.DataFrame(), '净值曲线')
+    document.add_picture(f'{path}/fig/{account1}_net_{today}.png', width=Inches(6.0))
+    save_df_to_doc(document, hold1, '期末持仓')
+    save_df_to_doc(document, trad_df1, '当日交易')
+    # save_df_to_doc(document, pd.DataFrame(), '国泰君安')
+    document.add_heading(f'国泰君安账户')
+    save_df_to_doc(document, pd.DataFrame(), '净值曲线')
+    document.add_picture(f'{path}/fig/{account2}_net_{today}.png', width=Inches(6.0))
+    save_df_to_doc(document, hold2, '期末持仓')
+    save_df_to_doc(document, trad_df2, '当日交易')
 
 
 
-    document.save(f'{path}/交易报告{today}.docx')
+
+    document.save(f'{path}/期货交易报告{today}.docx')
 
     a = 0
 

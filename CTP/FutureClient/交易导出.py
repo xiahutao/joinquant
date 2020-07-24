@@ -53,8 +53,8 @@ if __name__ == "__main__":
     net = fund_pos.loc[:, ['交易日', '静态权益']].rename(columns={'交易日': 'date'})
     net['date'] = net['date'].apply(lambda x: str(x))
     net = net.sort_values(['date'])
-    net['静态权益'] = net['静态权益'].shift(-1).fillna(value=fund_net)
-    net['净值曲线'] = net['静态权益'] / net['静态权益'].tolist()[0]
+    net['权益'] = net['静态权益'].shift(-1).fillna(value=fund_net)
+    net['净值曲线'] = net['权益'] / net['权益'].tolist()[0]
     net.to_excel(path + 'net_' + account + '_' + today + '.xlsx')
     net['date'] = pd.to_datetime(net['date'])
     title_str = '账户%s 净值曲线' % (account)
