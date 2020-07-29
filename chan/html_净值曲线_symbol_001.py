@@ -30,7 +30,7 @@ if __name__ == "__main__":
     period_ini_lst = [5, 15, 30, 60, 240, 1440]
     period_lst_all = PowerSetsRecursive(period_ini_lst)
     period_lst_all = [i for i in period_lst_all if len(i) >= 1]
-    # period_lst_all = [[5, 15, 30, 60, 240, 1440]]
+    period_lst_all = [[5, 15, 30, 60, 240, 1440]]
     print(period_lst_all)
 
     code_lst = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
@@ -199,12 +199,12 @@ if __name__ == "__main__":
 
     porfolio_state = pd.DataFrame(porfolio_lst, columns=['品种数', 'period', 'fee', 'sharpe_ratio', 'ann_return',
                                                          'max_drawdown', 's_date', 'e_date', 'method'])
-    porfolio_state.to_excel(fold_ini_path + 'state_blue_line//state_porfolio_001_' + '0729opt.xlsx', encoding='gbk')
+    # porfolio_state.to_excel(fold_ini_path + 'state_blue_line//state_porfolio_001_' + '0729all.xlsx', encoding='gbk')
 
     signal_state = pd.DataFrame(signal_lst, columns=['品种', 'period', 'period_num', 'fee', 'sharpe_ratio', 'ann_return',
                                                          'max_drawdown', 's_date', 'e_date', 'method'])
-    # signal_state.to_excel(
-    #     fold_ini_path + 'state_blue_line//state_signal_001_' + '0729opt.xlsx',
-    #     encoding='gbk')
+    signal_state.to_excel(
+        fold_ini_path + 'state_blue_line//state_signal_001_' + '0729opt.xlsx',
+        encoding='gbk')
 
 

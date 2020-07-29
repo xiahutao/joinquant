@@ -20,31 +20,33 @@ def PowerSetsRecursive(items):
 if __name__ == "__main__":
     fold_ini_path = 'e://Strategy//MT4//'
     # fold_ini_path = 'G://缠论//回测报告//'
-    level = 5
-    date_lst = [('2017-01-01', '2020-07-01')]
+    level = 1
+    date_lst = [('2020-01-01', '2020-07-01'), ('2015-01-01', '2017-01-01'), ('2017-01-01', '2020-01-01')]
+    # date_lst = [('2017-01-01', '2020-07-01')]
 
     fee = np.float(0.00015)
     porfolio = Future()
     period_ini_lst = [15, 30, 60, 240, 1440]
-    period_ini_lst = [15, 30, 60, 240, 1440]
+    period_ini_lst = [5, 15, 30, 60, 240, 1440]
     period_lst_all = PowerSetsRecursive(period_ini_lst)
-    period_lst_all = [i for i in period_lst_all if len(i) > 0]
-    period_lst_all = [[240], [15], [30], [60], [1440], [15, 30, 60, 240]]
+    period_lst_all = [i for i in period_lst_all if len(i) == 1]
+    # period_lst_all = [[5, 15, 30, 60, 240, 1440]]
+
     print(period_lst_all)
 
     code_lst = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
                 'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有品种32个
-    code_lst_5 = ['ap', 'j', 'rb', 'i', 'fu', 'sm', 'if', 'v', 'zn', 'pp', 'ni', 'pb']  # 所有5分钟夏普>0
-    code_lst_15 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'sc', 'v', 'zc', 'zn', 'c',
-                'if', 'sf', 'hc', 'au', 'sm', 'sr', 'ta']  # 所有15分钟夏普>0
-    code_lst_30 = ['ap', 'al', 'fu', 'i', 'j', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn',
-                'if', 'sf', 'sm', 'ta']  # 所有30分钟夏普>0
-    code_lst_60 = ['ap', 'al', 'cu', 'fu', 'i', 'j', 'ni', 'rb', 'sc', 'tf', 'v', 'zc', 'zn',
-                'hc', 'sm', 'bu', 'ta', 'ma']  # 所有60分钟夏普>0
-    code_lst_240 = ['ap', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'pp', 'rb', 'v', 'zc', 'zn', 'c',
-                'if', 'p', 'hc', 'jm', 'sm', 'bu', 'ta', 'ma']  # 所有4小时夏普>0
-    code_lst_1440 = ['ag', 'cu', 'j', 'pp', 'tf', 'v', 'zn', 'c',
-                  'au', 'jm', 'sm', 'bu', 'ta', 'ma']  # 所有日级别夏普>0
+    # code_lst_5 = ['ap', 'j', 'i', 'fu', 'sm', 'if', 'v', 'zn', 'pp', 'ni', 'pb']  # 所有5分钟夏普>0
+    # code_lst_15 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'sc', 'v', 'zc', 'zn', 'c',
+    #             'if', 'sf', 'hc', 'au', 'sm', 'sr', 'ta']  # 所有15分钟夏普>0
+    # code_lst_30 = ['ap', 'al', 'fu', 'i', 'j', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn',
+    #             'if', 'sf', 'sm', 'ta']  # 所有30分钟夏普>0
+    # code_lst_60 = ['ap', 'al', 'cu', 'fu', 'i', 'j', 'ni', 'rb', 'sc', 'tf', 'v', 'zc', 'zn',
+    #             'hc', 'sm', 'bu', 'ta', 'ma']  # 所有60分钟夏普>0
+    # code_lst_240 = ['ap', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'pp', 'rb', 'v', 'zc', 'zn', 'c',
+    #             'if', 'p', 'hc', 'jm', 'sm', 'bu', 'ta', 'ma']  # 所有4小时夏普>0
+    # code_lst_1440 = ['ag', 'cu', 'j', 'pp', 'tf', 'v', 'zn', 'c',
+    #               'au', 'jm', 'sm', 'bu', 'ta', 'ma']  # 所有日级别夏普>0
 
     # code_lst_5 = []  # 所有5分钟夏普>0
     code_lst_15 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'sc', 'v', 'zc', 'zn', 'c',
@@ -57,6 +59,7 @@ if __name__ == "__main__":
                     'if', 'p', 'hc', 'jm', 'sm', 'bu', 'ta', 'ma']  # 所有4小时夏普>0
     code_lst_1440 = ['ag', 'cu', 'j', 'pp', 'tf', 'v', 'zn', 'c',
                      'au', 'jm', 'sm', 'bu', 'ta', 'ma']  # 所有日级别夏普>0
+    code_lst_5 = ['ap', 'j', 'i', 'sf', 'pp', 'sm', 'fu', 'if', 'zn', 'sc', 'ag', 'p', 'pb']  # 所有5分钟夏普>0
 
     code_dict = {}
     code_dict['5'] = code_lst_5

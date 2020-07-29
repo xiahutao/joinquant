@@ -21,36 +21,39 @@ if __name__ == "__main__":
     fold_ini_path = 'e://Strategy//MT4//'
     # fold_ini_path = 'G://缠论//回测报告//'
     level = 1
+    method = 'sum'
     date_lst = [('2020-01-01', '2020-07-01'), ('2015-01-01', '2017-01-01'), ('2017-01-01', '2020-01-01')]
     # date_lst = [('2015-01-01', '2020-07-01')]
-    method = 'sum'
+
     fee = np.float(0.00015)
     porfolio = Future()
-    period_ini_lst = [15, 30, 60, 240, 1440]
-    period_ini_lst = [5, 15, 30, 60, 240, 1440]
+    period_ini_lst = [15]
+    period_ini_lst = [15, 30, 60, 240]
     period_lst_all = PowerSetsRecursive(period_ini_lst)
     period_lst_all = [i for i in period_lst_all if len(i) >= 1]
-    # period_lst_all = [[5, 15, 30, 60, 240, 1440]]
+    # period_lst_all = [[240], [15], [5], [15], [30], [60], [5, 15, 30, 60, 240, 1440], [15, 30, 60, 240, 1440], [15, 30, 60, 240]]
+    # period_lst_all = [[15, 30, 60, 240, 1440]]
     print(period_lst_all)
 
     code_lst = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
                 'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有品种32个
-    code_lst_5 = ['ni', 'ap', 'j', 'i', 'pp', 'sm', 'fu', 'if', 'sc', 'p', 'pb', 'al', 'c', 'hc', 'sf', ]  # 所有5分钟夏普>0
-    code_lst_15 = ['ap', 'ag', 'al', 'cu', 'fu', 'i', 'j', 'pb', 'pp', 'sc', 'zc', 'zn', 'c',
-                'if', 'sf', 'hc', 'au', 'sm', 'sr', 'ta']  # 所有15分钟夏普>0 20
-    code_lst_30 = ['ap', 'al', 'fu', 'i', 'j', 'rb', 'sc', 'tf', 'v', 'zc', 'zn',
-                'if', 'sf', 'sm', 'ta', 'cu']  # 所有30分钟夏普>0 16
-    code_lst_60 = ['ap', 'al', 'cu', 'fu', 'j', 'ni', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'oi', 'pp',
-                'hc', 'bu', 'ta', 'ma']  # 所有60分钟夏普>0 18
-    code_lst_240 = ['ap', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'pp', 'rb', 'v', 'zc', 'zn', 'c', 'oi',
-                'if', 'p', 'jm', 'sm', 'bu', 'ta', 'ma', 'pb', 'sc', 'tf']  # 所有4小时夏普>0 24
-    code_lst_1440 = ['ag', 'cu', 'j', 'pp', 'tf', 'v', 'zn', 'c', 'p',
-                  'au', 'sm', 'bu', 'ta', 'ma', 'al']  # 所有日级别夏普>0 15
+    code_lst_5 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
+                'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有5分钟夏普>0
+    code_lst_15 = ['j', 'v', 'hc', 'al', 'pb', 'ap', 'ta', 'pp', 'sr', 'i', 'cu', 'ni', 'sm', 'zc', 'fu',
+                   'c', 'if', 'tf', 'jm', 'rb', 'sc']  # 所有15分钟夏普>0 21
+    code_lst_30 = ['v', 'hc', 'al', 'rb', 'fu', 'pp', 'tf', 'i', 'j', 'cu', 'sc',
+                'sr', 'zn', 'c', 'ta', 'oi', 'bu', 'cf']  # 所有30分钟夏普>0 18
+    code_lst_60 = ['ap', 'hc', 'rb', 'al', 'ta', 'sc', 'j', 'zc', 'ni',
+                'zn', 'v', 'pb', 'oi', 'fu']  # 所有60分钟夏普>0 14
+    code_lst_240 = ['ma', 'cu', 'al', 'zn', 'v', 'c', 'pp', 'i', 'p', 'ta',
+                'sm', 'zc', 'bu', 'fu', 'ni']  # 所有4小时夏普>0 15
+    code_lst_1440 = ['ma', 'tf', 'au', 'cu', 'j', 'ag', 'fu',
+                  'pb', 'pp', 'sr', 'sm', 'bu', 'zn', 'v', 'ni', 'p', 'rb']  # 所有日级别夏普>0 17
 
     # code_lst_5 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
     #             'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有5分钟夏普>0
     # code_lst_15 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
-    #             'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有15分钟夏普>0
+    #             'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有15分钟夏普>0
     # code_lst_30 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
     #             'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有30分钟夏普>0
     # code_lst_60 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
@@ -90,7 +93,7 @@ if __name__ == "__main__":
                     if code not in code_dict[str(period)]:
                         continue
                     period_name.append(period)
-                    mode = '蓝线笔_蓝线反转确认_蓝线反转平仓_200627_' + str(period) + '分钟_12tick_0710笔'
+                    mode = '缠论003_200724_' + str(period) + '分钟'
                     fold_path = fold_ini_path + mode + '//'
                     html = pd.read_html(fold_path + code + '.htm', encoding='gbk')
                     state = html[0]
@@ -170,6 +173,7 @@ if __name__ == "__main__":
                 chg_df['net'] = 1 + chg_df['chg'].cumsum()
             else:
                 chg_df['net'] = (1 + chg_df['chg']).cumprod()
+            # chg_df['net'] = 1 + chg_df['chg'].cumsum()
             chg_df = chg_df.reset_index(drop=False)
             chg_df['date_time'] = pd.to_datetime(chg_df['date_time'])
             chg_df = chg_df.set_index(['date_time'])
@@ -199,12 +203,12 @@ if __name__ == "__main__":
 
     porfolio_state = pd.DataFrame(porfolio_lst, columns=['品种数', 'period', 'fee', 'sharpe_ratio', 'ann_return',
                                                          'max_drawdown', 's_date', 'e_date', 'method'])
-    porfolio_state.to_excel(fold_ini_path + 'state_blue_line//state_porfolio_001_' + '0729opt.xlsx', encoding='gbk')
+    # porfolio_state.to_excel(fold_ini_path + 'state_blue_line//state_porfolio_缠论003' + '0728all.xlsx', encoding='gbk')
 
     signal_state = pd.DataFrame(signal_lst, columns=['品种', 'period', 'period_num', 'fee', 'sharpe_ratio', 'ann_return',
                                                          'max_drawdown', 's_date', 'e_date', 'method'])
-    # signal_state.to_excel(
-    #     fold_ini_path + 'state_blue_line//state_signal_001_' + '0729opt.xlsx',
-    #     encoding='gbk')
+    signal_state.to_excel(
+        fold_ini_path + 'state_blue_line//state_signal_缠论003' + '0729.xlsx',
+        encoding='gbk')
 
 
