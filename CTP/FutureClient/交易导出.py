@@ -68,7 +68,10 @@ if __name__ == "__main__":
     hold_pos = hold_df.loc[:, ['交易所', '交易日', '合约', '方向', '总仓', '上次结算价', '本次结算价', '保证金', '平仓盈亏', '持仓盈亏', '开仓成本', '持仓成本', '帐号']]
     hold_pos['symbol'] = hold_df['合约'].apply(lambda x: ''.join(filter(str.isalpha, x)))
     hold_pos['symbol'] = hold_pos['symbol'].apply(lambda x: x.upper())
+    print(hold_pos)
+    hold_pos = hold_pos.tail(7)
     contract_lst = hold_pos.symbol.tolist()
+    print(contract_lst)
     VolumeMultiple_dict = porfolio.get_VolumeMultiple(contract_lst)
     VolumeMultiple_lst = []
     for symbol in contract_lst:
