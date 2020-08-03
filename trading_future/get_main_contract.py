@@ -22,8 +22,8 @@ if __name__ == '__main__':
     symbol_lst = ['C', 'CS', 'A', 'B', 'M', 'RM', 'Y', 'P', 'OI', 'L', 'V', 'PP', 'TA', 'RU', 'BU', 'MA', 'SC', 'FU',
                    'AL', 'ZN', 'CU', 'PB', 'NI', 'SN', 'J', 'JM', 'I', 'RB', 'HC', 'ZC', 'SF', 'SM', 'FG', 'IF',
                    'IH', 'IC', 'T', 'TF', 'AG', 'AU', 'JD', 'AP', 'CJ', 'CF', 'SR']
-    symbol_lst = ['SF', 'RU', 'C', 'P', 'AU', 'CU', 'ZN', 'SC', 'Y', 'CF', 'I', 'AG', 'M', 'OI', 'RB', 'IH', 'IC', 'JD', 'IF', 'SA', 'NI']
-    symbol_lst = ['V', 'AP', 'SM', 'RB', 'HC', 'MA', 'FU', 'ZC', 'TA', 'BU']
+    symbol_lst = ['SF', 'RU', 'P', 'AU', 'CU', 'ZN', 'SC', 'Y', 'CF', 'I', 'AG', 'M', 'OI', 'IH', 'IC', 'JD', 'IF', 'SA', 'NI', 'V', 'AP', 'SM', 'RB', 'HC', 'MA', 'FU', 'ZC', 'TA', 'BU', 'C']
+    # symbol_lst = ['V', 'AP', 'SM', 'RB', 'HC', 'MA', 'FU', 'ZC', 'TA', 'BU', 'C']
     date = datetime.date.today()
     # date = pd.to_datetime('2020-06-29')
 
@@ -38,7 +38,6 @@ if __name__ == '__main__':
     df = pd.DataFrame(df).T
     print(df)
     df.to_csv('G:/trading/main_contract.csv')
-
 
     # code = 'Y8888.XDCE'
     # sday = '2010-01-01'

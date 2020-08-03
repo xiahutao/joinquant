@@ -69,7 +69,7 @@ if __name__ == "__main__":
     hold_pos['symbol'] = hold_df['合约'].apply(lambda x: ''.join(filter(str.isalpha, x)))
     hold_pos['symbol'] = hold_pos['symbol'].apply(lambda x: x.upper())
     print(hold_pos)
-    hold_pos = hold_pos.tail(7)
+    hold_pos = hold_pos.tail(6)
     contract_lst = hold_pos.symbol.tolist()
     print(contract_lst)
     VolumeMultiple_dict = porfolio.get_VolumeMultiple(contract_lst)

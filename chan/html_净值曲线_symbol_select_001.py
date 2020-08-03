@@ -20,7 +20,7 @@ def PowerSetsRecursive(items):
 if __name__ == "__main__":
     fold_ini_path = 'e://Strategy//MT4//'
     # fold_ini_path = 'G://缠论//回测报告//'
-    level = 1
+    level = 10
     date_lst = [('2020-01-01', '2020-07-01'), ('2015-01-01', '2017-01-01'), ('2017-01-01', '2020-01-01')]
     date_lst = [('2015-01-01', '2020-07-01')]
     signal_date_lst = [('2015-01-01', '2016-01-01'), ('2016-01-01', '2017-01-01'), ('2017-01-01', '2018-01-01'),
@@ -33,35 +33,46 @@ if __name__ == "__main__":
     period_lst_all = PowerSetsRecursive(period_ini_lst)
     period_lst_all = [i for i in period_lst_all if len(i) == 1]
     # period_lst_all = [[5, 15, 30, 60, 240, 1440]]
-    # period_lst_all = [[5]]
+    period_lst_all = [[15, 30, 60, 240]]
     print(period_lst_all)
 
     code_lst = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
                 'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有品种32个
-    code_lst_5 = ['ni', 'ap', 'j', 'i', 'pp', 'sm', 'fu', 'if', 'sc', 'p', 'pb', 'al', 'c', 'hc', 'sf', ]  # 所有5分钟夏普>0
-    code_lst_15 = ['ap', 'ag', 'al', 'cu', 'fu', 'i', 'j', 'pb', 'pp', 'sc', 'zc', 'zn', 'c',
-                'if', 'sf', 'hc', 'au', 'sm', 'sr', 'ta']  # 所有15分钟夏普>0 20
-    code_lst_30 = ['ap', 'al', 'fu', 'i', 'j', 'rb', 'sc', 'tf', 'v', 'zc', 'zn',
-                'if', 'sf', 'sm', 'ta', 'cu']  # 所有30分钟夏普>0 16
-    code_lst_60 = ['ap', 'al', 'cu', 'fu', 'j', 'ni', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'oi', 'pp',
-                'hc', 'bu', 'ta', 'ma']  # 所有60分钟夏普>0 18
-    code_lst_240 = ['ap', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'pp', 'rb', 'v', 'zc', 'zn', 'c', 'oi',
-                'if', 'p', 'jm', 'sm', 'bu', 'ta', 'ma', 'pb', 'sc', 'tf']  # 所有4小时夏普>0 24
-    code_lst_1440 = ['ag', 'cu', 'j', 'pp', 'tf', 'v', 'zn', 'c', 'p',
-                  'au', 'sm', 'bu', 'ta', 'ma', 'al']  # 所有日级别夏普>0 15
+    # code_lst_5 = ['j', 'ap', 'sm', 'fu', 'pb', 'sc', 'ag', 'al', 'bu', 'c', 'i', 'ma', 'ni', 'p', 'pp', 'ru', 'sf', 'zc']  # 所有夏普>0年份胜率>=0.5
+    # code_lst_15 = ['fu', 'j', 'sm', 'al', 'sr', 'ag', 'ap', 'c', 'cu', 'hc', 'if', 'ni', 'pb',
+    #             'pp', 'sc', 'zc', 'zn', 'bu', 'cf', 'sf', 'ta', 'v']  # 所有夏普>0年份胜率>=0.5
+    # code_lst_30 = ['ap', 'fu', 'sm', 'if', 'rb', 'v', 'sf', 'al', 'hc', 'j', 'sc',
+    #             'ta', 'tf', 'ag', 'i', 'p', 'zc', 'zn']  # 所有夏普>0年份胜率>=0.5
+    # code_lst_60 = ['ap', 'fu', 'j', 'sc', 'al', 'bu', 'hc', 'v', 'ma', 'ni', 'pp', 'rb', 'ru', 'cf',
+    #             'cu', 'oi', 'pb', 'sm', 'sr', 'ta', 'tf', 'zc', 'zn']  # 所有夏普>0年份胜率>=0.5
+    # code_lst_240 = ['fu', 'i', 'al', 'cu', 'if', 'j', 'ma', 'ta', 'v', 'sm', 'ap', 'bu', 'c', 'cf',
+    #             'jm', 'p', 'pp', 'sc', 'zc', 'zn', 'au', 'ag', 'm', 'pb', 'rb', 'sr', 'tf']  # 所有夏普>0年份胜率>=0.5
+    # code_lst_1440 = ['c', 'ma', 'j', 'pp', 'v', 'au', 'sm', 'ag', 'bu',
+    #               'cu', 'p', 'tf', 'sr', 'al', 'jm', 'm', 'pb', 'rb', 'zc', 'zn']  # 所有夏普>0年份胜率>=0.5
 
-    code_lst_5 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
-                'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有5分钟夏普>0
-    code_lst_15 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
-                'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有15分钟夏普>0
-    code_lst_30 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
-                'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有30分钟夏普>0
-    code_lst_60 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
-                'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有60分钟夏普>0
-    code_lst_240 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
-                'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有4小时夏普>0
-    code_lst_1440 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
-                'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有日级别夏普>0
+    code_lst_5 = ['j', 'ap', 'sm', 'fu', 'pb', 'sc']  # 所有夏普>0年份胜率>0.5
+    code_lst_15 = ['fu', 'j', 'sm', 'al', 'sr', 'ag', 'ap', 'c', 'cu', 'hc', 'if', 'ni', 'pb',
+                   'pp', 'sc', 'zc', 'zn']  # 所有夏普>0年份胜率>0.5
+    code_lst_30 = ['ap', 'fu', 'sm', 'if', 'rb', 'v', 'sf', 'al', 'hc', 'j', 'sc',
+                   'ta', 'tf']  # 所有夏普>0年份胜率>0.5
+    code_lst_60 = ['ap', 'fu', 'j', 'sc', 'al', 'bu', 'hc', 'v', 'ma', 'ni', 'pp', 'rb', 'ru']  # 所有夏普>0年份胜率>0.5
+    code_lst_240 = ['fu', 'i', 'al', 'cu', 'if', 'j', 'ma', 'ta', 'v', 'sm', 'ap', 'bu', 'c', 'cf',
+                    'jm', 'p', 'pp', 'sc', 'zc', 'zn', 'au']  # 所有夏普>0年份胜率>0.5
+    code_lst_1440 = ['c', 'ma', 'j', 'pp', 'v', 'au', 'sm', 'ag', 'bu',
+                  'cu', 'p', 'tf', 'sr']  # 所有夏普>0年份胜率>0.5
+
+    # code_lst_5 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
+    #             'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有5分钟夏普>0
+    # code_lst_15 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
+    #             'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有15分钟夏普>0
+    # code_lst_30 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
+    #             'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有30分钟夏普>0
+    # code_lst_60 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
+    #             'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有60分钟夏普>0
+    # code_lst_240 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
+    #             'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有4小时夏普>0
+    # code_lst_1440 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
+    #             'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有日级别夏普>0
 
     code_dict = {}
     code_dict['5'] = code_lst_5
@@ -124,7 +135,9 @@ if __name__ == "__main__":
                 for (sdate, edate) in signal_date_lst:
                     profit_df_ = profit_df[(profit_df['date_time'] > sdate) & (profit_df['date_time'] < edate)]
                     # print(profit_df)
-                    net_lst = profit_df.net.tolist()
+                    if len(profit_df_) == 0:
+                        continue
+                    net_lst = profit_df_.net.tolist()
                     try:
                         sharpe_ratio = yearsharpRatio(net_lst, 1)
                     except:
@@ -203,12 +216,12 @@ if __name__ == "__main__":
 
     porfolio_state = pd.DataFrame(porfolio_lst, columns=['品种数', 'period', 'fee', 'sharpe_ratio', 'ann_return',
                                                          'max_drawdown', 's_date', 'e_date', 'method'])
-    # porfolio_state.to_excel(fold_ini_path + 'state_blue_line//state_porfolio_001_' + '0729all.xlsx', encoding='gbk')
+    porfolio_state.to_excel(fold_ini_path + 'state_blue_line//state_porfolio_001_' + '0729_51.xlsx', encoding='gbk')
 
     signal_state = pd.DataFrame(signal_lst, columns=['品种', 'period', 'period_num', 'fee', 'sharpe_ratio', 'ann_return',
                                                          'max_drawdown', 's_date', 'e_date', 'method'])
-    signal_state.to_excel(
-        fold_ini_path + 'state_blue_line//state_signal_001_' + '0803.xlsx',
-        encoding='gbk')
+    # signal_state.to_excel(
+    #     fold_ini_path + 'state_blue_line//state_signal_001_' + '0803.xlsx',
+    #     encoding='gbk')
 
 
