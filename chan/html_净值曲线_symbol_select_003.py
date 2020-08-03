@@ -20,7 +20,7 @@ def PowerSetsRecursive(items):
 if __name__ == "__main__":
     fold_ini_path = 'e://Strategy//MT4//'
     # fold_ini_path = 'G://缠论//回测报告//'
-    level = 10
+    level = 1
     date_lst = [('2020-01-01', '2020-07-01'), ('2015-01-01', '2017-01-01'), ('2017-01-01', '2020-01-01')]
     date_lst = [('2015-01-01', '2020-07-01')]
     signal_date_lst = [('2015-01-01', '2016-01-01'), ('2016-01-01', '2017-01-01'), ('2017-01-01', '2018-01-01'),
@@ -33,33 +33,30 @@ if __name__ == "__main__":
     period_lst_all = PowerSetsRecursive(period_ini_lst)
     period_lst_all = [i for i in period_lst_all if len(i) == 1]
     # period_lst_all = [[5, 15, 30, 60, 240, 1440]]
-    period_lst_all = [[15, 30, 60, 240]]
+    # period_lst_all = [[15, 30, 60, 240]]
     print(period_lst_all)
-
+    #  一筛133
     code_lst = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
                 'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有品种32个
-    # code_lst_5 = ['j', 'ap', 'sm', 'fu', 'pb', 'sc', 'ag', 'al', 'bu', 'c', 'i', 'ma', 'ni', 'p', 'pp', 'ru', 'sf', 'zc']  # 所有夏普>0年份胜率>=0.5
-    # code_lst_15 = ['fu', 'j', 'sm', 'al', 'sr', 'ag', 'ap', 'c', 'cu', 'hc', 'if', 'ni', 'pb',
-    #             'pp', 'sc', 'zc', 'zn', 'bu', 'cf', 'sf', 'ta', 'v']  # 所有夏普>0年份胜率>=0.5
-    # code_lst_30 = ['ap', 'fu', 'sm', 'if', 'rb', 'v', 'sf', 'al', 'hc', 'j', 'sc',
-    #             'ta', 'tf', 'ag', 'i', 'p', 'zc', 'zn']  # 所有夏普>0年份胜率>=0.5
-    # code_lst_60 = ['ap', 'fu', 'j', 'sc', 'al', 'bu', 'hc', 'v', 'ma', 'ni', 'pp', 'rb', 'ru', 'cf',
-    #             'cu', 'oi', 'pb', 'sm', 'sr', 'ta', 'tf', 'zc', 'zn']  # 所有夏普>0年份胜率>=0.5
-    # code_lst_240 = ['fu', 'i', 'al', 'cu', 'if', 'j', 'ma', 'ta', 'v', 'sm', 'ap', 'bu', 'c', 'cf',
-    #             'jm', 'p', 'pp', 'sc', 'zc', 'zn', 'au', 'ag', 'm', 'pb', 'rb', 'sr', 'tf']  # 所有夏普>0年份胜率>=0.5
-    # code_lst_1440 = ['c', 'ma', 'j', 'pp', 'v', 'au', 'sm', 'ag', 'bu',
-    #               'cu', 'p', 'tf', 'sr', 'al', 'jm', 'm', 'pb', 'rb', 'zc', 'zn']  # 所有夏普>0年份胜率>=0.5
-
-    code_lst_5 = ['j', 'ap', 'sm', 'fu', 'pb', 'sc']  # 所有夏普>0年份胜率>0.5
-    code_lst_15 = ['fu', 'j', 'sm', 'al', 'sr', 'ag', 'ap', 'c', 'cu', 'hc', 'if', 'ni', 'pb',
-                   'pp', 'sc', 'zc', 'zn']  # 所有夏普>0年份胜率>0.5
-    code_lst_30 = ['ap', 'fu', 'sm', 'if', 'rb', 'v', 'sf', 'al', 'hc', 'j', 'sc',
-                   'ta', 'tf']  # 所有夏普>0年份胜率>0.5
-    code_lst_60 = ['ap', 'fu', 'j', 'sc', 'al', 'bu', 'hc', 'v', 'ma', 'ni', 'pp', 'rb', 'ru']  # 所有夏普>0年份胜率>0.5
-    code_lst_240 = ['fu', 'i', 'al', 'cu', 'if', 'j', 'ma', 'ta', 'v', 'sm', 'ap', 'bu', 'c', 'cf',
-                    'jm', 'p', 'pp', 'sc', 'zc', 'zn', 'au']  # 所有夏普>0年份胜率>0.5
-    code_lst_1440 = ['c', 'ma', 'j', 'pp', 'v', 'au', 'sm', 'ag', 'bu',
-                  'cu', 'p', 'tf', 'sr']  # 所有夏普>0年份胜率>0.5
+    code_lst_5 = ['sm', 'j', 'zc', 'ap', 'al', 'c', 'i', 'pp', 'sc', 'ag', 'bu', 'hc', 'ma', 'ni', 'p', 'rb', 'sf', 'ta', 'v']  # 所有夏普>0年份胜率>=0.5
+    code_lst_15 = ['hc', 'j', 'sr', 'al', 'ma', 'ni', 'sm', 'ap', 'cf', 'fu', 'i', 'if', 'jm',
+                   'pb', 'pp', 'sc', 'tf', 'v', 'zn', 'ag', 'bu', 'c', 'cu', 'p', 'ta', 'zc']  # 所有夏普>0年份胜率>=0.5
+    code_lst_30 = ['fu', 'hc', 'v', 'al', 'ap', 'cu', 'sc', 'ta', 'tf', 'cf', 'i', 'if', 'j', 'jm', 'ma', 'p', 'pp', 'ru', 'sf', 'sr', 'zc', 'zn']  # 所有夏普>0年份胜率>=0.5
+    code_lst_60 = ['ap', 'bu', 'j', 'rb', 'al', 'hc', 'pb', 'ta', 'v', 'zn', 'cu', 'm', 'ma', 'ni', 'oi', 'pp', 'ru', 'sr', 'tf']  # 所有夏普>0年份胜率>=0.5
+    code_lst_240 = ['c', 'fu', 'cu', 'i', 'p', 'ta', 'v', 'zn', 'zc', 'al', 'ap', 'j', 'm', 'pp',
+                    'tf', 'ag', 'hc', 'if', 'jm', 'ma', 'ni', 'pb', 'rb', 'ru', 'sm', 'sr']  # 所有夏普>0年份胜率>=0.5
+    code_lst_1440 = ['fu', 'ma', 'pp', 'sm', 'tf', 'ag', 'p', 'v', 'au',
+                     'al', 'bu', 'cu', 'j', 'pb', 'rb', 'sf', 'c', 'ni', 'oi', 'zc', 'zn']  # 所有夏普>0年份胜率>=0.5
+    #  二筛78
+    # code_lst_5 = ['sm', 'j', 'zc', 'ap', 'al', 'c', 'i', 'pp', 'sc']  # 所有夏普>0年份胜率>0.5
+    # code_lst_15 = ['hc', 'j', 'sr', 'al', 'ma', 'ni', 'sm', 'ap', 'cf', 'fu', 'i', 'if', 'jm',
+    #                'pb', 'pp', 'sc', 'tf', 'v', 'zn']  # 所有夏普>0年份胜率>0.5
+    # code_lst_30 = ['fu', 'hc', 'v', 'al', 'ap', 'cu', 'sc', 'ta', 'tf', ]  # 所有夏普>0年份胜率>0.5
+    # code_lst_60 = ['ap', 'bu', 'j', 'rb', 'al', 'hc', 'pb', 'ta', 'v', 'zn', ]  # 所有夏普>0年份胜率>0.5
+    # code_lst_240 = ['c', 'fu', 'cu', 'i', 'p', 'ta', 'v', 'zn', 'zc', 'al', 'ap', 'j', 'm', 'pp',
+    #                 'tf',]  # 所有夏普>0年份胜率>0.5
+    # code_lst_1440 = ['fu', 'ma', 'pp', 'sm', 'tf', 'ag', 'p', 'v', 'au',
+    #               'al', 'bu', 'cu', 'j', 'pb', 'rb', 'sf']  # 所有夏普>0年份胜率>0.5
 
     # code_lst_5 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
     #             'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有5分钟夏普>0
@@ -104,7 +101,7 @@ if __name__ == "__main__":
                     if code not in code_dict[str(period)]:
                         continue
                     period_name.append(period)
-                    mode = '蓝线笔_蓝线反转确认_蓝线反转平仓_200627_' + str(period) + '分钟_12tick_0710笔'
+                    mode = '缠论003_200724_' + str(period) + '分钟'
                     fold_path = fold_ini_path + mode + '//'
                     html = pd.read_html(fold_path + code + '.htm', encoding='gbk')
                     state = html[0]
@@ -216,12 +213,12 @@ if __name__ == "__main__":
 
     porfolio_state = pd.DataFrame(porfolio_lst, columns=['品种数', 'period', 'fee', 'sharpe_ratio', 'ann_return',
                                                          'max_drawdown', 's_date', 'e_date', 'method'])
-    porfolio_state.to_excel(fold_ini_path + 'state_blue_line//state_porfolio_001_' + '0729_51.xlsx', encoding='gbk')
+    porfolio_state.to_excel(fold_ini_path + 'state_blue_line//state_porfolio_003_' + '0803_50.xlsx', encoding='gbk')
 
     signal_state = pd.DataFrame(signal_lst, columns=['品种', 'period', 'period_num', 'fee', 'sharpe_ratio', 'ann_return',
                                                          'max_drawdown', 's_date', 'e_date', 'method'])
-    # signal_state.to_excel(
-    #     fold_ini_path + 'state_blue_line//state_signal_001_' + '0803.xlsx',
-    #     encoding='gbk')
+    signal_state.to_excel(
+        fold_ini_path + 'state_blue_line//state_signal_003_' + '0803_50.xlsx',
+        encoding='gbk')
 
 

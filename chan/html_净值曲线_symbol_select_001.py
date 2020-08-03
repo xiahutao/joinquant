@@ -38,6 +38,7 @@ if __name__ == "__main__":
 
     code_lst = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
                 'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有品种32个
+    #  一筛128
     # code_lst_5 = ['j', 'ap', 'sm', 'fu', 'pb', 'sc', 'ag', 'al', 'bu', 'c', 'i', 'ma', 'ni', 'p', 'pp', 'ru', 'sf', 'zc']  # 所有夏普>0年份胜率>=0.5
     # code_lst_15 = ['fu', 'j', 'sm', 'al', 'sr', 'ag', 'ap', 'c', 'cu', 'hc', 'if', 'ni', 'pb',
     #             'pp', 'sc', 'zc', 'zn', 'bu', 'cf', 'sf', 'ta', 'v']  # 所有夏普>0年份胜率>=0.5
@@ -49,7 +50,7 @@ if __name__ == "__main__":
     #             'jm', 'p', 'pp', 'sc', 'zc', 'zn', 'au', 'ag', 'm', 'pb', 'rb', 'sr', 'tf']  # 所有夏普>0年份胜率>=0.5
     # code_lst_1440 = ['c', 'ma', 'j', 'pp', 'v', 'au', 'sm', 'ag', 'bu',
     #               'cu', 'p', 'tf', 'sr', 'al', 'jm', 'm', 'pb', 'rb', 'zc', 'zn']  # 所有夏普>0年份胜率>=0.5
-
+    #  二筛83
     code_lst_5 = ['j', 'ap', 'sm', 'fu', 'pb', 'sc']  # 所有夏普>0年份胜率>0.5
     code_lst_15 = ['fu', 'j', 'sm', 'al', 'sr', 'ag', 'ap', 'c', 'cu', 'hc', 'if', 'ni', 'pb',
                    'pp', 'sc', 'zc', 'zn']  # 所有夏普>0年份胜率>0.5

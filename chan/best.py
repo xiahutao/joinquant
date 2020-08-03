@@ -7,7 +7,7 @@ import pandas as pd
 if __name__ == "__main__":
     fold_ini_path = 'e://Strategy//MT4//'
     # fold_ini_path = 'G://缠论//回测报告//'
-    signal_state = pd.read_excel(fold_ini_path + 'state_blue_line//state_signal_001_0803' + '' + '.xlsx',
+    signal_state = pd.read_excel(fold_ini_path + 'state_blue_line//state_signal_003_0803' + '' + '.xlsx',
         encoding='gbk', index_col=0)
     print(signal_state)
     signal_state = signal_state.drop_duplicates(['品种', 'period', 's_date', 'e_date'], keep='first').dropna()
@@ -21,7 +21,7 @@ if __name__ == "__main__":
         row.append(len(group[group['sharpe_ratio'] > 0]) / len(group))
         lst.append(row)
     df = pd.DataFrame(lst, columns=['品种', 'period', 'winR'])
-    df.to_excel(fold_ini_path + 'state_blue_line//state_signal_001_0803' + '_select.xlsx',
+    df.to_excel(fold_ini_path + 'state_blue_line//state_signal_003_0803' + '_select.xlsx',
         encoding='gbk')
 
 
