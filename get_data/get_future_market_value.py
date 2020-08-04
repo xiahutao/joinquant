@@ -53,8 +53,8 @@ def stock_price(sec, sday, eday, fred):
 if __name__ == '__main__':
     api = TqApi()
     # api = TqApi(TqAccount("G国泰君安", "85030120", "jz04282020"), web_gui=False)
-    # fold_ini_path = 'e://Strategy//MT4//'
-    fold_ini_path = 'G://缠论//回测报告//'
+    fold_ini_path = 'e://Strategy//MT4//'
+    # fold_ini_path = 'G://缠论//回测报告//'
 
     level = 5
     calen = get_trade_days(count=5)
@@ -129,7 +129,7 @@ if __name__ == '__main__':
     trading_info['market_value'] = trading_info['VolumeMultiple'] * trading_info['last_price']
     trading_info['market_margin'] = trading_info['market_value'] * trading_info['LongMarginRatio']
     trading_info['lots'] = init_aum / trading_info['market_value'] / len(symbol_lst) * level / 2
-    # trading_info.to_csv('F:/data/future/' + 'future_market_value_' + hq_last_date + '.csv')
+    trading_info.to_csv('F:/data/future/' + 'future_market_value_' + hq_last_date + '.csv')
 
     singal = pd.read_excel(fold_ini_path + 'state_blue_line//state_signal_all_period实盘1' + '.xlsx', encoding='gbk',
                                  index_col=0)
