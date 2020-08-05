@@ -3,7 +3,7 @@
 # @Author  : zhangfang
 import sys
 
-sys.path.append('C:\\Users\\Administrator\\PycharmProjects\\joinquant')  # 新加入的
+sys.path.append('C:\\Users\\51951\\PycharmProjects\\joinquant')  # 新加入的
 
 from tqsdk import TqApi, TqSim, TqAccount
 import pandas as pd

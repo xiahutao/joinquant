@@ -9,7 +9,7 @@ Created on Tue Oct 23 20:21:02 2018
 from __future__ import division
 import sys
 print(sys.path)
-sys.path.append('C:\\Users\\Administrator\\PycharmProjects\\joinquant')  # 新加入的
+sys.path.append('C:\\Users\\51951\\PycharmProjects\\joinquant')  # 新加入的
 print(sys.path)
 import pandas as pd
 import os
@@ -53,14 +53,14 @@ def stock_price_cgo(sec, sday, eday):
     return temp
 
 
-def stock_code_lst(sec):
-    """
-    输入 股票代码，开始日期，截至日期
-    输出 个股的后复权的开高低收价格
-    """
-    temp = jzmongo['wind_index'].read(sec + '_component')
-    temp = temp[temp['date'] == temp['date'].max()]
-    return temp.code.tolist()
+# def stock_code_lst(sec):
+#     """
+#     输入 股票代码，开始日期，截至日期
+#     输出 个股的后复权的开高低收价格
+#     """
+#     temp = jzmongo['wind_index'].read(sec + '_component')
+#     temp = temp[temp['date'] == temp['date'].max()]
+#     return temp.code.tolist()
 
 
 def get_date(calen, today):
@@ -187,9 +187,9 @@ def get_signal(signal, aum, balance, EndDate, close_dict):
 
 
 if __name__ == '__main__':
-    myclient = pymongo.MongoClient('mongodb://juzheng:jz2018*@192.168.2.201:27017/')
-    jzmongo = Arctic(myclient)
-    aum = 16000000
+    # myclient = pymongo.MongoClient('mongodb://juzheng:jz2018*@192.168.2.201:27017/')
+    # jzmongo = Arctic(myclient)
+    aum = 21000000
     balance = 5
     strategy_id = 'momentum'
     fold_path = 'G://trading_strategy//'
