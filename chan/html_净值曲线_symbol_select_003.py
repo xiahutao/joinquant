@@ -70,6 +70,12 @@ if __name__ == "__main__":
     #             'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有4小时夏普>0
     # code_lst_1440 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
     #             'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有日级别夏普>0
+    code_lst_5 = ['A', 'B', 'CS', 'CJ', 'FG', 'L', 'JD', 'SA']
+    code_lst_15 = ['A', 'B', 'CS', 'CJ', 'FG', 'L', 'JD', 'SA']
+    code_lst_30 = ['A', 'B', 'CS', 'CJ', 'FG', 'L', 'JD', 'SA']
+    code_lst_60 = ['A', 'B', 'CS', 'CJ', 'FG', 'L', 'JD', 'SA']
+    code_lst_240 = ['A', 'B', 'CS', 'CJ', 'FG', 'L', 'JD', 'SA']
+    code_lst_1440 = ['A', 'B', 'CS', 'CJ', 'FG', 'L', 'JD', 'SA']
 
     code_dict = {}
     code_dict['5'] = code_lst_5

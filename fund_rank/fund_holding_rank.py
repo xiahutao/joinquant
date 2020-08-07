@@ -12,11 +12,11 @@ if __name__ == '__main__':
         .assign(code=lambda df: df.code.apply(lambda x: int(x)))
     # rank = pd.read_csv('g://lfp//result//fund_rank_position_chg_zf2020-07-22.csv', encoding='gbk', index_col=0)[['code', 'topsis', 'stars']]\
     #     .assign(code=lambda df: df.code.apply(lambda x: int(x)))
-    rank = pd.read_csv('g://lfp//result//fund_rank_by_topsis_v5_2020-07-31.csv', encoding='gbk', index_col=0)[
+    rank = pd.read_csv('g://lfp//result//fund_rank_by_topsis_v5_2020-08-06.csv', encoding='gbk', index_col=0)[
         ['code', 'topsis', 'stars', 'name']] \
         .assign(code=lambda df: df.code.apply(lambda x: int(x)))
     print(rank)
-    rank_48 = pd.read_csv('g://lfp//result//fund_rank_position_chg_482020-07-31.csv', encoding='gbk', index_col=0)[['code', 'name', 'topsis', 'stars']]\
+    rank_48 = pd.read_csv('g://lfp//result//fund_rank_position_chg_482020-08-06.csv', encoding='gbk', index_col=0)[['code', 'name', 'topsis', 'stars']]\
         .assign(code=lambda df: df.code.apply(lambda x: int(x)))
     print(rank_48)
     df_rank_60 = fund_holding.merge(rank, on='code', how='left').rename(columns={'topsis': 'topsis5', 'stars': 'stars5', 'name': 'name1'})[['code', 'topsis5', 'stars5', 'name1']]

@@ -551,12 +551,18 @@ if __name__ == '__main__':
         print(resultdf)
         result, acc, odd, freq, lsprofitsum, longprofitsum, lsprofitlist, longprofitlist = evaluate(resultdf)
         print(result)
+        # result['date'] = result.index
+        # result = result[(result['date'] > '2016-01-01')]
+        # result['ex_chg'] = result['No_cuttingloss'] / result['No_cuttingloss'].shift(1) - result['Indextrend'] / result['Indextrend'].shift(1)
+        # result = result.fillna(0)
+        # result['No_cuttingloss'] = (1 + result['ex_chg']).cumprod()
         if result.position.tolist()[-1] == 0:
             ret = 'none'
         elif result.position.tolist()[-1] == 1:
             ret = 'long'
         elif result.position.tolist()[-1] == -1:
             ret = 'short'
+
         print('正确率：%s 盈亏比：%s 预测频率：%s 多空累积收益：%s 做多累积收益：%s' % (acc, odd, freq, lsprofitsum, longprofitsum))
         sharpRatio = daysharpRatio(result['No_cuttingloss'].tolist()) * math.pow(252, 0.5)
         annROR = math.pow(result['No_cuttingloss'].tolist()[-1], 252 / len(result)) - 1
@@ -624,7 +630,7 @@ if __name__ == '__main__':
         smtp.quit()
         #    print('完成邮件发送')
 
-        # result.ix[:, ['Indextrend', 'No_cuttingloss']].plot()
-        #
-        # print('time spend : %s' % (time.time() - t0))
-        # plt.show()
+        result.ix[:, ['Indextrend', 'No_cuttingloss']].plot()
+
+        print('time spend : %s' % (time.time() - t0))
+        plt.show()

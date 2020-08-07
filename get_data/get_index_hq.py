@@ -71,12 +71,13 @@ if __name__ == '__main__':
                    'AL', 'ZN', 'CU', 'PB', 'NI', 'SN', 'J', 'JM', 'I', 'RB', 'HC', 'ZC', 'SF', 'SM', 'FG', 'IF',
                    'IH', 'IC', 'T', 'TF', 'AG', 'AU', 'JD', 'AP', 'CJ', 'CF', 'SR']
 
-    # symbol_lst = ['FU']
+    symbol_lst = ['A', 'B', 'CS', 'CJ', 'FG', 'L', 'JD', 'SA']
+    symbol_lst = ['SA']
     # symbol_lst = ['000300.XSHG', '000016.XSHG', '000905.XSHG', '399006.XSHE']
     date = datetime.date.today()
 
     sday = '2010-01-01'
-    eday = '2020-06-29'
+    eday = '2020-08-01'
     for symbol in symbol_lst:
         code = code_dic[symbol]
         # code = symbol

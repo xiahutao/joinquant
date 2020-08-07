@@ -10,6 +10,9 @@ from __future__ import division
 import sys
 print(sys.path)
 sys.path.append('C:\\Users\\51951\\PycharmProjects\\joinquant')  # 新加入的
+sys.path.append('C:\\Users\\51951\\PycharmProjects')  # 新加入的
+sys.path.append('C:\\Users\\51951')  # 新加入的
+sys.path.append('C:\\ProgramData\\Anaconda3')  # 新加入的
 print(sys.path)
 import pandas as pd
 import os
@@ -232,12 +235,14 @@ if __name__ == '__main__':
         res_n = res.copy()
         res_n = res_n[res_n['trade_date'] == hq_last_date].drop(['trade_date'], axis=1).T
         res_n.columns = ['weight']
-        print(res_n)
+        # print(res_n)
         res_n.to_csv(fold_path + 'temp//' + strategy_id + '_' + hq_last_date + '.csv')
         # send_email(res_n, date, receiver)
 
         trading_info = get_signal(res_n, aum, balance, EndDate, close_dict)
         trading_info.to_csv('G://trading_strategy//' + 'position_momentum_' + hq_last_date + '.csv')
+
+
         subject = date + strategy_id
         send_email(trading_info, subject, receiver)
 
