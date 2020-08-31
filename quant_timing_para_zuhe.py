@@ -35,16 +35,6 @@ def stock_price(sec, period, sday, eday):
     return temp
 
 
-def stock_price_jz(sec, sday, eday):
-    """
-    输入 股票代码，开始日期，截至日期
-    输出 个股的后复权的开高低收价格
-    """
-    temp = jzmongo['wind_index'].read(sec)
-    temp = temp[(temp['date'] >= sday) & (temp['date'] <= eday)]
-    return temp
-
-
 # 提取成分股列表
 def constituent_stock(df):
     df.stockcode = df.stockcode.apply(lambda s: normalize_code(s))
@@ -120,15 +110,12 @@ def annROR(netlist, n):
 
 
 if __name__ == '__main__':
-    myclient = pymongo.MongoClient('mongodb://juzheng:jz2018*@192.168.2.201:27017/')
-    jzmongo = Arctic(myclient)
+    # myclient = pymongo.MongoClient('mongodb://juzheng:jz2018*@192.168.2.201:27017/')
+    # jzmongo = Arctic(myclient)
     fold = 'e:/fof/cgo/'
-    name_lst = ['tech', 'ai', 'chip', 'internet', 'energe']
-    indus_name_lst = ['884160.WI', '884076.WI', '884224.WI', '399608.SZ', '884201.WI']
-    # indus_name_lst = ['tech']
     start_day = '2010-01-01'
     end_day = datetime.date.today().strftime('%Y-%m-%d')
-    fee = 0.000
+    fee = 0.0002
     index_code_lst = ['399006.XSHE', '000300.XSHG', '000905.XSHG', '000016.XSHG']
     name_lst = ['cyb', 'hs300', 'zz500', 'sz50']
     # index_code_lst = ['399006.XSHE', '000300.XSHG', '000016.XSHG']

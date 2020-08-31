@@ -136,8 +136,8 @@ def annROR(netlist, n):
 
 
 if __name__ == '__main__':
-    myclient = pymongo.MongoClient('mongodb://juzheng:jz2018*@192.168.2.201:27017/')
-    jzmongo = Arctic(myclient)
+    # myclient = pymongo.MongoClient('mongodb://juzheng:jz2018*@192.168.2.201:27017/')
+    # jzmongo = Arctic(myclient)
     fold = 'e:/fof/cgo/'
     fold_data = 'e:/fof/data/'
     # indus_name_lst = ['tech']
@@ -157,15 +157,15 @@ if __name__ == '__main__':
     etf_to_idx = etf_to_idx.assign(code_trans=lambda df: df.code.apply(lambda x: str(x)[:6])) \
         .assign(idx_code=lambda df: df.idx_code.apply(lambda x: str(x)[:6]))
     jz_idx_code_lst = jzmongo['stock_raw.wind_index'].list_symbols()
-    jz_idx_code_df = pd.DataFrame(jz_idx_code_lst, columns=['jz_code'])
-    jz_idx_code_df['temp'] = jz_idx_code_df.jz_code.apply(lambda x: x[0])
-    jz_idx_code_df = jz_idx_code_df[(jz_idx_code_df['temp'] == '9') | (jz_idx_code_df['temp'] == '0') |
-                                    (jz_idx_code_df['temp'] == 'H') | (jz_idx_code_df['temp'] == '3')]
-    jz_idx_code_df = jz_idx_code_df.assign(idx_code=lambda df: df.jz_code.apply(lambda x: x[:6]))
-    jz_idx_code_df = jz_idx_code_df.merge(etf_to_idx, on=['idx_code'])
-    jz_idx_code_df.to_csv(fold_data + 'cgo_select_idx_code.csv', encoding='gbk')
-
-    index_code_lst = jz_idx_code_df.jz_code.tolist()
+    # jz_idx_code_df = pd.DataFrame(jz_idx_code_lst, columns=['jz_code'])
+    # jz_idx_code_df['temp'] = jz_idx_code_df.jz_code.apply(lambda x: x[0])
+    # jz_idx_code_df = jz_idx_code_df[(jz_idx_code_df['temp'] == '9') | (jz_idx_code_df['temp'] == '0') |
+    #                                 (jz_idx_code_df['temp'] == 'H') | (jz_idx_code_df['temp'] == '3')]
+    # jz_idx_code_df = jz_idx_code_df.assign(idx_code=lambda df: df.jz_code.apply(lambda x: x[:6]))
+    # jz_idx_code_df = jz_idx_code_df.merge(etf_to_idx, on=['idx_code'])
+    # jz_idx_code_df.to_csv(fold_data + 'cgo_select_idx_code.csv', encoding='gbk')
+    #
+    # index_code_lst = jz_idx_code_df.jz_code.tolist()
     index_code_lst = list(set(index_code_lst))
     pos_df_all = pd.read_csv('e:/fof/cgo/' + 'indus_pos_df_all.csv', encoding='gbk')\
         .assign(position=lambda df: df.total.shift(1))[['trade_date', 'position']]\

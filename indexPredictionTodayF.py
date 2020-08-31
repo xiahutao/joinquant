@@ -477,8 +477,8 @@ def get_html_msg(data):
         ".format(df_html=df_html)
     html_msg = "<html>" + head + body + "</html>"
     # 这里是将HTML文件输出，作为测试的时候，查看格式用的，正式脚本中可以注释掉
-    fout = open('t4.html', 'w', encoding='UTF-8', newline='')
-    fout.write(html_msg)
+    # fout = open('t4.html', 'w', encoding='UTF-8', newline='')
+    # fout.write(html_msg)
     return html_msg
 
 
@@ -629,8 +629,10 @@ if __name__ == '__main__':
         smtp.sendmail(sender, receiver, msg.as_string())
         smtp.quit()
         #    print('完成邮件发送')
+        result['net'] = result['No_cuttingloss']
+        result['index'] = result['Indextrend']
 
-        result.ix[:, ['Indextrend', 'No_cuttingloss']].plot()
+        result.ix[:, ['index', 'net']].plot()
 
         print('time spend : %s' % (time.time() - t0))
         plt.show()

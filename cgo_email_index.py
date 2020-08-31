@@ -265,19 +265,10 @@ def get_html_msg(data):
     return html_msg
 
 
-def stock_code_lst(sec):
-    """
-    输入 股票代码，开始日期，截至日期
-    输出 个股的后复权的开高低收价格
-    """
-    temp = jzmongo['wind_index'].read(sec + '_component')
-    temp = temp[temp['date'] == temp['date'].max()]
-    return temp.code.tolist()
-
-
 if __name__ == '__main__':
-    myclient = pymongo.MongoClient('mongodb://juzheng:jz2018*@192.168.2.201:27017/')
-    jzmongo = Arctic(myclient)
+    # fold = 'e:/fof/cgo/'
+    # fold_data = 'e:/fof/data/'
+    # fold_pos = 'e:/fof/ymjh/pos/'
     today = datetime.date.today()
     fold = 'E:/fof/cgo/'
     fund = ['399006.XSHE', '000300.XSHG', '000905.XSHG']
@@ -285,7 +276,7 @@ if __name__ == '__main__':
     indus_name_lst = ['cyb', 'hs300', 'zz500']
     N = 100
     num = 0
-    bars = 252
+    bars = 2520
     calen = get_trade_days(count=bars)
     calen = list(calen)
     if today in calen:
@@ -361,15 +352,15 @@ if __name__ == '__main__':
             out = pd.concat(out)\
                 .assign(CGO=lambda df: (df.TCLOSE - df.rpt) / df.rpt)[['ENDDATE', 'CGO']]\
                 .assign(trade_date=lambda df: df.ENDDATE.apply(lambda x: str(x)[:10]))[['trade_date', 'CGO']]
-            # out.to_csv(fold + 'stock_cgo_' + indus_name[:6] + '.csv', encoding='gbk')
+            out.to_csv(fold + 'lfp_cgo_' + indus_name[:6] + '.csv', encoding='gbk')
             cgo_dict[indus_name[:6]] = out
 
-            ratio = out.query("ENDDATE=='{date1}'".format(date1=max(out.ENDDATE))).dropna()
-            ratio_list.append(len(ratio.query("CGO>0")) / len(ratio))
+            # ratio = out.query("trade_date=='{date1}'".format(date1=max(out.trade_date))).dropna()
+            # ratio_list.append(len(ratio.query("CGO>0")) / len(ratio))
 
             f = lambda s: s.quantile(0.3)
             # f2 = lambda s: s.quantile(0.5)
-            cgo = out.groupby('ENDDATE') \
+            cgo = out.groupby('trade_date') \
                 .CGO \
                 .apply(f) \
                 .reset_index()
@@ -388,7 +379,7 @@ if __name__ == '__main__':
             #    print('完成计算')
             # 整理数据
             res.dropna(inplace=True)
-            res.to_csv(fold + 'res_' + indus_name[:6] + '.csv', encoding='gbk')
+            res.to_csv(fold + 'lfp_res_' + indus_name[:6] + '.csv', encoding='gbk')
             # res = pd.read_csv(fold + 'res_' + indus_name + '.csv', encoding='gbk', index_col=0)
 
             # res = res.assign(sign2=[sign2(row) for idx, row in res.iterrows()])

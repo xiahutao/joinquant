@@ -18,8 +18,8 @@ def PowerSetsRecursive(items):
 
 
 if __name__ == "__main__":
-    fold_ini_path = 'e://Strategy//MT4//'
-    # fold_ini_path = 'G://缠论//回测报告//'
+    # fold_ini_path = 'e://Strategy//MT4//'
+    fold_ini_path = 'G://缠论//回测报告//'
     level = 1
     date_lst = [('2020-01-01', '2020-07-01'), ('2015-01-01', '2017-01-01'), ('2017-01-01', '2020-01-01')]
     date_lst = [('2015-01-01', '2020-07-01')]
@@ -32,7 +32,7 @@ if __name__ == "__main__":
     period_ini_lst = [5, 15, 30, 60, 240, 1440]
     period_lst_all = PowerSetsRecursive(period_ini_lst)
     period_lst_all = [i for i in period_lst_all if len(i) == 1]
-    # period_lst_all = [[5, 15, 30, 60, 240, 1440]]
+    period_lst_all = [[15, 30, 240]]
     # period_lst_all = [[5]]
     print(period_lst_all)
 
@@ -62,12 +62,12 @@ if __name__ == "__main__":
                 'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有4小时夏普>0
     code_lst_1440 = ['ap', 'ag', 'al', 'cf', 'cu', 'fu', 'i', 'j', 'ni', 'pb', 'pp', 'rb', 'sc', 'tf', 'v', 'zc', 'zn', 'c',
                 'if', 'sf', 'p', 'hc', 'au', 'jm', 'sm', 'ru', 'bu', 'oi', 'sr', 'ta', 'm', 'ma']  # 所有日级别夏普>0
-    code_lst_5 = ['A', 'B', 'CS', 'CJ', 'FG', 'L', 'JD', 'SA']
-    code_lst_15 = ['A', 'B', 'CS', 'CJ', 'FG', 'L', 'JD', 'SA']
-    code_lst_30 = ['A', 'B', 'CS', 'CJ', 'FG', 'L', 'JD', 'SA']
-    code_lst_60 = ['A', 'B', 'CS', 'CJ', 'FG', 'L', 'JD', 'SA']
-    code_lst_240 = ['A', 'B', 'CS', 'CJ', 'FG', 'L', 'JD', 'SA']
-    code_lst_1440 = ['A', 'B', 'CS', 'CJ', 'FG', 'L', 'JD', 'SA']
+    code_lst_5 = ['if']
+    code_lst_15 = ['if']
+    code_lst_30 = ['if']
+    code_lst_60 = ['if']
+    code_lst_240 = ['if']
+    code_lst_1440 = ['if']
 
     code_dict = {}
     code_dict['5'] = code_lst_5
@@ -98,6 +98,7 @@ if __name__ == "__main__":
                 for period in period_lst:
                     if code not in code_dict[str(period)]:
                         continue
+                    # print(period)
                     period_name.append(period)
                     mode = '蓝线笔_蓝线反转确认_蓝线反转平仓_200627_' + str(period) + '分钟_12tick_0710笔'
                     fold_path = fold_ini_path + mode + '//'

@@ -128,36 +128,16 @@ if __name__ == '__main__':
     back_sdate = '2010-01-01'
     end_day = datetime.date.today().strftime('%Y-%m-%d')
     fee = 0.0002
-    # index_code_lst = get_all_securities(types=['index'], date=end_day).index.tolist()
-    # etf_to_idx = pd.read_excel(fold_data + 'etf_to_idx_index.xls', encoding='gbk')[
-    #     ['基金代码', '基金简称', '跟踪指数', '跟踪指数代码', 'select']] \
-    #     .rename(columns={'基金代码': 'code', '基金简称': 'name', '跟踪指数代码': 'idx_code', '跟踪指数': 'idx_name'})
-    # etf_to_idx = etf_to_idx[etf_to_idx['select'] == 1]
-    # etf_to_idx = etf_to_idx.drop_duplicates(['idx_code'], keep='first')\
-    #     .assign(idx_code=lambda df: df.idx_code.apply(lambda x: str(x))).sort_values(['idx_code'])
-    # etf_to_idx = etf_to_idx.assign(code_trans=lambda df: df.code.apply(lambda x: str(x)[:6])) \
-    #     .assign(idx_code=lambda df: df.idx_code.apply(lambda x: str(x)[:6]))
-    # jz_idx_code_lst = jzmongo['stock_raw.wind_index'].list_symbols()
-    # jz_idx_code_df = pd.DataFrame(jz_idx_code_lst, columns=['jz_code'])
-    # jz_idx_code_df['temp'] = jz_idx_code_df.jz_code.apply(lambda x: x[0])
-    # jz_idx_code_df = jz_idx_code_df[(jz_idx_code_df['temp'] == '9') | (jz_idx_code_df['temp'] == '0') |
-    #                                 (jz_idx_code_df['temp'] == 'H') | (jz_idx_code_df['temp'] == '3')]
-    # jz_idx_code_df = jz_idx_code_df.assign(idx_code=lambda df: df.jz_code.apply(lambda x: x[:6]))
-    # jz_idx_code_df = jz_idx_code_df.merge(etf_to_idx, on=['idx_code'])
-    # jz_idx_code_df.to_csv(fold_data + 'cgo_select_idx_code.csv', encoding='gbk')
-    index_code_lst = ['399006.XSHE', '000300.XSHG', '000905.XSHG', '000016.XSHG']
-    name_lst = ['cyb', 'hs300', 'zz500', 'sz50']
+
+    index_code_lst = ['399006.XSHE', '000300.XSHG', '000905.XSHG']
+    name_lst = ['cyb', 'hs300', 'zz500']
     # index_code_lst = jz_idx_code_df.jz_code.tolist()
     # index_code_lst = list(set(index_code_lst))
     print(index_code_lst)
-    pos_df_all = pd.read_csv('e:/fof/cgo/' + 'indus_pos_df_all.csv', encoding='gbk')\
-        .assign(position_cgo=lambda df: df.total.shift(1))\
-        .assign(cyb=lambda df: df.cyb.shift(1))\
-        .assign(hs300=lambda df: df.hs300.shift(1))\
-        .assign(zz500=lambda df: df.zz500.shift(1))\
-        .assign(sz50=lambda df: df.sz50.shift(1))\
-        .rename(columns={'cyb': '399006.XSHE', 'hs300': '000300.XSHG', 'zz500': '000905.XSHG', 'sz50': '000016.XSHG'})\
-        .assign(trade_date=lambda df: df.trade_date.apply(lambda x: str(x)[:10])).dropna()
+    # pos_df_all = pd.read_csv('e:/fof/cgo/' + 'indus_pos_df_all.csv', encoding='gbk')\
+    #     .assign(position_cgo=lambda df: df.total.shift(1))\
+    #     .rename(columns={'cyb': '399006.XSHE', 'hs300': '000300.XSHG', 'zz500': '000905.XSHG', 'sz50': '000016.XSHG'})\
+    #     .assign(trade_date=lambda df: df.trade_date.apply(lambda x: str(x)[:10])).dropna()
 
     index_hq_dict = {}
     for i in range(len(index_code_lst)):
@@ -171,25 +151,13 @@ if __name__ == '__main__':
             index_code = index_code_lst[j]
             # index_name = index_code_lst[j]
             index_name = name_lst[j]
-            pos_df = pd.read_csv(fold_pos + 'pos_ymjh_' + index_code[:6] + '.csv', encoding='gbk', header=None, index_col=0)
-            pos_df.columns = ['trade_date', 'pos_ymjh']
+            pos_df = pd.read_csv(fold + 'lfp_res_' + index_code[:6] + '.csv', encoding='gbk')
+            pos_df = pos_df[
+                ['trade_date', 'position']]
+
             pos_df = pos_df.assign(trade_date=lambda df: df.trade_date.apply(lambda x: str(x)[:10]))\
-                .merge(pos_df_all, on=['trade_date'])
-            pos_df = pos_df.set_index(['trade_date'])
+                .assign(position=lambda df: df.position.shift(1))
 
-            pos_average = pos_df.mean(axis=1)
-            pos_max = pos_df.max(axis=1)
-            pos_min = pos_df.min(axis=1)
-            pos_df['pos_max'] = pos_max
-            pos_df['pos_min'] = pos_min
-            pos_df['position_cgo'] = pos_df[index_code]
-
-            pos_df['pos_cumprod'] = pos_df['pos_ymjh'] * pos_df['position_cgo']
-            pos_df['pos_average'] = pos_average
-
-            pos_df['position'] = pos_df[pos_method]
-
-            pos_df = pos_df.reset_index(drop=False)
             hq = index_hq_dict[index_code]
             pos_df = hq.merge(pos_df, on=['trade_date']).sort_values(['trade_date']) \
                 .assign(close_1=lambda df: df.close.shift(1)).dropna()

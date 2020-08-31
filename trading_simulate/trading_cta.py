@@ -20,7 +20,6 @@ auth(JOINQUANT_USER, JOINQUANT_PW)
 
 if __name__ == '__main__':
     signal_path = 'G://trading_strategy//'
-    aum = 1000000
     balance = 10
     bars = 5
     # api = TqApi(TqAccount("快期模拟", "519518384@qq.com", "zf1991"), web_gui=True)

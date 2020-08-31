@@ -265,19 +265,7 @@ def get_html_msg(data):
     return html_msg
 
 
-def stock_code_lst(sec):
-    """
-    输入 股票代码，开始日期，截至日期
-    输出 个股的后复权的开高低收价格
-    """
-    temp = jzmongo['wind_index'].read(sec + '_component')
-    temp = temp[temp['date'] == temp['date'].max()]
-    return temp.code.tolist()
-
-
 if __name__ == '__main__':
-    myclient = pymongo.MongoClient('mongodb://juzheng:jz2018*@192.168.2.201:27017/')
-    jzmongo = Arctic(myclient)
     today = datetime.date.today()
     fold = 'E:/fof/cgo/'
     index_code_lst = ['399006.XSHE', '000300.XSHG', '000905.XSHG', '000016.XSHG']
@@ -290,8 +278,8 @@ if __name__ == '__main__':
                  'sz50': [(0.95, 7, 28), (0.55, 12, 88), (0.95, 16, 22), (0.95, 10, 18), (0.4, 9, 14)]}
     N = 100
     num = 0
-    bars = 252
-    # bars = 2500
+    # bars = 252
+    bars = 2500
     calen = get_trade_days(count=bars)
     calen = list(calen)
     if today in calen:
@@ -346,8 +334,8 @@ if __name__ == '__main__':
                 .assign(TURNOVER_DAY=lambda df: df.TURNOVER_DAY / 100) \
                 .assign(comturnover=lambda df: 1 - df.TURNOVER_DAY.shift(-1))
 
-            # df_50_1.to_csv(fold + 'stock_hq_' + indus_name[:6] + '.csv', encoding='gbk')
-            # df_50_1 = pd.read_csv(fold + 'stock_hq_' + indus_name[:6] + '.csv', encoding='gbk', index_col=0)
+            df_50_1.to_csv(fold + 'stock_hq_' + index_name[:6] + '.csv', encoding='gbk')
+            df_50_1 = pd.read_csv(fold + 'stock_hq_' + index_name[:6] + '.csv', encoding='gbk', index_col=0)
 
             date = today
 
@@ -368,8 +356,8 @@ if __name__ == '__main__':
             out = pd.concat(out) \
                 .assign(CGO=lambda df: (df.TCLOSE - df.rpt) / df.rpt)[['ENDDATE', 'CGO']] \
                 .assign(trade_date=lambda df: df.ENDDATE.apply(lambda x: str(x)[:10]))[['trade_date', 'CGO']]
-            # out.to_csv(fold + 'cgo_' + index_name + '.csv', encoding='gbk')
-            # out = pd.read_csv(fold + 'cgo_' + index_name + '.csv', encoding='gbk', index_col=0)
+            out.to_csv(fold + 'cgo_' + index_name + '.csv', encoding='gbk')
+            out = pd.read_csv(fold + 'cgo_' + index_name + '.csv', encoding='gbk', index_col=0)
             cgo_dict[index_name] = out
         position_dict = {}
         ratio_dict = {}
@@ -402,7 +390,7 @@ if __name__ == '__main__':
             position_dict[index_name] = pos_df[index_name].tolist()[-1]
         pos_df_all = pos_df_all.dropna().sort_values(['trade_date']).set_index(['trade_date'])
         pos_df_all['total'] = pos_df_all.sum(axis=1) / len(index_code_lst)
-        # pos_df_all.to_csv(fold + 'indus_pos_df_all.csv', encoding='gbk')
+        pos_df_all.to_csv(fold + 'indus_pos_df_all.csv', encoding='gbk')
 
         # =============================================================================
         # 邮件发送
@@ -474,9 +462,9 @@ if __name__ == '__main__':
         msg.attach(content_html)
 
         # 发送邮件
-        smtp = smtplib.SMTP()
-        smtp.connect('smtp.163.com')
-        smtp.login(username, password)
-        smtp.sendmail(sender, receiver, msg.as_string())
-        smtp.quit()
+        # smtp = smtplib.SMTP()
+        # smtp.connect('smtp.163.com')
+        # smtp.login(username, password)
+        # smtp.sendmail(sender, receiver, msg.as_string())
+        # smtp.quit()
     #    print('完成邮件发送')

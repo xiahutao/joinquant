@@ -18,9 +18,9 @@ def PowerSetsRecursive(items):
 
 
 if __name__ == "__main__":
-    fold_ini_path = 'e://Strategy//MT4//'
-    # fold_ini_path = 'G://缠论//回测报告//'
-    level = 10
+    # fold_ini_path = 'e://Strategy//MT4//'
+    fold_ini_path = 'G://缠论//回测报告//'
+    level = 1
     method = 'com'
     date_lst = [('2020-01-01', '2020-07-01'), ('2015-01-01', '2017-01-01'), ('2017-01-01', '2020-01-01')]
     date_lst = [('2015-01-01', '2020-07-01'), ('2015-01-01', '2020-01-01')]
