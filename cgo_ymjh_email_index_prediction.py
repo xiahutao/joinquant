@@ -442,8 +442,9 @@ if __name__ == '__main__':
     From = 'xiahutao@163.com <xiahutao@163.com>'
     # 收件人为多个收件人
     # receiver = ['zxdokok@sina.com','43521385@qq.com','542362275@qq.com', '3467518502@qq.com', 'xiahutao@163.com']
+    receiver = ['zxdokok@sina.com', '43521385@qq.com', '542362275@qq.com', '3467518502@qq.com', 'xiahutao@163.com']
     # receiver = ['xiahutao@163.com', '3467518502@qq.com', '542362275@qq.com']
-    receiver = ['xiahutao@163.com']
+    receiver1 = ['xiahutao@163.com']
 
     today = datetime.date.today()
     fold = 'E:/fof/cgo/'
@@ -495,7 +496,7 @@ if __name__ == '__main__':
         # res_n.columns = ['日期', 'resualt']
         print(res_n)
         subject = date + ' CGO: ' + context1
-        send_email(res_n, subject, From, receiver)
+        send_email(res_n, subject, From, receiver1)
         index_hq_dic = {}
 
         for index_code in index_code_lst:
@@ -512,7 +513,7 @@ if __name__ == '__main__':
         res_n = res.copy()
         res_n.trade_date = res_n.trade_date.shift(1)
         res_n.trade_date = res_n.trade_date.fillna(EndDate)
-        send_email(res_n, date, From, receiver)
+        send_email(res_n, date, From, receiver1)
 
         colume_names = copy.deepcopy(name_lst)
         colume_names.append('trade_date')
